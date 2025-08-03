@@ -1,0 +1,2769 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>المدونة والمقالات - Pixomod</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&amp;family=Segoe+UI:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        /* =============== GLOBAL VARIABLES =============== */
+        :root {
+            /* Light Theme Colors */
+            --primary-light: #007BFF;
+            --secondary-light: #6610F2;
+            --background-light: #FFFFFF;
+            --surface-light: #F8F9FA;
+            --text-light: #212529;
+            --text-secondary-light: #6C757D;
+            --border-light: #DEE2E6;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark Theme Colors */
+            --primary-dark: #000000;
+            --secondary-dark: #00FF7F;
+            --background-dark: #121212;
+            --surface-dark: #1E1E1E;
+            --text-dark: #FFFFFF;
+            --text-secondary-dark: #B3B3B3;
+            --border-dark: #333333;
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            
+            /* Current Theme (defaults to light) */
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --background: var(--background-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            
+            /* Typography */
+            --font-primary: 'Cairo', 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Z-index layers */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal-backdrop: 1040;
+            --z-modal: 1050;
+            --z-popover: 1060;
+            --z-tooltip: 1070;
+        }
+        
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --surface: var(--surface-dark);
+            --text: var(--text-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+        
+        /* =============== RESET & BASE STYLES =============== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+            overflow-x: hidden;
+        }
+        
+        /* RTL/LTR Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="ltr"] {
+            text-align: left;
+        }
+        
+        /* =============== UTILITY CLASSES =============== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .visible {
+            display: block !important;
+        }
+        
+        .opacity-0 {
+            opacity: 0;
+        }
+        
+        .opacity-100 {
+            opacity: 1;
+        }
+        
+        .transition-all {
+            transition: all var(--transition-normal);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            gap: var(--spacing-sm);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--surface);
+        }
+        
+        /* =============== HEADER STYLES =============== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: var(--z-fixed);
+            transition: all var(--transition-normal);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(18, 18, 18, 0.95);
+        }
+        
+        .header.scrolled {
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .header-content {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-normal);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .language-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 25px var(--shadow);
+            min-width: 150px;
+            z-index: var(--z-dropdown);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+        }
+        
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .language-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            width: 50px;
+            height: 25px;
+            background: var(--border);
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color var(--transition-normal);
+        }
+        
+        .theme-toggle.active {
+            background: var(--primary);
+        }
+        
+        .theme-toggle-thumb {
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+        }
+        
+        .theme-toggle.active .theme-toggle-thumb {
+            transform: translateX(25px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all var(--transition-fast);
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* =============== SIDEBAR STYLES =============== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: var(--z-modal);
+            transition: right var(--transition-normal);
+            overflow-y: auto;
+        }
+        
+        [dir="ltr"] .sidebar {
+            left: -350px;
+            right: auto;
+            border-left: none;
+            border-right: 1px solid var(--border);
+            transition: left var(--transition-normal);
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        [dir="ltr"] .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .sidebar-close:hover {
+            transform: rotate(90deg);
+            background: var(--secondary);
+        }
+        
+        .sidebar-nav {
+            padding: var(--spacing-lg);
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-nav-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.1;
+            transition: left var(--transition-slow);
+        }
+        
+        .sidebar-nav-item:hover:before {
+            left: 100%;
+        }
+        
+        .sidebar-nav-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        [dir="ltr"] .sidebar-nav-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        .sidebar-nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* =============== MODAL STYLES =============== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px var(--shadow);
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: all var(--transition-normal);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            background: var(--background);
+            color: var(--text);
+            transition: all var(--transition-fast);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--background);
+            color: var(--text);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: var(--spacing-xl) 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .divider:before,
+        .divider:after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* =============== MAIN CONTENT STYLES =============== */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 900;
+            margin-bottom: var(--spacing-md);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .breadcrumb-item {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb-item:hover {
+            color: white;
+        }
+        
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        .blog-filters {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-2xl);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--surface);
+            color: var(--text);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .blog-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            position: relative;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .blog-card-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-normal);
+        }
+        
+        .blog-card:hover .blog-card-image img {
+            transform: scale(1.05);
+        }
+        
+        .blog-card-category {
+            position: absolute;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--primary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+        
+        .blog-card-content {
+            padding: var(--spacing-xl);
+        }
+        
+        .blog-card-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--text);
+            line-height: 1.4;
+        }
+        
+        .blog-card-excerpt {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.6;
+        }
+        
+        .blog-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        .blog-card-author {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .author-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .blog-card-date {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .pagination-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--surface);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .pagination-btn:hover,
+        .pagination-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        /* =============== ARTICLE PAGE STYLES =============== */
+        .article-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .article-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 800;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+            line-height: 1.3;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            color: var(--text-secondary);
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 400px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: var(--font-size-lg);
+            line-height: 1.8;
+        }
+        
+        .article-content h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin: var(--spacing-2xl) 0 var(--spacing-lg) 0;
+            color: var(--text);
+        }
+        
+        .article-content h3 {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin: var(--spacing-xl) 0 var(--spacing-md) 0;
+            color: var(--text);
+        }
+        
+        .article-content p {
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+        
+        .article-content blockquote {
+            border-right: 4px solid var(--primary);
+            padding: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            font-style: italic;
+        }
+        
+        [dir="ltr"] .article-content blockquote {
+            border-right: none;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .article-tags {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-2xl) 0;
+            flex-wrap: wrap;
+        }
+        
+        .article-tag {
+            background: var(--surface);
+            color: var(--text);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-sm);
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all var(--transition-fast);
+        }
+        
+        .article-tag:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .article-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--surface);
+            color: var(--text);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .share-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .related-articles {
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-2xl);
+            border-top: 1px solid var(--border);
+        }
+        
+        .related-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+            text-align: center;
+            color: var(--text);
+        }
+        
+        /* =============== FOOTER STYLES =============== */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: var(--spacing-2xl) 0;
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+        }
+        
+        .footer-section h3 {
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,123,255,0.3);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        /* =============== ANIMATIONS =============== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* =============== RESPONSIVE DESIGN =============== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .header-content {
+                height: 60px;
+            }
+            
+            .main {
+                margin-top: 60px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .header-actions > .btn {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .blog-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .blog-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            
+            .article-image {
+                height: 250px;
+            }
+            
+            .article-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            [dir="ltr"] .sidebar {
+                left: -100%;
+            }
+            
+            .page-header {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .blog-card-content {
+                padding: var(--spacing-lg);
+            }
+        }
+        
+        /* =============== CUSTOM SCROLLBAR =============== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* =============== SELECTION STYLES =============== */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+        
+        ::-moz-selection {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* =============== FOCUS STYLES =============== */
+        .focus-visible:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        /* =============== TOOLTIP STYLES =============== */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: var(--z-tooltip);
+        }
+        
+        .tooltip:hover:before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header" id="header">
+<div class="container">
+<div class="header-content">
+<!-- Logo -->
+<a class="logo" href="index.html">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span class="logo-text" data-i18n="logoText">Pixomod</span>
+</a>
+<!-- Header Actions -->
+<div class="header-actions">
+<!-- Language Selector -->
+<div class="language-selector">
+<button class="language-btn" id="languageBtn">
+<i class="fas fa-globe"></i>
+<span data-i18n="currentLang" id="currentLang">العربية</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="language-dropdown" id="languageDropdown">
+<div class="language-option" data-lang="ar">
+<i class="fas fa-flag"></i>
+<span>العربية</span>
+</div>
+<div class="language-option" data-lang="en">
+<i class="fas fa-flag"></i>
+<span>English</span>
+</div>
+<div class="language-option" data-lang="fr">
+<i class="fas fa-flag"></i>
+<span>Français</span>
+</div>
+</div>
+</div>
+<!-- Theme Toggle -->
+<div class="theme-toggle" data-i18n-tooltip="themeToggleTooltip" data-tooltip="تبديل الوضع" id="themeToggle">
+<div class="theme-toggle-thumb">
+<i class="fas fa-sun"></i>
+</div>
+</div>
+<!-- Login Button -->
+<button class="btn btn-primary" id="loginBtn">
+<i class="fas fa-user"></i>
+<span data-i18n="login">تسجيل الدخول</span>
+</button>
+<!-- Menu Toggle -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span data-i18n="logoText">Pixomod</span>
+</div>
+<button class="sidebar-close" id="sidebarClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<nav class="sidebar-nav">
+<a class="sidebar-nav-item" href="index.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-home"></i>
+</div>
+<span data-i18n="home">الصفحة الرئيسية</span>
+</a>
+<a class="sidebar-nav-item" href="#mobile-apps">
+<div class="sidebar-nav-icon">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<span data-i18n="mobileApps">ألعاب وتطبيقات الهاتف</span>
+</a>
+<a class="sidebar-nav-item" href="#pc-software">
+<div class="sidebar-nav-icon">
+<i class="fas fa-desktop"></i>
+</div>
+<span data-i18n="pcSoftware">برامج الكمبيوتر</span>
+</a>
+<a class="sidebar-nav-item active" href="blog.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-blog"></i>
+</div>
+<span data-i18n="blog">المدونة والمقالات</span>
+</a>
+<a class="sidebar-nav-item" href="#contact">
+<div class="sidebar-nav-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<span data-i18n="contact">اتصل بنا</span>
+</a>
+<!-- Dashboard Link (shown after login for admin/moderator) -->
+<a class="sidebar-nav-item hidden" href="#dashboard" id="dashboardLink">
+<div class="sidebar-nav-icon">
+<i class="fas fa-tachometer-alt"></i>
+</div>
+<span data-i18n="dashboard">لوحة التحكم</span>
+</a>
+</nav>
+</aside>
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+<div class="modal">
+<div class="modal-header">
+<h2 class="modal-title" data-i18n="loginTitle">تسجيل الدخول</h2>
+<button class="modal-close" id="loginModalClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<form id="loginForm">
+<div class="form-group">
+<label class="form-label" data-i18n="emailLabel" for="email">البريد الإلكتروني</label>
+<input class="form-input" id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="passwordLabel" for="password">كلمة المرور</label>
+<input class="form-input" id="password" required="" type="password"/>
+</div>
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+<i class="fas fa-sign-in-alt"></i>
+<span data-i18n="loginButton">تسجيل الدخول</span>
+</button>
+</form>
+<div class="divider">
+<span data-i18n="or">أو</span>
+</div>
+<div class="social-login">
+<a class="social-btn" href="#">
+<i class="fab fa-google" style="color: #DB4437;"></i>
+<span data-i18n="loginWithGoogle">تسجيل الدخول بـ Google</span>
+</a>
+<a class="social-btn" href="#">
+<i class="fab fa-facebook" style="color: #4267B2;"></i>
+<span data-i18n="loginWithFacebook">تسجيل الدخول بـ Facebook</span>
+</a>
+</div>
+<div style="text-align: center; margin-top: var(--spacing-lg);">
+<span data-i18n="noAccount">ليس لديك حساب؟ </span>
+<a data-i18n="createAccount" href="#" style="color: var(--primary); text-decoration: none;">إنشاء حساب جديد</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="main">
+<!-- Page Header -->
+<section class="page-header">
+<div class="container">
+<div class="page-header-content">
+<h1 class="page-title" data-i18n="blogPageTitle">المدونة والمقالات</h1>
+<p class="page-subtitle" data-i18n="blogPageSubtitle">اكتشف أحدث المقالات التقنية والنصائح المفيدة في عالم التكنولوجيا</p>
+<div class="breadcrumbs">
+<a class="breadcrumb-item" data-i18n="home" href="index.html">الصفحة الرئيسية</a>
+<span class="breadcrumb-separator">/</span>
+<span class="breadcrumb-item" data-i18n="blog">المدونة والمقالات</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Blog Section -->
+<section class="section">
+<div class="container">
+<!-- Blog Filters -->
+<div class="blog-filters scroll-reveal">
+<button class="filter-btn active" data-category="all" data-i18n="allCategories">جميع المقالات</button>
+<button class="filter-btn" data-category="tech" data-i18n="techCategory">تقنية</button>
+<button class="filter-btn" data-category="games" data-i18n="gamesCategory">ألعاب</button>
+<button class="filter-btn" data-category="reviews" data-i18n="reviewsCategory">مراجعات</button>
+<button class="filter-btn" data-category="news" data-i18n="newsCategory">أخبار</button>
+<button class="filter-btn" data-category="tutorials" data-i18n="tutorialsCategory">دروس</button>
+</div>
+<!-- Blog Grid -->
+<div class="blog-grid" id="blogGrid">
+<!-- Article 1 -->
+<article class="blog-card scroll-reveal" data-category="tech">
+<div class="blog-card-image">
+<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+<i class="fas fa-robot"></i>
+</div>
+<div class="blog-card-category" data-i18n="techCategory">تقنية</div>
+</div>
+<div class="blog-card-content">
+<h3 class="blog-card-title" data-i18n="article1Title">مستقبل الذكاء الاصطناعي في عام 2024</h3>
+<p class="blog-card-excerpt" data-i18n="article1Excerpt">استكشف أحدث التطورات في مجال الذكاء الاصطناعي وكيف ستؤثر على حياتنا اليومية في المستقبل القريب.</p>
+<div class="blog-card-meta">
+<div class="blog-card-author">
+<div class="author-avatar">أ</div>
+<span data-i18n="author1">أحمد محمد</span>
+</div>
+<div class="blog-card-date">
+<i class="fas fa-calendar"></i>
+<span>15 يناير 2024</span>
+</div>
+</div>
+<a class="btn btn-primary" href="#" onclick="openArticle('ai-future-2024')">
+<i class="fas fa-arrow-left"></i>
+<span data-i18n="readMore">اقرأ المزيد</span>
+</a>
+</div>
+</article>
+<!-- Article 2 -->
+<article class="blog-card scroll-reveal" data-category="games">
+<div class="blog-card-image">
+<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+<i class="fas fa-gamepad"></i>
+</div>
+<div class="blog-card-category" data-i18n="gamesCategory">ألعاب</div>
+</div>
+<div class="blog-card-content">
+<h3 class="blog-card-title" data-i18n="article2Title">أفضل الألعاب المجانية لعام 2024</h3>
+<p class="blog-card-excerpt" data-i18n="article2Excerpt">قائمة شاملة بأفضل الألعاب المجانية التي يمكنك لعبها على الهاتف والكمبيوتر دون دفع أي رسوم.</p>
+<div class="blog-card-meta">
+<div class="blog-card-author">
+<div class="author-avatar">س</div>
+<span data-i18n="author2">سارة أحمد</span>
+</div>
+<div class="blog-card-date">
+<i class="fas fa-calendar"></i>
+<span>12 يناير 2024</span>
+</div>
+</div>
+<a class="btn btn-primary" href="#" onclick="openArticle('best-free-games-2024')">
+<i class="fas fa-arrow-left"></i>
+<span data-i18n="readMore">اقرأ المزيد</span>
+</a>
+</div>
+</article>
+<!-- Article 3 -->
+<article class="blog-card scroll-reveal" data-category="reviews">
+<div class="blog-card-image">
+<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+<i class="fas fa-star"></i>
+</div>
+<div class="blog-card-category" data-i18n="reviewsCategory">مراجعات</div>
+</div>
+<div class="blog-card-content">
+<h3 class="blog-card-title" data-i18n="article3Title">مراجعة شاملة لتطبيق Adobe Photoshop 2024</h3>
+<p class="blog-card-excerpt" data-i18n="article3Excerpt">تعرف على الميزات الجديدة والتحسينات في أحدث إصدار من برنامج فوتوشوب الشهير.</p>
+<div class="blog-card-meta">
+<div class="blog-card-author">
+<div class="author-avatar">م</div>
+<span data-i18n="author3">محمد علي</span>
+</div>
+<div class="blog-card-date">
+<i class="fas fa-calendar"></i>
+<span>10 يناير 2024</span>
+</div>
+</div>
+<a class="btn btn-primary" href="#" onclick="openArticle('photoshop-2024-review')">
+<i class="fas fa-arrow-left"></i>
+<span data-i18n="readMore">اقرأ المزيد</span>
+</a>
+</div>
+</article>
+<!-- Article 4 -->
+<article class="blog-card scroll-reveal" data-category="news">
+<div class="blog-card-image">
+<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+<i class="fas fa-newspaper"></i>
+</div>
+<div class="blog-card-category" data-i18n="newsCategory">أخبار</div>
+</div>
+<div class="blog-card-content">
+<h3 class="blog-card-title" data-i18n="article4Title">إطلاق تحديث جديد لنظام أندرويد 15</h3>
+<p class="blog-card-excerpt" data-i18n="article4Excerpt">تعرف على أهم الميزات والتحسينات الجديدة في آخر تحديث لنظام التشغيل أندرويد.</p>
+<div class="blog-card-meta">
+<div class="blog-card-author">
+<div class="author-avatar">ل</div>
+<span data-i18n="author4">ليلى حسن</span>
+</div>
+<div class="blog-card-date">
+<i class="fas fa-calendar"></i>
+<span>8 يناير 2024</span>
+</div>
+</div>
+<a class="btn btn-primary" href="#" onclick="openArticle('android-15-update')">
+<i class="fas fa-arrow-left"></i>
+<span data-i18n="readMore">اقرأ المزيد</span>
+</a>
+</div>
+</article>
+<!-- Article 5 -->
+<article class="blog-card scroll-reveal" data-category="tutorials">
+<div class="blog-card-image">
+<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center; color: #333; font-size: 3rem;">
+<i class="fas fa-graduation-cap"></i>
+</div>
+<div class="blog-card-category" data-i18n="tutorialsCategory">دروس</div>
+</div>
+<div class="blog-card-content">
+<h3 class="blog-card-title" data-i18n="article5Title">كيفية إنشاء موقع إلكتروني بسيط</h3>
+<p class="blog-card-excerpt" data-i18n="article5Excerpt">دليل شامل للمبتدئين لتعلم أساسيات تطوير المواقع الإلكترونية باستخدام HTML و CSS.</p>
+<div class="blog-card-meta">
+<div class="blog-card-author">
+<div class="author-avatar">ع</div>
+<span data-i18n="author5">عمر خالد</span>
+</div>
+<div class="blog-card-date">
+<i class="fas fa-calendar"></i>
+<span>5 يناير 2024</span>
+</div>
+</div>
+<a class="btn btn-primary" href="#" onclick="openArticle('create-simple-website')">
+<i class="fas fa-arrow-left"></i>
+<span data-i18n="readMore">اقرأ المزيد</span>
+</a>
+</div>
+</article>
+<!-- Article 6 -->
+<article class="blog-card scroll-reveal" data-category="tech">
+<div class="blog-card-image">
+<div style="width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">
+<i class="fas fa-shield-alt"></i>
+</div>
+<div class="blog-card-category" data-i18n="techCategory">تقنية</div>
+</div>
+<div class="blog-card-content">
+<h3 class="blog-card-title" data-i18n="article6Title">أهمية الأمان السيبراني في العصر الرقمي</h3>
+<p class="blog-card-excerpt" data-i18n="article6Excerpt">تعلم كيفية حماية بياناتك الشخصية وأجهزتك من التهديدات السيبرانية المتزايدة.</p>
+<div class="blog-card-meta">
+<div class="blog-card-author">
+<div class="author-avatar">ف</div>
+<span data-i18n="author6">فاطمة يوسف</span>
+</div>
+<div class="blog-card-date">
+<i class="fas fa-calendar"></i>
+<span>3 يناير 2024</span>
+</div>
+</div>
+<a class="btn btn-primary" href="#" onclick="openArticle('cybersecurity-importance')">
+<i class="fas fa-arrow-left"></i>
+<span data-i18n="readMore">اقرأ المزيد</span>
+</a>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<div class="pagination">
+<button class="pagination-btn" disabled="" id="prevPage">
+<i class="fas fa-chevron-right"></i>
+</button>
+<a class="pagination-btn active" href="#">1</a>
+<a class="pagination-btn" href="#">2</a>
+<a class="pagination-btn" href="#">3</a>
+<button class="pagination-btn" id="nextPage">
+<i class="fas fa-chevron-left"></i>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Article Modal -->
+<div class="modal-overlay" id="articleModal">
+<div class="modal" style="max-width: 900px;">
+<div class="modal-header">
+<h2 class="modal-title" id="articleModalTitle">عنوان المقال</h2>
+<button class="modal-close" id="articleModalClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<div id="articleContent">
+<!-- Article content will be loaded here -->
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h3 data-i18n="aboutPixomod">معلومات عن Pixomod</h3>
+<p data-i18n="footerDescription">وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.</p>
+<div class="social-links">
+<a class="social-link" data-tooltip="فيسبوك" href="#">
+<i class="fab fa-facebook"></i>
+</a>
+<a class="social-link" data-tooltip="تويتر" href="#">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="social-link" data-tooltip="إنستغرام" href="#">
+<i class="fab fa-instagram"></i>
+</a>
+<a class="social-link" data-tooltip="يوتيوب" href="#">
+<i class="fab fa-youtube"></i>
+</a>
+</div>
+</div>
+<div class="footer-section">
+<h3 data-i18n="quickLinks">روابط سريعة</h3>
+<ul class="footer-links">
+<li><a data-i18n="home" href="index.html">الصفحة الرئيسية</a></li>
+<li><a data-i18n="mobileApps" href="#mobile-apps">تطبيقات الهاتف</a></li>
+<li><a data-i18n="pcSoftware" href="#pc-software">برامج الكمبيوتر</a></li>
+<li><a data-i18n="blog" href="blog.html">المدونة</a></li>
+<li><a data-i18n="contact" href="#contact">اتصل بنا</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3 data-i18n="categories">الفئات</h3>
+<ul class="footer-links">
+<li><a data-i18n="actionGames" href="#">ألعاب الأكشن</a></li>
+<li><a data-i18n="puzzleGames" href="#">ألعاب الذكاء</a></li>
+<li><a data-i18n="designSoftware" href="#">برامج التصميم</a></li>
+<li><a data-i18n="securitySoftware" href="#">برامج الحماية</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3 data-i18n="importantInfo">معلومات مهمة</h3>
+<ul class="footer-links">
+<li><a data-i18n="privacyPolicy" href="#">سياسة الخصوصية</a></li>
+<li><a data-i18n="termsOfUse" href="#">شروط الاستخدام</a></li>
+<li><a data-i18n="faq" href="#">الأسئلة الشائعة</a></li>
+<li><a data-i18n="support" href="#">الدعم الفني</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 Pixomod. <span data-i18n="allRightsReserved">جميع الحقوق محفوظة</span>. <span data-i18n="madeWithLove">صُنع بـ</span> <i class="fas fa-heart" style="color: #e74c3c;"></i> <span data-i18n="inAlgeria">في الجزائر</span></p>
+</div>
+</div>
+</footer>
+<script>
+        // =============== GLOBAL VARIABLES ===============
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                logoText: 'Pixomod',
+                login: 'تسجيل الدخول',
+                home: 'الصفحة الرئيسية',
+                mobileApps: 'ألعاب وتطبيقات الهاتف',
+                pcSoftware: 'برامج الكمبيوتر',
+                blog: 'المدونة والمقالات',
+                contact: 'اتصل بنا',
+                dashboard: 'لوحة التحكم',
+                currentLang: 'العربية',
+                themeToggleTooltip: 'تبديل الوضع',
+                blogPageTitle: 'المدونة والمقالات',
+                blogPageSubtitle: 'اكتشف أحدث المقالات التقنية والنصائح المفيدة في عالم التكنولوجيا',
+                allCategories: 'جميع المقالات',
+                techCategory: 'تقنية',
+                gamesCategory: 'ألعاب',
+                reviewsCategory: 'مراجعات',
+                newsCategory: 'أخبار',
+                tutorialsCategory: 'دروس',
+                readMore: 'اقرأ المزيد',
+                loginTitle: 'تسجيل الدخول',
+                emailLabel: 'البريد الإلكتروني',
+                passwordLabel: 'كلمة المرور',
+                loginButton: 'تسجيل الدخول',
+                or: 'أو',
+                loginWithGoogle: 'تسجيل الدخول بـ Google',
+                loginWithFacebook: 'تسجيل الدخول بـ Facebook',
+                noAccount: 'ليس لديك حساب؟ ',
+                createAccount: 'إنشاء حساب جديد',
+                // Articles
+                article1Title: 'مستقبل الذكاء الاصطناعي في عام 2024',
+                article1Excerpt: 'استكشف أحدث التطورات في مجال الذكاء الاصطناعي وكيف ستؤثر على حياتنا اليومية في المستقبل القريب.',
+                article2Title: 'أفضل الألعاب المجانية لعام 2024',
+                article2Excerpt: 'قائمة شاملة بأفضل الألعاب المجانية التي يمكنك لعبها على الهاتف والكمبيوتر دون دفع أي رسوم.',
+                article3Title: 'مراجعة شاملة لتطبيق Adobe Photoshop 2024',
+                article3Excerpt: 'تعرف على الميزات الجديدة والتحسينات في أحدث إصدار من برنامج فوتوشوب الشهير.',
+                article4Title: 'إطلاق تحديث جديد لنظام أندرويد 15',
+                article4Excerpt: 'تعرف على أهم الميزات والتحسينات الجديدة في آخر تحديث لنظام التشغيل أندرويد.',
+                article5Title: 'كيفية إنشاء موقع إلكتروني بسيط',
+                article5Excerpt: 'دليل شامل للمبتدئين لتعلم أساسيات تطوير المواقع الإلكترونية باستخدام HTML و CSS.',
+                article6Title: 'أهمية الأمان السيبراني في العصر الرقمي',
+                article6Excerpt: 'تعلم كيفية حماية بياناتك الشخصية وأجهزتك من التهديدات السيبرانية المتزايدة.',
+                // Authors
+                author1: 'أحمد محمد',
+                author2: 'سارة أحمد',
+                author3: 'محمد علي',
+                author4: 'ليلى حسن',
+                author5: 'عمر خالد',
+                author6: 'فاطمة يوسف',
+                // Footer
+                aboutPixomod: 'معلومات عن Pixomod',
+                footerDescription: 'وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.',
+                quickLinks: 'روابط سريعة',
+                categories: 'الفئات',
+                actionGames: 'ألعاب الأكشن',
+                puzzleGames: 'ألعاب الذكاء',
+                designSoftware: 'برامج التصميم',
+                securitySoftware: 'برامج الحماية',
+                importantInfo: 'معلومات مهمة',
+                privacyPolicy: 'سياسة الخصوصية',
+                termsOfUse: 'شروط الاستخدام',
+                faq: 'الأسئلة الشائعة',
+                support: 'الدعم الفني',
+                allRightsReserved: 'جميع الحقوق محفوظة',
+                madeWithLove: 'صُنع بـ',
+                inAlgeria: 'في الجزائر'
+            },
+            en: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Login',
+                home: 'Home',
+                mobileApps: 'Mobile Games & Apps',
+                pcSoftware: 'PC Software',
+                blog: 'Blog & Articles',
+                contact: 'Contact Us',
+                dashboard: 'Dashboard',
+                currentLang: 'English',
+                themeToggleTooltip: 'Toggle Theme',
+                blogPageTitle: 'Blog & Articles',
+                blogPageSubtitle: 'Discover the latest tech articles and helpful tips in the world of technology',
+                allCategories: 'All Articles',
+                techCategory: 'Technology',
+                gamesCategory: 'Games',
+                reviewsCategory: 'Reviews',
+                newsCategory: 'News',
+                tutorialsCategory: 'Tutorials',
+                readMore: 'Read More',
+                loginTitle: 'Login',
+                emailLabel: 'Email',
+                passwordLabel: 'Password',
+                loginButton: 'Login',
+                or: 'Or',
+                loginWithGoogle: 'Login with Google',
+                loginWithFacebook: 'Login with Facebook',
+                noAccount: "Don't have an account? ",
+                createAccount: 'Create New Account',
+                // Articles
+                article1Title: 'The Future of AI in 2024',
+                article1Excerpt: 'Explore the latest developments in artificial intelligence and how they will impact our daily lives in the near future.',
+                article2Title: 'Best Free Games of 2024',
+                article2Excerpt: 'A comprehensive list of the best free games you can play on mobile and PC without paying any fees.',
+                article3Title: 'Comprehensive Review of Adobe Photoshop 2024',
+                article3Excerpt: 'Learn about the new features and improvements in the latest version of the famous Photoshop software.',
+                article4Title: 'New Android 15 Update Released',
+                article4Excerpt: 'Learn about the most important new features and improvements in the latest Android operating system update.',
+                article5Title: 'How to Create a Simple Website',
+                article5Excerpt: 'A comprehensive guide for beginners to learn the basics of web development using HTML and CSS.',
+                article6Title: 'The Importance of Cybersecurity in the Digital Age',
+                article6Excerpt: 'Learn how to protect your personal data and devices from increasing cyber threats.',
+                // Authors
+                author1: 'Ahmed Mohamed',
+                author2: 'Sara Ahmed',
+                author3: 'Mohamed Ali',
+                author4: 'Layla Hassan',
+                author5: 'Omar Khalid',
+                author6: 'Fatima Youssef',
+                // Footer
+                aboutPixomod: 'About Pixomod',
+                footerDescription: 'Your ultimate destination for the best games, apps, and software with helpful tech articles.',
+                quickLinks: 'Quick Links',
+                categories: 'Categories',
+                actionGames: 'Action Games',
+                puzzleGames: 'Puzzle Games',
+                designSoftware: 'Design Software',
+                securitySoftware: 'Security Software',
+                importantInfo: 'Important Info',
+                privacyPolicy: 'Privacy Policy',
+                termsOfUse: 'Terms of Use',
+                faq: 'FAQ',
+                support: 'Support',
+                allRightsReserved: 'All Rights Reserved',
+                madeWithLove: 'Made with',
+                inAlgeria: 'in Algeria'
+            },
+            fr: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Connexion',
+                home: 'Accueil',
+                mobileApps: 'Jeux et Apps Mobile',
+                pcSoftware: 'Logiciels PC',
+                blog: 'Blog et Articles',
+                contact: 'Contactez-nous',
+                dashboard: 'Tableau de Bord',
+                currentLang: 'Français',
+                themeToggleTooltip: 'Basculer le Thème',
+                blogPageTitle: 'Blog et Articles',
+                blogPageSubtitle: 'Découvrez les derniers articles techniques et conseils utiles dans le monde de la technologie',
+                allCategories: 'Tous les Articles',
+                techCategory: 'Technologie',
+                gamesCategory: 'Jeux',
+                reviewsCategory: 'Critiques',
+                newsCategory: 'Actualités',
+                tutorialsCategory: 'Tutoriels',
+                readMore: 'Lire Plus',
+                loginTitle: 'Connexion',
+                emailLabel: 'Email',
+                passwordLabel: 'Mot de Passe',
+                loginButton: 'Se Connecter',
+                or: 'Ou',
+                loginWithGoogle: 'Se connecter avec Google',
+                loginWithFacebook: 'Se connecter avec Facebook',
+                noAccount: "Vous n'avez pas de compte ? ",
+                createAccount: 'Créer un Nouveau Compte',
+                // Articles
+                article1Title: "L'Avenir de l'IA en 2024",
+                article1Excerpt: "Explorez les derniers développements en intelligence artificielle et leur impact sur notre vie quotidienne.",
+                article2Title: 'Meilleurs Jeux Gratuits de 2024',
+                article2Excerpt: 'Une liste complète des meilleurs jeux gratuits que vous pouvez jouer sur mobile et PC.',
+                article3Title: 'Revue Complète d\'Adobe Photoshop 2024',
+                article3Excerpt: 'Découvrez les nouvelles fonctionnalités et améliorations de la dernière version de Photoshop.',
+                article4Title: 'Nouvelle Mise à Jour Android 15',
+                article4Excerpt: 'Découvrez les nouvelles fonctionnalités importantes de la dernière mise à jour Android.',
+                article5Title: 'Comment Créer un Site Web Simple',
+                article5Excerpt: 'Guide complet pour débutants pour apprendre les bases du développement web avec HTML et CSS.',
+                article6Title: 'L\'Importance de la Cybersécurité à l\'Ère Numérique',
+                article6Excerpt: 'Apprenez à protéger vos données personnelles et appareils des menaces cybernétiques croissantes.',
+                // Authors
+                author1: 'Ahmed Mohamed',
+                author2: 'Sara Ahmed',
+                author3: 'Mohamed Ali',
+                author4: 'Layla Hassan',
+                author5: 'Omar Khalid',
+                author6: 'Fatima Youssef',
+                // Footer
+                aboutPixomod: 'À Propos de Pixomod',
+                footerDescription: 'Votre destination ultime pour les meilleurs jeux, applications et logiciels avec des articles techniques utiles.',
+                quickLinks: 'Liens Rapides',
+                categories: 'Catégories',
+                actionGames: 'Jeux d\'Action',
+                puzzleGames: 'Jeux de Réflexion',
+                designSoftware: 'Logiciels de Design',
+                securitySoftware: 'Logiciels de Sécurité',
+                importantInfo: 'Infos Importantes',
+                privacyPolicy: 'Politique de Confidentialité',
+                termsOfUse: "Conditions d'Utilisation",
+                faq: 'FAQ',
+                support: 'Support',
+                allRightsReserved: 'Tous Droits Réservés',
+                madeWithLove: 'Fait avec',
+                inAlgeria: 'en Algérie'
+            }
+        };
+
+        let currentLanguage = 'ar';
+        let currentTheme = 'light';
+        let currentUser = null;
+        let currentCategory = 'all';
+
+        // Sample article data
+        const articles = {
+            'ai-future-2024': {
+                title: 'مستقبل الذكاء الاصطناعي في عام 2024',
+                content: `
+                    <div class="article-header">
+                        <h1 class="article-title">مستقبل الذكاء الاصطناعي في عام 2024</h1>
+                        <div class="article-meta">
+                            <div class="blog-card-author">
+                                <div class="author-avatar">أ</div>
+                                <span>أحمد محمد</span>
+                            </div>
+                            <div class="blog-card-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>15 يناير 2024</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-eye"></i>
+                                <span>1,234 مشاهدة</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                    </div>
+                    <div class="article-content">
+                        <p>يشهد عالم الذكاء الاصطناعي تطورات مذهلة في عام 2024، حيث نرى تقدماً كبيراً في مختلف المجالات من التعلم الآلي إلى معالجة اللغات الطبيعية.</p>
+                        
+                        <h2>التطورات الحديثة في الذكاء الاصطناعي</h2>
+                        <p>لقد شهدنا في السنوات الأخيرة تطوراً سريعاً في تقنيات الذكاء الاصطناعي، وخاصة في مجال النماذج اللغوية الكبيرة والتعلم العميق. هذه التطورات تفتح آفاقاً جديدة للاستخدامات العملية في حياتنا اليومية.</p>
+                        
+                        <h2>التأثير على الصناعات المختلفة</h2>
+                        <p>يؤثر الذكاء الاصطناعي على العديد من الصناعات بطرق مختلفة:</p>
+                        
+                        <h3>الطب والرعاية الصحية</h3>
+                        <p>في مجال الطب، يساعد الذكاء الاصطناعي في التشخيص المبكر للأمراض وتطوير العلاجات الشخصية. كما يساهم في تحليل الصور الطبية بدقة عالية تفوق أحياناً دقة الأطباء البشريين.</p>
+                        
+                        <h3>التعليم</h3>
+                        <p>في التعليم، توفر تقنيات الذكاء الاصطناعي تجارب تعلم شخصية تتكيف مع احتياجات كل طالب، مما يحسن من فعالية التعلم ويقلل الفجوات التعليمية.</p>
+                        
+                        <blockquote>
+                            "الذكاء الاصطناعي ليس مجرد تقنية، بل هو ثورة ستغير طريقة تفاعلنا مع العالم من حولنا"
+                        </blockquote>
+                        
+                        <h2>التحديات والفرص</h2>
+                        <p>رغم الفوائد العديدة، هناك تحديات يجب مواجهتها مثل قضايا الخصوصية والأمان، وضرورة إعادة تدريب القوى العاملة للتكيف مع التطورات الجديدة.</p>
+                        
+                        <p>إن مستقبل الذكاء الاصطناعي مشرق ومليء بالإمكانيات، وسيستمر في تشكيل عالمنا بطرق لم نتخيلها من قبل.</p>
+                    </div>
+                    <div class="article-tags">
+                        <a href="#" class="article-tag">ذكاء اصطناعي</a>
+                        <a href="#" class="article-tag">تقنية</a>
+                        <a href="#" class="article-tag">مستقبل</a>
+                        <a href="#" class="article-tag">تعلم آلي</a>
+                    </div>
+                    <div class="article-actions">
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-facebook"></i>
+                            <span>فيسبوك</span>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-twitter"></i>
+                            <span>تويتر</span>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>واتساب</span>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fas fa-link"></i>
+                            <span>نسخ الرابط</span>
+                        </a>
+                    </div>
+                `,
+                category: 'tech',
+                author: 'أحمد محمد',
+                date: '15 يناير 2024'
+            },
+            'best-free-games-2024': {
+                title: 'أفضل الألعاب المجانية لعام 2024',
+                content: `
+                    <div class="article-header">
+                        <h1 class="article-title">أفضل الألعاب المجانية لعام 2024</h1>
+                        <div class="article-meta">
+                            <div class="blog-card-author">
+                                <div class="author-avatar">س</div>
+                                <span>سارة أحمد</span>
+                            </div>
+                            <div class="blog-card-date">
+                                <i class="fas fa-calendar"></i>
+                                <span>12 يناير 2024</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-eye"></i>
+                                <span>2,567 مشاهدة</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-image">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                    </div>
+                    <div class="article-content">
+                        <p>في عام 2024، شهدنا إطلاق العديد من الألعاب المجانية الرائعة التي تقدم تجارب ممتعة دون الحاجة لدفع أي رسوم. في هذا المقال، سنستعرض أفضل هذه الألعاب.</p>
+                        
+                        <h2>ألعاب الموبايل المجانية</h2>
+                        <p>تصدرت العديد من ألعاب الموبايل قوائم التحميل هذا العام، ومن أبرزها:</p>
+                        
+                        <h3>1. Genshin Impact</h3>
+                        <p>لعبة RPG مفتوحة العالم بجرافيك مذهل وقصة رائعة. تقدم ساعات لا نهائية من المرح والاستكشاف.</p>
+                        
+                        <h3>2. Among Us</h3>
+                        <p>لعبة اجتماعية ممتعة تجمع الأصدقاء في مغامرات مثيرة من الغموض والخداع.</p>
+                        
+                        <h2>ألعاب الكمبيوتر المجانية</h2>
+                        <p>لم تكن ألعاب الكمبيوتر أقل إثارة، حيث قدمت لنا:</p>
+                        
+                        <h3>1. Valorant</h3>
+                        <p>لعبة إطلاق نار تكتيكية من Riot Games تجمع بين الدقة والاستراتيجية.</p>
+                        
+                        <h3>2. Fortnite</h3>
+                        <p>لعبة Battle Royale الشهيرة التي تستمر في تقديم محتوى جديد ومثير بانتظام.</p>
+                        
+                        <blockquote>
+                            "الألعاب المجانية اليوم تقدم جودة تنافس الألعاب المدفوعة، مما يجعل الألعاب متاحة للجميع"
+                        </blockquote>
+                        
+                        <h2>نصائح للاستمتاع بالألعاب المجانية</h2>
+                        <p>للحصول على أفضل تجربة من الألعاب المجانية، ننصح بـ:</p>
+                        <p>- تجربة أنواع مختلفة من الألعاب لاكتشاف ما يناسبك</p>
+                        <p>- الانضمام إلى مجتمعات اللاعبين للحصول على نصائح ومساعدة</p>
+                        <p>- تحديث الألعاب بانتظام للاستفادة من المحتوى الجديد</p>
+                        
+                        <p>الألعاب المجانية تقدم فرصة رائعة للاستمتاع بوقتك دون إنفاق المال، جربها الآن!</p>
+                    </div>
+                    <div class="article-tags">
+                        <a href="#" class="article-tag">ألعاب</a>
+                        <a href="#" class="article-tag">مجاني</a>
+                        <a href="#" class="article-tag">موبايل</a>
+                        <a href="#" class="article-tag">كمبيوتر</a>
+                    </div>
+                    <div class="article-actions">
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-facebook"></i>
+                            <span>فيسبوك</span>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-twitter"></i>
+                            <span>تويتر</span>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>واتساب</span>
+                        </a>
+                        <a href="#" class="share-btn">
+                            <i class="fas fa-link"></i>
+                            <span>نسخ الرابط</span>
+                        </a>
+                    </div>
+                `,
+                category: 'games',
+                author: 'سارة أحمد',
+                date: '12 يناير 2024'
+            }
+        };
+
+        // =============== DOM ELEMENTS ===============
+        const header = document.getElementById('header');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginModalClose = document.getElementById('loginModalClose');
+        const articleModal = document.getElementById('articleModal');
+        const articleModalClose = document.getElementById('articleModalClose');
+        const dashboardLink = document.getElementById('dashboardLink');
+
+        // =============== INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeScrollAnimations();
+            initializeEventListeners();
+            initializeHeaderScroll();
+            initializeForms();
+            initializeBlogFilters();
+            checkUserLogin();
+            showWelcomeAnimation();
+        });
+
+        // =============== THEME MANAGEMENT ===============
+        function initializeTheme() {
+            const savedTheme = currentTheme;
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            const themeToggleThumb = themeToggle.querySelector('.theme-toggle-thumb');
+            const themeIcon = themeToggleThumb.querySelector('i');
+            
+            if (theme === 'dark') {
+                themeToggle.classList.add('active');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeToggle.classList.remove('active');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            
+            document.body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        }
+
+        // =============== LANGUAGE MANAGEMENT ===============
+        function initializeLanguage() {
+            const savedLang = currentLanguage;
+            setLanguage(savedLang);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            const translation = translations[lang];
+            
+            document.documentElement.lang = lang;
+            document.documentElement.dir = translation.dir;
+            
+            updateUIText(translation);
+            document.getElementById('currentLang').textContent = translation.currentLang;
+            updateTooltips();
+        }
+
+        function updateUIText(translation) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translation[key]) {
+                    element.textContent = translation[key];
+                }
+            });
+        }
+
+        function updateTooltips() {
+            const translation = translations[currentLanguage];
+            document.querySelectorAll('[data-i18n-tooltip]').forEach(element => {
+                const key = element.getAttribute('data-i18n-tooltip');
+                if (translation[key]) {
+                    element.setAttribute('data-tooltip', translation[key]);
+                }
+            });
+        }
+
+        // =============== EVENT LISTENERS ===============
+        function initializeEventListeners() {
+            menuToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            languageBtn.addEventListener('click', toggleLanguageDropdown);
+            document.addEventListener('click', closeLanguageDropdown);
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    closeLanguageDropdown();
+                });
+            });
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            loginBtn.addEventListener('click', openLoginModal);
+            loginModalClose.addEventListener('click', closeLoginModal);
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === this) closeLoginModal();
+            });
+            
+            articleModalClose.addEventListener('click', closeArticleModal);
+            articleModal.addEventListener('click', function(e) {
+                if (e.target === this) closeArticleModal();
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeSidebar();
+                    }
+                });
+            });
+            
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            window.addEventListener('resize', handleResize);
+        }
+
+        // =============== BLOG FILTERS ===============
+        function initializeBlogFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Update active filter
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter cards
+                    blogCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+                        if (category === 'all' || cardCategory === category) {
+                            card.style.display = 'block';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 100);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                    
+                    currentCategory = category;
+                });
+            });
+        }
+
+        // =============== ARTICLE MODAL ===============
+        function openArticle(articleId) {
+            const article = articles[articleId];
+            if (article) {
+                document.getElementById('articleModalTitle').textContent = article.title;
+                document.getElementById('articleContent').innerHTML = article.content;
+                articleModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeArticleModal() {
+            articleModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== SIDEBAR MANAGEMENT ===============
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== LANGUAGE DROPDOWN ===============
+        function toggleLanguageDropdown(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        }
+
+        function closeLanguageDropdown() {
+            languageDropdown.classList.remove('active');
+        }
+
+        // =============== LOGIN MANAGEMENT ===============
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                const firstInput = loginModal.querySelector('input');
+                if (firstInput) firstInput.focus();
+            }, 300);
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function checkUserLogin() {
+            // Simulate checking user login status
+            // In a real app, this would check authentication status
+            if (currentUser && (currentUser.role === 'admin' || currentUser.role === 'moderator')) {
+                dashboardLink.classList.remove('hidden');
+            }
+        }
+
+        // =============== HEADER SCROLL EFFECT ===============
+        function initializeHeaderScroll() {
+            let lastScrollY = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
+
+        // =============== SCROLL ANIMATIONS ===============
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // =============== FORM HANDLING ===============
+        function initializeForms() {
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLoginSubmit);
+            
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+                
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+            });
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showNotification('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Simulate login process
+            setTimeout(() => {
+                showLoading(false);
+                
+                // Simulate successful login with role assignment
+                if (email === 'admin@pixomod.com') {
+                    currentUser = { email, role: 'admin', name: 'المدير' };
+                } else if (email === 'mod@pixomod.com') {
+                    currentUser = { email, role: 'moderator', name: 'المشرف' };
+                } else {
+                    currentUser = { email, role: 'user', name: 'المستخدم' };
+                }
+                
+                showNotification('تم تسجيل الدخول بنجاح!', 'success');
+                closeLoginModal();
+                updateUserInterface();
+                checkUserLogin();
+            }, 2000);
+        }
+
+        function updateUserInterface() {
+            if (currentUser) {
+                loginBtn.innerHTML = `
+                    <i class="fas fa-user-circle"></i>
+                    <span>${currentUser.name}</span>
+                `;
+                loginBtn.onclick = null; // Remove login click handler
+            }
+        }
+
+        // =============== NOTIFICATION SYSTEM ===============
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${getNotificationIcon(type)}"></i>
+                    <span>${message}</span>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-lg);
+                box-shadow: 0 10px 25px var(--shadow);
+                z-index: 10000;
+                min-width: 300px;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            
+            if (type === 'success') {
+                notification.style.borderColor = '#28a745';
+                notification.style.color = '#28a745';
+            } else if (type === 'error') {
+                notification.style.borderColor = '#dc3545';
+                notification.style.color = '#dc3545';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => removeNotification(notification));
+            
+            setTimeout(() => {
+                removeNotification(notification);
+            }, 5000);
+        }
+
+        function removeNotification(notification) {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+
+        function getNotificationIcon(type) {
+            switch (type) {
+                case 'success': return 'fa-check-circle';
+                case 'error': return 'fa-exclamation-circle';
+                case 'warning': return 'fa-exclamation-triangle';
+                default: return 'fa-info-circle';
+            }
+        }
+
+        // =============== LOADING SYSTEM ===============
+        function showLoading(show) {
+            let loader = document.getElementById('globalLoader');
+            
+            if (show && !loader) {
+                loader = document.createElement('div');
+                loader.id = 'globalLoader';
+                loader.innerHTML = `
+                    <div class="loading-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; align-items: center; justify-content: center; flex-direction: column; color: white;">
+                        <div class="loading-spinner"></div>
+                        <p style="margin-top: 1rem;">جاري التحميل...</p>
+                    </div>
+                `;
+                
+                loader.style.zIndex = '10000';
+                document.body.appendChild(loader);
+            } else if (!show && loader) {
+                loader.remove();
+            }
+        }
+
+        // =============== KEYBOARD NAVIGATION ===============
+        function handleKeyboardNavigation(e) {
+            if (e.key === 'Escape') {
+                closeLoginModal();
+                closeArticleModal();
+                closeSidebar();
+                closeLanguageDropdown();
+            }
+            
+            if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+                e.target.click();
+            }
+        }
+
+        // =============== RESPONSIVE HANDLING ===============
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+            closeLanguageDropdown();
+        }
+
+        // =============== WELCOME ANIMATION ===============
+        function showWelcomeAnimation() {
+            document.body.classList.add('welcome-animation');
+            
+            setTimeout(() => {
+                document.body.classList.remove('welcome-animation');
+            }, 1000);
+        }
+
+        // =============== PAGINATION ===============
+        function initializePagination() {
+            const prevBtn = document.getElementById('prevPage');
+            const nextBtn = document.getElementById('nextPage');
+            const pageButtons = document.querySelectorAll('.pagination-btn:not([id])');
+            
+            let currentPage = 1;
+            const totalPages = 3;
+            
+            function updatePagination() {
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                
+                pageButtons.forEach((btn, index) => {
+                    btn.classList.toggle('active', index + 1 === currentPage);
+                });
+            }
+            
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                    // Load previous page content
+                }
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                    // Load next page content
+                }
+            });
+            
+            pageButtons.forEach((btn, index) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    currentPage = index + 1;
+                    updatePagination();
+                    // Load specific page content
+                });
+            });
+            
+            updatePagination();
+        }
+
+        // Initialize pagination when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializePagination);
+
+        // =============== SEARCH FUNCTIONALITY ===============
+        function initializeSearch() {
+            // This would be implemented with a search input
+            // For now, we'll focus on the filter functionality
+        }
+
+        // =============== SOCIAL SHARING ===============
+        function shareArticle(platform, articleTitle, articleUrl) {
+            let shareUrl = '';
+            
+            switch (platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(articleUrl)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(articleTitle)}&url=${encodeURIComponent(articleUrl)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://wa.me/?text=${encodeURIComponent(articleTitle + ' ' + articleUrl)}`;
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(articleUrl).then(() => {
+                        showNotification('تم نسخ الرابط!', 'success');
+                    });
+                    return;
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            }
+        }
+
+        // =============== EXPORT FUNCTIONS ===============
+        window.PixomodBlog = {
+            setTheme,
+            setLanguage,
+            showNotification,
+            showLoading,
+            openArticle,
+            shareArticle
+        };
+
+    </script>
+
+<!-- Sidebar Enhancements -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector(".sidebar ul");
+  const role = localStorage.getItem("userRole");
+
+  // زر تسجيل الدخول (في الجوال فقط)
+  if (window.innerWidth < 768 && !document.getElementById("loginBtnMobile")) {
+    const loginLi = document.createElement("li");
+    const loginBtn = document.createElement("a");
+    loginBtn.textContent = "تسجيل الدخول";
+    loginBtn.href = "#";
+    loginBtn.id = "loginBtnMobile";
+    loginBtn.onclick = () => {
+      document.querySelector(".login-popup")?.classList.add("show");
+    };
+    loginLi.appendChild(loginBtn);
+    sidebar.appendChild(loginLi);
+  }
+
+  // زر لوحة التحكم عند تسجيل الدخول
+  if (role && !document.getElementById("dashboardLink")) {
+    const dashboardLi = document.createElement("li");
+    const dashboardLink = document.createElement("a");
+    dashboardLink.id = "dashboardLink";
+    dashboardLink.textContent = "لوحة التحكم";
+    dashboardLink.href = role === "admin" ? "pixomod_admin_dashboard_final.html" : "pixomod_moderator_dashboard_final.html";
+    dashboardLi.appendChild(dashboardLink);
+    sidebar.appendChild(dashboardLi);
+  }
+});
+</script>
+</body>
+</html>

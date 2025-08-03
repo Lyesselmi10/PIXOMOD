@@ -1,0 +1,3001 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pixomod - برامج الكمبيوتر</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&amp;family=Segoe+UI:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        /* =============== GLOBAL VARIABLES =============== */
+        :root {
+            /* Light Theme Colors */
+            --primary-light: #007BFF;
+            --secondary-light: #6610F2;
+            --background-light: #FFFFFF;
+            --surface-light: #F8F9FA;
+            --text-light: #212529;
+            --text-secondary-light: #6C757D;
+            --border-light: #DEE2E6;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark Theme Colors */
+            --primary-dark: #000000;
+            --secondary-dark: #00FF7F;
+            --background-dark: #121212;
+            --surface-dark: #1E1E1E;
+            --text-dark: #FFFFFF;
+            --text-secondary-dark: #B3B3B3;
+            --border-dark: #333333;
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            
+            /* Current Theme (defaults to light) */
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --background: var(--background-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            
+            /* Typography */
+            --font-primary: 'Cairo', 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Z-index layers */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal-backdrop: 1040;
+            --z-modal: 1050;
+            --z-popover: 1060;
+            --z-tooltip: 1070;
+        }
+        
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --surface: var(--surface-dark);
+            --text: var(--text-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+        
+        /* =============== RESET & BASE STYLES =============== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+            overflow-x: hidden;
+        }
+        
+        /* RTL/LTR Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="ltr"] {
+            text-align: left;
+        }
+        
+        /* =============== UTILITY CLASSES =============== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .visible {
+            display: block !important;
+        }
+        
+        .opacity-0 {
+            opacity: 0;
+        }
+        
+        .opacity-100 {
+            opacity: 1;
+        }
+        
+        .transition-all {
+            transition: all var(--transition-normal);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            gap: var(--spacing-sm);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--surface);
+        }
+        
+        .btn-sm {
+            padding: var(--spacing-xs) var(--spacing-md);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* =============== HEADER STYLES =============== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: var(--z-fixed);
+            transition: all var(--transition-normal);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(18, 18, 18, 0.95);
+        }
+        
+        .header.scrolled {
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .header-content {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-normal);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .language-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 25px var(--shadow);
+            min-width: 150px;
+            z-index: var(--z-dropdown);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+        }
+        
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .language-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            width: 50px;
+            height: 25px;
+            background: var(--border);
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color var(--transition-normal);
+        }
+        
+        .theme-toggle.active {
+            background: var(--primary);
+        }
+        
+        .theme-toggle-thumb {
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+        }
+        
+        .theme-toggle.active .theme-toggle-thumb {
+            transform: translateX(25px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all var(--transition-fast);
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* =============== SIDEBAR STYLES =============== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: var(--z-modal);
+            transition: right var(--transition-normal);
+            overflow-y: auto;
+        }
+        
+        [dir="ltr"] .sidebar {
+            left: -350px;
+            right: auto;
+            border-left: none;
+            border-right: 1px solid var(--border);
+            transition: left var(--transition-normal);
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        [dir="ltr"] .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .sidebar-close:hover {
+            transform: rotate(90deg);
+            background: var(--secondary);
+        }
+        
+        .sidebar-nav {
+            padding: var(--spacing-lg);
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-nav-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.1;
+            transition: left var(--transition-slow);
+        }
+        
+        .sidebar-nav-item:hover:before {
+            left: 100%;
+        }
+        
+        .sidebar-nav-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        [dir="ltr"] .sidebar-nav-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        .sidebar-nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .sidebar-nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-section {
+            border-top: 1px solid var(--border);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            background: var(--background);
+            border-radius: var(--radius-lg);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .user-details h4 {
+            margin: 0;
+            font-size: var(--font-size-sm);
+        }
+        
+        .user-details p {
+            margin: 0;
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+        }
+        
+        /* =============== MODAL STYLES =============== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px var(--shadow);
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: all var(--transition-normal);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            background: var(--background);
+            color: var(--text);
+            transition: all var(--transition-fast);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--background);
+            color: var(--text);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: var(--spacing-xl) 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .divider:before,
+        .divider:after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* =============== MAIN CONTENT STYLES =============== */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 900;
+            margin-bottom: var(--spacing-md);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: white;
+        }
+        
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        /* =============== FILTERS SECTION =============== */
+        .filters-section {
+            background: var(--surface);
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 70px;
+            z-index: var(--z-sticky);
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 2px solid var(--border);
+            background: var(--background);
+            color: var(--text);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm);
+            min-width: 250px;
+            transition: all var(--transition-fast);
+        }
+        
+        .search-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .search-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: var(--spacing-sm);
+            font-size: var(--font-size-base);
+            color: var(--text);
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .search-input:focus {
+            outline: none;
+        }
+        
+        .search-icon {
+            color: var(--text-secondary);
+            font-size: var(--font-size-lg);
+        }
+        
+        /* =============== SOFTWARE GRID =============== */
+        .software-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .software-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            position: relative;
+        }
+        
+        .software-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .software-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .software-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .software-image .placeholder-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .software-os-badge {
+            position: absolute;
+            top: var(--spacing-sm);
+            right: var(--spacing-sm);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+        
+        .software-content {
+            padding: var(--spacing-lg);
+        }
+        
+        .software-title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text);
+        }
+        
+        .software-description {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+            margin-bottom: var(--spacing-lg);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .software-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .software-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .star {
+            color: #ffc107;
+            font-size: var(--font-size-sm);
+        }
+        
+        .star.empty {
+            color: var(--border);
+        }
+        
+        .rating-text {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            margin-left: var(--spacing-xs);
+        }
+        
+        .software-size {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+        }
+        
+        .software-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .download-btn {
+            flex: 1;
+        }
+        
+        .favorite-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            background: var(--background);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .favorite-btn:hover {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+        
+        .favorite-btn.active {
+            background: #e74c3c;
+            border-color: #e74c3c;
+            color: white;
+        }
+        
+        /* =============== PAGINATION =============== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        .pagination-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: var(--radius-md);
+            border: 2px solid var(--border);
+            background: var(--background);
+            color: var(--text);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        .pagination-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        
+        .pagination-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-info {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            margin: 0 var(--spacing-lg);
+        }
+        
+        /* =============== LOADING STATES =============== */
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--surface) 25%, var(--border) 50%, var(--surface) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .skeleton-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+        
+        .skeleton-image {
+            width: 100%;
+            height: 200px;
+        }
+        
+        .skeleton-content {
+            padding: var(--spacing-lg);
+        }
+        
+        .skeleton-title {
+            height: 24px;
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .skeleton-text {
+            height: 16px;
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .skeleton-text:last-child {
+            width: 60%;
+        }
+        
+        /* =============== EMPTY STATE =============== */
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-2xl);
+            color: var(--text-secondary);
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.5;
+        }
+        
+        .empty-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--text);
+        }
+        
+        .empty-description {
+            font-size: var(--font-size-base);
+            max-width: 400px;
+            margin: 0 auto var(--spacing-lg);
+        }
+        
+        /* =============== FOOTER STYLES =============== */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: var(--spacing-2xl) 0;
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+        }
+        
+        .footer-section h3 {
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,123,255,0.3);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        /* =============== ANIMATIONS =============== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* =============== RESPONSIVE DESIGN =============== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .header-content {
+                height: 60px;
+            }
+            
+            .main {
+                margin-top: 60px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .header-actions > .btn {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .filters-section {
+                top: 60px;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--spacing-md);
+            }
+            
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--spacing-sm);
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+            
+            .software-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .pagination {
+                flex-wrap: wrap;
+                gap: var(--spacing-xs);
+            }
+            
+            .pagination-info {
+                width: 100%;
+                text-align: center;
+                margin: var(--spacing-sm) 0;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            [dir="ltr"] .sidebar {
+                left: -100%;
+            }
+            
+            .page-header {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .software-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* =============== HIGH CONTRAST MODE =============== */
+        @media (prefers-contrast: high) {
+            .btn, .filter-btn, .pagination-btn {
+                border: 2px solid currentColor;
+            }
+            
+            .software-card {
+                border: 2px solid var(--border);
+            }
+        }
+        
+        /* =============== REDUCED MOTION =============== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* =============== PRINT STYLES =============== */
+        @media print {
+            .header,
+            .sidebar,
+            .modal-overlay,
+            .filters-section,
+            .pagination,
+            .software-actions {
+                display: none !important;
+            }
+            
+            .main {
+                margin-top: 0;
+            }
+            
+            body {
+                color: black;
+                background: white;
+            }
+            
+            .software-card {
+                break-inside: avoid;
+                border: 1px solid #000;
+            }
+        }
+        
+        /* =============== CUSTOM SCROLLBAR =============== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* =============== SELECTION STYLES =============== */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+        
+        ::-moz-selection {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* =============== TOOLTIP STYLES =============== */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: var(--z-tooltip);
+        }
+        
+        .tooltip:hover:before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header" id="header">
+<div class="container">
+<div class="header-content">
+<!-- Logo -->
+<a class="logo" href="index.html">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span class="logo-text" data-i18n="logoText">Pixomod</span>
+</a>
+<!-- Header Actions -->
+<div class="header-actions">
+<!-- Language Selector -->
+<div class="language-selector">
+<button class="language-btn" id="languageBtn">
+<i class="fas fa-globe"></i>
+<span data-i18n="currentLang" id="currentLang">العربية</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="language-dropdown" id="languageDropdown">
+<div class="language-option" data-lang="ar">
+<i class="fas fa-flag"></i>
+<span>العربية</span>
+</div>
+<div class="language-option" data-lang="en">
+<i class="fas fa-flag"></i>
+<span>English</span>
+</div>
+<div class="language-option" data-lang="fr">
+<i class="fas fa-flag"></i>
+<span>Français</span>
+</div>
+</div>
+</div>
+<!-- Theme Toggle -->
+<div class="theme-toggle" data-i18n-tooltip="themeToggleTooltip" data-tooltip="تبديل الوضع" id="themeToggle">
+<div class="theme-toggle-thumb">
+<i class="fas fa-sun"></i>
+</div>
+</div>
+<!-- Login Button -->
+<button class="btn btn-primary" id="loginBtn">
+<i class="fas fa-user"></i>
+<span data-i18n="login">تسجيل الدخول</span>
+</button>
+<!-- Menu Toggle -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span data-i18n="logoText">Pixomod</span>
+</div>
+<button class="sidebar-close" id="sidebarClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<nav class="sidebar-nav">
+<a class="sidebar-nav-item" href="index.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-home"></i>
+</div>
+<span data-i18n="home">الصفحة الرئيسية</span>
+</a>
+<a class="sidebar-nav-item" href="mobile-apps.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<span data-i18n="mobileApps">ألعاب وتطبيقات الهاتف</span>
+</a>
+<a class="sidebar-nav-item active" href="pc-software.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-desktop"></i>
+</div>
+<span data-i18n="pcSoftware">برامج الكمبيوتر</span>
+</a>
+<a class="sidebar-nav-item" href="blog.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-blog"></i>
+</div>
+<span data-i18n="blog">المدونة والمقالات</span>
+</a>
+<a class="sidebar-nav-item" href="contact.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<span data-i18n="contact">اتصل بنا</span>
+</a>
+<!-- User Section (shown after login) -->
+<div class="user-section hidden" id="userSection">
+<div class="user-info" id="userInfo">
+<div class="user-avatar" id="userAvatar">U</div>
+<div class="user-details">
+<h4 id="userName">المستخدم</h4>
+<p id="userRole">مستخدم</p>
+</div>
+</div>
+<a class="sidebar-nav-item hidden" href="dashboard.html" id="dashboardLink">
+<div class="sidebar-nav-icon">
+<i class="fas fa-tachometer-alt"></i>
+</div>
+<span data-i18n="dashboard">لوحة التحكم</span>
+</a>
+<a class="sidebar-nav-item" href="#" id="logoutBtn">
+<div class="sidebar-nav-icon">
+<i class="fas fa-sign-out-alt"></i>
+</div>
+<span data-i18n="logout">تسجيل الخروج</span>
+</a>
+</div>
+</nav>
+</aside>
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+<div class="modal">
+<div class="modal-header">
+<h2 class="modal-title" data-i18n="loginTitle">تسجيل الدخول</h2>
+<button class="modal-close" id="loginModalClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<form id="loginForm">
+<div class="form-group">
+<label class="form-label" data-i18n="email" for="email">البريد الإلكتروني</label>
+<input class="form-input" id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="password" for="password">كلمة المرور</label>
+<input class="form-input" id="password" required="" type="password"/>
+</div>
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+<i class="fas fa-sign-in-alt"></i>
+<span data-i18n="loginBtn">تسجيل الدخول</span>
+</button>
+</form>
+<div class="divider">
+<span data-i18n="or">أو</span>
+</div>
+<div class="social-login">
+<a class="social-btn" href="#">
+<i class="fab fa-google" style="color: #DB4437;"></i>
+<span data-i18n="loginWithGoogle">تسجيل الدخول بـ Google</span>
+</a>
+<a class="social-btn" href="#">
+<i class="fab fa-facebook" style="color: #4267B2;"></i>
+<span data-i18n="loginWithFacebook">تسجيل الدخول بـ Facebook</span>
+</a>
+</div>
+<div style="text-align: center; margin-top: var(--spacing-lg);">
+<span data-i18n="noAccount">ليس لديك حساب؟ </span>
+<a data-i18n="createAccount" href="#" style="color: var(--primary); text-decoration: none;">إنشاء حساب جديد</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="main">
+<!-- Page Header -->
+<section class="page-header">
+<div class="container">
+<div class="page-header-content">
+<h1 class="page-title" data-i18n="pcSoftwareTitle">برامج الكمبيوتر</h1>
+<p class="page-subtitle" data-i18n="pcSoftwareSubtitle">اكتشف مجموعة شاملة من أفضل برامج الكمبيوتر لجميع احتياجاتك</p>
+<nav class="breadcrumb">
+<a data-i18n="home" href="index.html">الصفحة الرئيسية</a>
+<i class="fas fa-chevron-right"></i>
+<span data-i18n="pcSoftware">برامج الكمبيوتر</span>
+</nav>
+</div>
+</div>
+</section>
+<!-- Filters Section -->
+<section class="filters-section">
+<div class="container">
+<div class="filters-container">
+<div class="filter-group">
+<span class="filter-label" data-i18n="operatingSystem">نظام التشغيل:</span>
+<div class="filter-buttons">
+<button class="filter-btn active" data-filter="all" data-i18n="all">الكل</button>
+<button class="filter-btn" data-filter="windows" data-i18n="windows">Windows</button>
+<button class="filter-btn" data-filter="mac" data-i18n="mac">Mac</button>
+<button class="filter-btn" data-filter="linux" data-i18n="linux">Linux</button>
+</div>
+</div>
+<div class="filter-group">
+<span class="filter-label" data-i18n="category">الفئة:</span>
+<div class="filter-buttons">
+<button class="filter-btn active" data-category="all" data-i18n="all">الكل</button>
+<button class="filter-btn" data-category="design" data-i18n="design">التصميم</button>
+<button class="filter-btn" data-category="security" data-i18n="security">الحماية</button>
+<button class="filter-btn" data-category="video" data-i18n="video">المونتاج</button>
+<button class="filter-btn" data-category="office" data-i18n="office">المكتب</button>
+<button class="filter-btn" data-category="system" data-i18n="system">النظام</button>
+</div>
+</div>
+<div class="search-box">
+<input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" placeholder="البحث عن البرامج..." type="text"/>
+<i class="fas fa-search search-icon"></i>
+</div>
+</div>
+</div>
+</section>
+<!-- Software Grid Section -->
+<section class="section">
+<div class="container">
+<div class="software-grid" id="softwareGrid">
+<!-- Software cards will be populated by JavaScript -->
+</div>
+<!-- Loading Skeleton -->
+<div class="software-grid hidden" id="loadingSkeleton">
+<div class="skeleton-card">
+<div class="skeleton-image loading-skeleton"></div>
+<div class="skeleton-content">
+<div class="skeleton-title loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+</div>
+</div>
+<div class="skeleton-card">
+<div class="skeleton-image loading-skeleton"></div>
+<div class="skeleton-content">
+<div class="skeleton-title loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+</div>
+</div>
+<div class="skeleton-card">
+<div class="skeleton-image loading-skeleton"></div>
+<div class="skeleton-content">
+<div class="skeleton-title loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+<div class="skeleton-text loading-skeleton"></div>
+</div>
+</div>
+</div>
+<!-- Empty State -->
+<div class="empty-state hidden" id="emptyState">
+<div class="empty-icon">
+<i class="fas fa-search"></i>
+</div>
+<h3 class="empty-title" data-i18n="noResults">لا توجد نتائج</h3>
+<p class="empty-description" data-i18n="noResultsDesc">لم نتمكن من العثور على أي برامج تطابق معايير البحث الخاصة بك. جرب تغيير الفلاتر أو مصطلح البحث.</p>
+<button class="btn btn-primary" data-i18n="clearFilters" onclick="clearFilters()">مسح الفلاتر</button>
+</div>
+<!-- Pagination -->
+<div class="pagination" id="pagination">
+<button class="pagination-btn" disabled="" id="prevBtn">
+<i class="fas fa-chevron-left"></i>
+</button>
+<div class="pagination-info">
+<span data-i18n="page">صفحة</span> <span id="currentPage">1</span> <span data-i18n="of">من</span> <span id="totalPages">1</span>
+</div>
+<button class="pagination-btn" id="nextBtn">
+<i class="fas fa-chevron-right"></i>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h3 data-i18n="aboutPixomod">حول Pixomod</h3>
+<p data-i18n="footerDesc">وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.</p>
+<div class="social-links">
+<a class="social-link" data-tooltip="فيسبوك" href="#">
+<i class="fab fa-facebook"></i>
+</a>
+<a class="social-link" data-tooltip="تويتر" href="#">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="social-link" data-tooltip="إنستغرام" href="#">
+<i class="fab fa-instagram"></i>
+</a>
+<a class="social-link" data-tooltip="يوتيوب" href="#">
+<i class="fab fa-youtube"></i>
+</a>
+</div>
+</div>
+<div class="footer-section">
+<h3 data-i18n="quickLinks">روابط سريعة</h3>
+<ul class="footer-links">
+<li><a data-i18n="home" href="index.html">الصفحة الرئيسية</a></li>
+<li><a data-i18n="mobileApps" href="mobile-apps.html">تطبيقات الهاتف</a></li>
+<li><a data-i18n="pcSoftware" href="pc-software.html">برامج الكمبيوتر</a></li>
+<li><a data-i18n="blog" href="blog.html">المدونة</a></li>
+<li><a data-i18n="contact" href="contact.html">اتصل بنا</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3 data-i18n="categories">الفئات</h3>
+<ul class="footer-links">
+<li><a data-i18n="designSoftware" href="#">برامج التصميم</a></li>
+<li><a data-i18n="securitySoftware" href="#">برامج الحماية</a></li>
+<li><a data-i18n="videoSoftware" href="#">برامج المونتاج</a></li>
+<li><a data-i18n="officeSoftware" href="#">برامج المكتب</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3 data-i18n="importantInfo">معلومات مهمة</h3>
+<ul class="footer-links">
+<li><a data-i18n="privacyPolicy" href="#">سياسة الخصوصية</a></li>
+<li><a data-i18n="termsOfUse" href="#">شروط الاستخدام</a></li>
+<li><a data-i18n="faq" href="#">الأسئلة الشائعة</a></li>
+<li><a data-i18n="support" href="#">الدعم الفني</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 Pixomod. <span data-i18n="allRightsReserved">جميع الحقوق محفوظة.</span> <span data-i18n="madeWithLove">صُنع بـ</span> <i class="fas fa-heart" style="color: #e74c3c;"></i> <span data-i18n="inAlgeria">في الجزائر</span></p>
+</div>
+</div>
+</footer>
+<script>
+        // =============== GLOBAL VARIABLES ===============
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                logoText: 'Pixomod',
+                login: 'تسجيل الدخول',
+                home: 'الصفحة الرئيسية',
+                mobileApps: 'ألعاب وتطبيقات الهاتف',
+                pcSoftware: 'برامج الكمبيوتر',
+                blog: 'المدونة والمقالات',
+                contact: 'اتصل بنا',
+                dashboard: 'لوحة التحكم',
+                logout: 'تسجيل الخروج',
+                pcSoftwareTitle: 'برامج الكمبيوتر',
+                pcSoftwareSubtitle: 'اكتشف مجموعة شاملة من أفضل برامج الكمبيوتر لجميع احتياجاتك',
+                operatingSystem: 'نظام التشغيل:',
+                category: 'الفئة:',
+                all: 'الكل',
+                windows: 'Windows',
+                mac: 'Mac',
+                linux: 'Linux',
+                design: 'التصميم',
+                security: 'الحماية',
+                video: 'المونتاج',
+                office: 'المكتب',
+                system: 'النظام',
+                searchPlaceholder: 'البحث عن البرامج...',
+                download: 'تحميل',
+                noResults: 'لا توجد نتائج',
+                noResultsDesc: 'لم نتمكن من العثور على أي برامج تطابق معايير البحث الخاصة بك. جرب تغيير الفلاتر أو مصطلح البحث.',
+                clearFilters: 'مسح الفلاتر',
+                page: 'صفحة',
+                of: 'من',
+                currentLang: 'العربية',
+                themeToggleTooltip: 'تبديل الوضع',
+                loginTitle: 'تسجيل الدخول',
+                email: 'البريد الإلكتروني',
+                password: 'كلمة المرور',
+                loginBtn: 'تسجيل الدخول',
+                or: 'أو',
+                loginWithGoogle: 'تسجيل الدخول بـ Google',
+                loginWithFacebook: 'تسجيل الدخول بـ Facebook',
+                noAccount: 'ليس لديك حساب؟ ',
+                createAccount: 'إنشاء حساب جديد',
+                aboutPixomod: 'حول Pixomod',
+                footerDesc: 'وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.',
+                quickLinks: 'روابط سريعة',
+                categories: 'الفئات',
+                designSoftware: 'برامج التصميم',
+                securitySoftware: 'برامج الحماية',
+                videoSoftware: 'برامج المونتاج',
+                officeSoftware: 'برامج المكتب',
+                importantInfo: 'معلومات مهمة',
+                privacyPolicy: 'سياسة الخصوصية',
+                termsOfUse: 'شروط الاستخدام',
+                faq: 'الأسئلة الشائعة',
+                support: 'الدعم الفني',
+                allRightsReserved: 'جميع الحقوق محفوظة.',
+                madeWithLove: 'صُنع بـ',
+                inAlgeria: 'في الجزائر'
+            },
+            en: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Login',
+                home: 'Home',
+                mobileApps: 'Mobile Games & Apps',
+                pcSoftware: 'PC Software',
+                blog: 'Blog & Articles',
+                contact: 'Contact Us',
+                dashboard: 'Dashboard',
+                logout: 'Logout',
+                pcSoftwareTitle: 'PC Software',
+                pcSoftwareSubtitle: 'Discover a comprehensive collection of the best PC software for all your needs',
+                operatingSystem: 'Operating System:',
+                category: 'Category:',
+                all: 'All',
+                windows: 'Windows',
+                mac: 'Mac',
+                linux: 'Linux',
+                design: 'Design',
+                security: 'Security',
+                video: 'Video',
+                office: 'Office',
+                system: 'System',
+                searchPlaceholder: 'Search for software...',
+                download: 'Download',
+                noResults: 'No Results',
+                noResultsDesc: 'We couldn\'t find any software matching your search criteria. Try changing the filters or search term.',
+                clearFilters: 'Clear Filters',
+                page: 'Page',
+                of: 'of',
+                currentLang: 'English',
+                themeToggleTooltip: 'Toggle Theme',
+                loginTitle: 'Login',
+                email: 'Email',
+                password: 'Password',
+                loginBtn: 'Login',
+                or: 'or',
+                loginWithGoogle: 'Login with Google',
+                loginWithFacebook: 'Login with Facebook',
+                noAccount: 'Don\'t have an account? ',
+                createAccount: 'Create new account',
+                aboutPixomod: 'About Pixomod',
+                footerDesc: 'Your ultimate destination for the best games, apps, and software with helpful tech articles.',
+                quickLinks: 'Quick Links',
+                categories: 'Categories',
+                designSoftware: 'Design Software',
+                securitySoftware: 'Security Software',
+                videoSoftware: 'Video Software',
+                officeSoftware: 'Office Software',
+                importantInfo: 'Important Info',
+                privacyPolicy: 'Privacy Policy',
+                termsOfUse: 'Terms of Use',
+                faq: 'FAQ',
+                support: 'Support',
+                allRightsReserved: 'All rights reserved.',
+                madeWithLove: 'Made with',
+                inAlgeria: 'in Algeria'
+            },
+            fr: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Connexion',
+                home: 'Accueil',
+                mobileApps: 'Jeux et Apps Mobile',
+                pcSoftware: 'Logiciels PC',
+                blog: 'Blog et Articles',
+                contact: 'Contactez-nous',
+                dashboard: 'Tableau de bord',
+                logout: 'Déconnexion',
+                pcSoftwareTitle: 'Logiciels PC',
+                pcSoftwareSubtitle: 'Découvrez une collection complète des meilleurs logiciels PC pour tous vos besoins',
+                operatingSystem: 'Système d\'exploitation:',
+                category: 'Catégorie:',
+                all: 'Tous',
+                windows: 'Windows',
+                mac: 'Mac',
+                linux: 'Linux',
+                design: 'Design',
+                security: 'Sécurité',
+                video: 'Vidéo',
+                office: 'Bureau',
+                system: 'Système',
+                searchPlaceholder: 'Rechercher des logiciels...',
+                download: 'Télécharger',
+                noResults: 'Aucun Résultat',
+                noResultsDesc: 'Nous n\'avons trouvé aucun logiciel correspondant à vos critères de recherche. Essayez de modifier les filtres ou le terme de recherche.',
+                clearFilters: 'Effacer les Filtres',
+                page: 'Page',
+                of: 'de',
+                currentLang: 'Français',
+                themeToggleTooltip: 'Basculer le Thème',
+                loginTitle: 'Connexion',
+                email: 'Email',
+                password: 'Mot de passe',
+                loginBtn: 'Connexion',
+                or: 'ou',
+                loginWithGoogle: 'Connexion avec Google',
+                loginWithFacebook: 'Connexion avec Facebook',
+                noAccount: 'Pas de compte? ',
+                createAccount: 'Créer un nouveau compte',
+                aboutPixomod: 'À propos de Pixomod',
+                footerDesc: 'Votre destination ultime pour les meilleurs jeux, applications et logiciels avec des articles techniques utiles.',
+                quickLinks: 'Liens Rapides',
+                categories: 'Catégories',
+                designSoftware: 'Logiciels de Design',
+                securitySoftware: 'Logiciels de Sécurité',
+                videoSoftware: 'Logiciels Vidéo',
+                officeSoftware: 'Logiciels de Bureau',
+                importantInfo: 'Infos Importantes',
+                privacyPolicy: 'Politique de Confidentialité',
+                termsOfUse: 'Conditions d\'Utilisation',
+                faq: 'FAQ',
+                support: 'Support',
+                allRightsReserved: 'Tous droits réservés.',
+                madeWithLove: 'Fait avec',
+                inAlgeria: 'en Algérie'
+            }
+        };
+
+        // Sample software data
+        const softwareData = [
+            {
+                id: 1,
+                name: 'Adobe Photoshop 2024',
+                description: 'برنامج تحرير الصور الأكثر احترافية في العالم مع أدوات متقدمة للتصميم والتلاعب بالصور',
+                category: 'design',
+                os: ['windows', 'mac'],
+                rating: 4.8,
+                size: '2.1 GB',
+                icon: 'fas fa-paint-brush',
+                image: null,
+                downloads: 125430
+            },
+            {
+                id: 2,
+                name: 'Windows Defender',
+                description: 'برنامج الحماية المدمج في ويندوز مع حماية شاملة ضد الفيروسات والبرمجيات الخبيثة',
+                category: 'security',
+                os: ['windows'],
+                rating: 4.5,
+                size: '150 MB',
+                icon: 'fas fa-shield-alt',
+                image: null,
+                downloads: 89200
+            },
+            {
+                id: 3,
+                name: 'Final Cut Pro',
+                description: 'برنامج مونتاج فيديو احترافي مخصص لنظام Mac مع إمكانيات متقدمة لتحرير الفيديو',
+                category: 'video',
+                os: ['mac'],
+                rating: 4.7,
+                size: '3.2 GB',
+                icon: 'fas fa-video',
+                image: null,
+                downloads: 67890
+            },
+            {
+                id: 4,
+                name: 'Microsoft Office 365',
+                description: 'مجموعة أدوات المكتب الشاملة تشمل Word وExcel وPowerPoint وأكثر',
+                category: 'office',
+                os: ['windows', 'mac'],
+                rating: 4.6,
+                size: '4.5 GB',
+                icon: 'fas fa-file-alt',
+                image: null,
+                downloads: 234560
+            },
+            {
+                id: 5,
+                name: 'CCleaner',
+                description: 'أداة تنظيف النظام لإزالة الملفات المؤقتة وتحسين أداء الكمبيوتر',
+                category: 'system',
+                os: ['windows', 'mac'],
+                rating: 4.3,
+                size: '45 MB',
+                icon: 'fas fa-broom',
+                image: null,
+                downloads: 156780
+            },
+            {
+                id: 6,
+                name: 'GIMP',
+                description: 'محرر صور مجاني ومفتوح المصدر مع إمكانيات تحرير متقدمة',
+                category: 'design',
+                os: ['windows', 'mac', 'linux'],
+                rating: 4.4,
+                size: '280 MB',
+                icon: 'fas fa-image',
+                image: null,
+                downloads: 98450
+            },
+            {
+                id: 7,
+                name: 'VLC Media Player',
+                description: 'مشغل وسائط مجاني يدعم جميع صيغ الفيديو والصوت',
+                category: 'video',
+                os: ['windows', 'mac', 'linux'],
+                rating: 4.9,
+                size: '95 MB',
+                icon: 'fas fa-play-circle',
+                image: null,
+                downloads: 345670
+            },
+            {
+                id: 8,
+                name: 'Malwarebytes',
+                description: 'برنامج حماية متخصص في إزالة البرمجيات الخبيثة والتهديدات المتقدمة',
+                category: 'security',
+                os: ['windows', 'mac'],
+                rating: 4.7,
+                size: '75 MB',
+                icon: 'fas fa-bug',
+                image: null,
+                downloads: 123890
+            },
+            {
+                id: 9,
+                name: 'LibreOffice',
+                description: 'مجموعة مكتبية مجانية ومفتوحة المصدر كبديل لـ Microsoft Office',
+                category: 'office',
+                os: ['windows', 'mac', 'linux'],
+                rating: 4.2,
+                size: '350 MB',
+                icon: 'fas fa-file-word',
+                image: null,
+                downloads: 87650
+            },
+            {
+                id: 10,
+                name: 'Ubuntu',
+                description: 'نظام تشغيل Linux مجاني وسهل الاستخدام للمبتدئين والمحترفين',
+                category: 'system',
+                os: ['linux'],
+                rating: 4.6,
+                size: '2.8 GB',
+                icon: 'fab fa-ubuntu',
+                image: null,
+                downloads: 234890
+            },
+            {
+                id: 11,
+                name: 'Premiere Pro 2024',
+                description: 'برنامج مونتاج فيديو احترافي من Adobe مع أدوات متقدمة للإنتاج السينمائي',
+                category: 'video',
+                os: ['windows', 'mac'],
+                rating: 4.8,
+                size: '2.9 GB',
+                icon: 'fas fa-film',
+                image: null,
+                downloads: 178950
+            },
+            {
+                id: 12,
+                name: 'Blender',
+                description: 'برنامج النمذجة ثلاثية الأبعاد والرسوم المتحركة مجاني ومفتوح المصدر',
+                category: 'design',
+                os: ['windows', 'mac', 'linux'],
+                rating: 4.7,
+                size: '315 MB',
+                icon: 'fas fa-cube',
+                image: null,
+                downloads: 145670
+            }
+        ];
+
+        let currentLanguage = 'ar';
+        let currentTheme = 'light';
+        let currentPage = 1;
+        let itemsPerPage = 9;
+        let filteredSoftware = [...softwareData];
+        let isLoggedIn = false;
+        let currentUser = null;
+
+        // =============== DOM ELEMENTS ===============
+        const header = document.getElementById('header');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginModalClose = document.getElementById('loginModalClose');
+        const softwareGrid = document.getElementById('softwareGrid');
+        const loadingSkeleton = document.getElementById('loadingSkeleton');
+        const emptyState = document.getElementById('emptyState');
+        const pagination = document.getElementById('pagination');
+        const searchInput = document.getElementById('searchInput');
+
+        // =============== INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeEventListeners();
+            initializeHeaderScroll();
+            initializeForms();
+            initializeFilters();
+            loadSoftware();
+            checkLoginStatus();
+        });
+
+        // =============== THEME MANAGEMENT ===============
+        function initializeTheme() {
+            const savedTheme = currentTheme;
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            const themeToggleThumb = themeToggle.querySelector('.theme-toggle-thumb');
+            const themeIcon = themeToggleThumb.querySelector('i');
+            
+            if (theme === 'dark') {
+                themeToggle.classList.add('active');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeToggle.classList.remove('active');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            
+            document.body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        }
+
+        // =============== LANGUAGE MANAGEMENT ===============
+        function initializeLanguage() {
+            const savedLang = currentLanguage;
+            setLanguage(savedLang);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            const translation = translations[lang];
+            
+            document.documentElement.lang = lang;
+            document.documentElement.dir = translation.dir;
+            
+            updateUIText(translation);
+            document.getElementById('currentLang').textContent = translation.currentLang;
+            updateTooltips();
+        }
+
+        function updateUIText(translation) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translation[key]) {
+                    element.textContent = translation[key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translation[key]) {
+                    element.placeholder = translation[key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-tooltip]').forEach(element => {
+                const key = element.getAttribute('data-i18n-tooltip');
+                if (translation[key]) {
+                    element.setAttribute('data-tooltip', translation[key]);
+                }
+            });
+        }
+
+        function updateTooltips() {
+            const translation = translations[currentLanguage];
+            themeToggle.setAttribute('data-tooltip', translation.themeToggleTooltip);
+        }
+
+        // =============== LOGIN MANAGEMENT ===============
+        function checkLoginStatus() {
+            // Simulate checking login status
+            // In a real app, you would check with the server or local storage
+            if (isLoggedIn && currentUser) {
+                showUserSection();
+            }
+        }
+
+        function showUserSection() {
+            const userSection = document.getElementById('userSection');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            const dashboardLink = document.getElementById('dashboardLink');
+            
+            userSection.classList.remove('hidden');
+            
+            if (currentUser) {
+                userAvatar.textContent = currentUser.name.charAt(0).toUpperCase();
+                userName.textContent = currentUser.name;
+                userRole.textContent = currentUser.role;
+                
+                // Show dashboard link for admin/moderator
+                if (currentUser.role === 'admin' || currentUser.role === 'moderator') {
+                    dashboardLink.classList.remove('hidden');
+                }
+            }
+            
+            // Hide login button and show user avatar in header
+            loginBtn.style.display = 'none';
+        }
+
+        function hideUserSection() {
+            document.getElementById('userSection').classList.add('hidden');
+            document.getElementById('dashboardLink').classList.add('hidden');
+            loginBtn.style.display = 'flex';
+        }
+
+        // =============== EVENT LISTENERS ===============
+        function initializeEventListeners() {
+            menuToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            languageBtn.addEventListener('click', toggleLanguageDropdown);
+            document.addEventListener('click', closeLanguageDropdown);
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    closeLanguageDropdown();
+                });
+            });
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            loginBtn.addEventListener('click', openLoginModal);
+            loginModalClose.addEventListener('click', closeLoginModal);
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === this) closeLoginModal();
+            });
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeSidebar();
+                    }
+                });
+            });
+            
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            window.addEventListener('resize', handleResize);
+        }
+
+        // =============== SIDEBAR MANAGEMENT ===============
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== LANGUAGE DROPDOWN ===============
+        function toggleLanguageDropdown(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        }
+
+        function closeLanguageDropdown() {
+            languageDropdown.classList.remove('active');
+        }
+
+        // =============== MODAL MANAGEMENT ===============
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                const firstInput = loginModal.querySelector('input');
+                if (firstInput) firstInput.focus();
+            }, 300);
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== HEADER SCROLL EFFECT ===============
+        function initializeHeaderScroll() {
+            let lastScrollY = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
+
+        // =============== FORM HANDLING ===============
+        function initializeForms() {
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLoginSubmit);
+            
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+                
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+            });
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showNotification('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            // Simulate login process
+            setTimeout(() => {
+                showLoading(false);
+                
+                // Simulate successful login
+                isLoggedIn = true;
+                currentUser = {
+                    name: 'أحمد محمد',
+                    email: email,
+                    role: email.includes('admin') ? 'admin' : 'user'
+                };
+                
+                showUserSection();
+                showNotification('تم تسجيل الدخول بنجاح!', 'success');
+                closeLoginModal();
+                
+                // Reset form
+                e.target.reset();
+            }, 2000);
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            currentUser = null;
+            hideUserSection();
+            showNotification('تم تسجيل الخروج بنجاح', 'success');
+            closeSidebar();
+        }
+
+        // =============== FILTERS MANAGEMENT ===============
+        function initializeFilters() {
+            // OS Filter buttons
+            document.querySelectorAll('[data-filter]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    filterSoftware('os', filter);
+                });
+            });
+            
+            // Category Filter buttons
+            document.querySelectorAll('[data-category]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-category]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    filterSoftware('category', category);
+                });
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', debounce(function() {
+                filterSoftware('search', this.value);
+            }, 300));
+        }
+
+        function filterSoftware(type, value) {
+            let filtered = [...softwareData];
+            
+            // Get current filters
+            const osFilter = document.querySelector('[data-filter].active').getAttribute('data-filter');
+            const categoryFilter = document.querySelector('[data-category].active').getAttribute('data-category');
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            // Apply OS filter
+            if (osFilter !== 'all') {
+                filtered = filtered.filter(software => software.os.includes(osFilter));
+            }
+            
+            // Apply Category filter
+            if (categoryFilter !== 'all') {
+                filtered = filtered.filter(software => software.category === categoryFilter);
+            }
+            
+            // Apply Search filter
+            if (searchTerm) {
+                filtered = filtered.filter(software => 
+                    software.name.toLowerCase().includes(searchTerm) ||
+                    software.description.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            filteredSoftware = filtered;
+            currentPage = 1;
+            loadSoftware();
+        }
+
+        function clearFilters() {
+            // Reset all filters
+            document.querySelectorAll('[data-filter]').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('[data-category]').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-filter="all"]').classList.add('active');
+            document.querySelector('[data-category="all"]').classList.add('active');
+            searchInput.value = '';
+            
+            filteredSoftware = [...softwareData];
+            currentPage = 1;
+            loadSoftware();
+        }
+
+        // =============== SOFTWARE LOADING ===============
+        function loadSoftware() {
+            showLoading(true);
+            
+            setTimeout(() => {
+                if (filteredSoftware.length === 0) {
+                    showEmptyState();
+                } else {
+                    displaySoftware();
+                    updatePagination();
+                }
+                showLoading(false);
+            }, 500);
+        }
+
+        function displaySoftware() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedSoftware = filteredSoftware.slice(startIndex, endIndex);
+            
+            softwareGrid.innerHTML = '';
+            emptyState.classList.add('hidden');
+            softwareGrid.classList.remove('hidden');
+            
+            paginatedSoftware.forEach(software => {
+                const card = createSoftwareCard(software);
+                softwareGrid.appendChild(card);
+            });
+            
+            // Initialize scroll animations for new cards
+            initializeScrollAnimations();
+        }
+
+        function createSoftwareCard(software) {
+            const card = document.createElement('div');
+            card.className = 'software-card scroll-reveal';
+            card.setAttribute('data-id', software.id);
+            
+            const osLabels = software.os.map(os => {
+                const translation = translations[currentLanguage];
+                return translation[os] || os;
+            }).join(', ');
+            
+            const stars = generateStars(software.rating);
+            
+            card.innerHTML = `
+                <div class="software-image">
+                    ${software.image ? 
+                        `<img src="${software.image}" alt="${software.name}">` : 
+                        `<div class="placeholder-icon"><i class="${software.icon}"></i></div>`
+                    }
+                    <div class="software-os-badge">${osLabels}</div>
+                </div>
+                <div class="software-content">
+                    <h3 class="software-title">${software.name}</h3>
+                    <p class="software-description">${software.description}</p>
+                    <div class="software-meta">
+                        <div class="software-rating">
+                            <div class="stars">${stars}</div>
+                            <span class="rating-text">(${software.rating})</span>
+                        </div>
+                        <div class="software-size">${software.size}</div>
+                    </div>
+                    <div class="software-actions">
+                        <button class="btn btn-primary download-btn" onclick="downloadSoftware(${software.id})">
+                            <i class="fas fa-download"></i>
+                            <span data-i18n="download">تحميل</span>
+                        </button>
+                        <button class="favorite-btn" onclick="toggleFavorite(${software.id})" data-tooltip="إضافة للمفضلة">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    stars += '<i class="fas fa-star star"></i>';
+                } else if (i === fullStars && hasHalfStar) {
+                    stars += '<i class="fas fa-star-half-alt star"></i>';
+                } else {
+                    stars += '<i class="fas fa-star star empty"></i>';
+                }
+            }
+            
+            return stars;
+        }
+
+        function showEmptyState() {
+            softwareGrid.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+            pagination.classList.add('hidden');
+        }
+
+        function showLoading(show) {
+            if (show) {
+                softwareGrid.classList.add('hidden');
+                emptyState.classList.add('hidden');
+                loadingSkeleton.classList.remove('hidden');
+            } else {
+                loadingSkeleton.classList.add('hidden');
+                softwareGrid.classList.remove('hidden');
+                pagination.classList.remove('hidden');
+            }
+        }
+
+        // =============== PAGINATION ===============
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredSoftware.length / itemsPerPage);
+            
+            document.getElementById('currentPage').textContent = currentPage;
+            document.getElementById('totalPages').textContent = totalPages;
+            
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+            
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    loadSoftware();
+                    scrollToTop();
+                }
+            };
+            
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    loadSoftware();
+                    scrollToTop();
+                }
+            };
+        }
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // =============== SOFTWARE ACTIONS ===============
+        function downloadSoftware(id) {
+            const software = softwareData.find(s => s.id === id);
+            if (software) {
+                showNotification(`بدء تحميل ${software.name}...`, 'success');
+                
+                // Simulate download progress
+                let progress = 0;
+                const progressInterval = setInterval(() => {
+                    progress += 10;
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        showNotification(`تم تحميل ${software.name} بنجاح!`, 'success');
+                    }
+                }, 200);
+                
+                // Track download
+                trackUserInteraction('download', software.name);
+            }
+        }
+
+        function toggleFavorite(id) {
+            const btn = document.querySelector(`[data-id="${id}"] .favorite-btn`);
+            const isActive = btn.classList.contains('active');
+            
+            if (isActive) {
+                btn.classList.remove('active');
+                showNotification('تم إزالة البرنامج من المفضلة', 'info');
+            } else {
+                btn.classList.add('active');
+                showNotification('تم إضافة البرنامج للمفضلة', 'success');
+            }
+            
+            // In a real app, you would save this to the server
+            trackUserInteraction('favorite', id);
+        }
+
+        // =============== SCROLL ANIMATIONS ===============
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal:not(.revealed)').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // =============== NOTIFICATION SYSTEM ===============
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${getNotificationIcon(type)}"></i>
+                    <span>${message}</span>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-lg);
+                box-shadow: 0 10px 25px var(--shadow);
+                z-index: 10000;
+                min-width: 300px;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--spacing-md);
+            `;
+            
+            if (type === 'success') {
+                notification.style.borderColor = '#28a745';
+                notification.style.color = '#28a745';
+            } else if (type === 'error') {
+                notification.style.borderColor = '#dc3545';
+                notification.style.color = '#dc3545';
+            } else if (type === 'info') {
+                notification.style.borderColor = '#17a2b8';
+                notification.style.color = '#17a2b8';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => removeNotification(notification));
+            
+            setTimeout(() => {
+                removeNotification(notification);
+            }, 5000);
+        }
+
+        function removeNotification(notification) {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+
+        function getNotificationIcon(type) {
+            switch (type) {
+                case 'success': return 'fa-check-circle';
+                case 'error': return 'fa-exclamation-circle';
+                case 'warning': return 'fa-exclamation-triangle';
+                case 'info': return 'fa-info-circle';
+                default: return 'fa-info-circle';
+            }
+        }
+
+        // =============== KEYBOARD NAVIGATION ===============
+        function handleKeyboardNavigation(e) {
+            if (e.key === 'Escape') {
+                closeLoginModal();
+                closeSidebar();
+                closeLanguageDropdown();
+            }
+            
+            if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+                e.target.click();
+            }
+            
+            // Arrow key navigation for software grid
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                const cards = document.querySelectorAll('.software-card');
+                const focusedCard = document.activeElement.closest('.software-card');
+                if (focusedCard) {
+                    const currentIndex = Array.from(cards).indexOf(focusedCard);
+                    let nextIndex;
+                    
+                    if (e.key === 'ArrowRight') {
+                        nextIndex = currentIndex + 1;
+                    } else {
+                        nextIndex = currentIndex - 1;
+                    }
+                    
+                    if (nextIndex >= 0 && nextIndex < cards.length) {
+                        cards[nextIndex].focus();
+                    }
+                }
+            }
+        }
+
+        // =============== RESPONSIVE HANDLING ===============
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+            closeLanguageDropdown();
+        }
+
+        // =============== UTILITY FUNCTIONS ===============
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function trackUserInteraction(action, element) {
+            console.log('User interaction:', action, element);
+            // In a real implementation, send this data to analytics service
+        }
+
+        // =============== ERROR HANDLING ===============
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+            showNotification('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.', 'error');
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+
+        // =============== PERFORMANCE OPTIMIZATIONS ===============
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.body.classList.add('page-hidden');
+            } else {
+                document.body.classList.remove('page-hidden');
+            }
+        });
+
+        // =============== ADDITIONAL FEATURES ===============
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'k':
+                        e.preventDefault();
+                        searchInput.focus();
+                        break;
+                    case '/':
+                        e.preventDefault();
+                        searchInput.focus();
+                        break;
+                }
+            }
+        });
+
+        // Add focus styles for keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('using-keyboard');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('using-keyboard');
+        });
+
+        // Initialize scroll reveal on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                initializeScrollAnimations();
+            }, 100);
+        });
+
+        // Export functions for potential external use
+        window.PixomodSoftware = {
+            setTheme,
+            setLanguage,
+            showNotification,
+            downloadSoftware,
+            toggleFavorite,
+            clearFilters,
+            loadSoftware
+        };
+
+    </script>
+
+<!-- Sidebar Enhancements -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector(".sidebar ul");
+  const role = localStorage.getItem("userRole");
+
+  // زر تسجيل الدخول (في الجوال فقط)
+  if (window.innerWidth < 768 && !document.getElementById("loginBtnMobile")) {
+    const loginLi = document.createElement("li");
+    const loginBtn = document.createElement("a");
+    loginBtn.textContent = "تسجيل الدخول";
+    loginBtn.href = "#";
+    loginBtn.id = "loginBtnMobile";
+    loginBtn.onclick = () => {
+      document.querySelector(".login-popup")?.classList.add("show");
+    };
+    loginLi.appendChild(loginBtn);
+    sidebar.appendChild(loginLi);
+  }
+
+  // زر لوحة التحكم عند تسجيل الدخول
+  if (role && !document.getElementById("dashboardLink")) {
+    const dashboardLi = document.createElement("li");
+    const dashboardLink = document.createElement("a");
+    dashboardLink.id = "dashboardLink";
+    dashboardLink.textContent = "لوحة التحكم";
+    dashboardLink.href = role === "admin" ? "pixomod_admin_dashboard_final.html" : "pixomod_moderator_dashboard_final.html";
+    dashboardLi.appendChild(dashboardLink);
+    sidebar.appendChild(dashboardLi);
+  }
+});
+</script>
+</body>
+</html>

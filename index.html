@@ -1,0 +1,3689 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pixomod - الصفحة الرئيسية</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&amp;family=Segoe+UI:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        /* =============== GLOBAL VARIABLES =============== */
+        :root {
+            /* Light Theme Colors */
+            --primary-light: #007BFF;
+            --secondary-light: #6610F2;
+            --background-light: #FFFFFF;
+            --surface-light: #F8F9FA;
+            --text-light: #212529;
+            --text-secondary-light: #6C757D;
+            --border-light: #DEE2E6;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark Theme Colors */
+            --primary-dark: #000000;
+            --secondary-dark: #00FF7F;
+            --background-dark: #121212;
+            --surface-dark: #1E1E1E;
+            --text-dark: #FFFFFF;
+            --text-secondary-dark: #B3B3B3;
+            --border-dark: #333333;
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            
+            /* Current Theme (defaults to light) */
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --background: var(--background-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            
+            /* Typography */
+            --font-primary: 'Cairo', 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Z-index layers */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal-backdrop: 1040;
+            --z-modal: 1050;
+            --z-popover: 1060;
+            --z-tooltip: 1070;
+        }
+        
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --surface: var(--surface-dark);
+            --text: var(--text-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+        
+        /* =============== RESET & BASE STYLES =============== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+            overflow-x: hidden;
+        }
+        
+        /* RTL/LTR Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="ltr"] {
+            text-align: left;
+        }
+        
+        /* =============== UTILITY CLASSES =============== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .visible {
+            display: block !important;
+        }
+        
+        .opacity-0 {
+            opacity: 0;
+        }
+        
+        .opacity-100 {
+            opacity: 1;
+        }
+        
+        .transition-all {
+            transition: all var(--transition-normal);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--surface);
+        }
+        
+        /* =============== HEADER STYLES =============== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: var(--z-fixed);
+            transition: all var(--transition-normal);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(18, 18, 18, 0.95);
+        }
+        
+        .header.scrolled {
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .header-content {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-normal);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .language-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 25px var(--shadow);
+            min-width: 150px;
+            z-index: var(--z-dropdown);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+        }
+        
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .language-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            width: 50px;
+            height: 25px;
+            background: var(--border);
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color var(--transition-normal);
+        }
+        
+        .theme-toggle.active {
+            background: var(--primary);
+        }
+        
+        .theme-toggle-thumb {
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+        }
+        
+        .theme-toggle.active .theme-toggle-thumb {
+            transform: translateX(25px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all var(--transition-fast);
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* =============== SIDEBAR STYLES =============== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: var(--z-modal);
+            transition: right var(--transition-normal);
+            overflow-y: auto;
+        }
+        
+        [dir="ltr"] .sidebar {
+            left: -350px;
+            right: auto;
+            border-left: none;
+            border-right: 1px solid var(--border);
+            transition: left var(--transition-normal);
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        [dir="ltr"] .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .sidebar-close:hover {
+            transform: rotate(90deg);
+            background: var(--secondary);
+        }
+        
+        .sidebar-nav {
+            padding: var(--spacing-lg);
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-nav-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.1;
+            transition: left var(--transition-slow);
+        }
+        
+        .sidebar-nav-item:hover:before {
+            left: 100%;
+        }
+        
+        .sidebar-nav-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        [dir="ltr"] .sidebar-nav-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        .sidebar-nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* =============== MODAL STYLES =============== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px var(--shadow);
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: all var(--transition-normal);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            background: var(--background);
+            color: var(--text);
+            transition: all var(--transition-fast);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--background);
+            color: var(--text);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: var(--spacing-xl) 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .divider:before,
+        .divider:after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* =============== MAIN CONTENT STYLES =============== */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-subtitle {
+            font-size: var(--font-size-xl);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-2xl);
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-lg);
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .section-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            color: var(--text);
+        }
+        
+        .section-subtitle {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,123,255,0.05), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .card:hover:before {
+            left: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .card-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            color: var(--text);
+        }
+        
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .ad-banner {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: var(--spacing-2xl);
+            border-radius: var(--radius-xl);
+            text-align: center;
+            margin: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ad-banner:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .ad-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-xl);
+            margin: var(--spacing-2xl) 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: var(--spacing-xl);
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            transition: all var(--transition-normal);
+        }
+        
+        .stat-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px var(--shadow);
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        
+        /* =============== CONTACT SECTION =============== */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* =============== FOOTER STYLES =============== */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: var(--spacing-2xl) 0;
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+        }
+        
+        .footer-section h3 {
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,123,255,0.3);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        /* =============== ANIMATIONS =============== */
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transform: translate3d(0, -30px, 0);
+            }
+            70% {
+                animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transform: translate3d(0, -15px, 0);
+            }
+            90% {
+                transform: translate3d(0,-4px,0);
+            }
+        }
+        
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px var(--primary); }
+            to { box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary); }
+        }
+        
+        /* =============== SCROLL ANIMATIONS =============== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* =============== LOADING ANIMATIONS =============== */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* =============== RESPONSIVE DESIGN =============== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .header-content {
+                height: 60px;
+            }
+            
+            .main {
+                margin-top: 60px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .header-actions > .btn {
+                display: none;
+            }
+            
+            .hero-title {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .hero-subtitle {
+                font-size: var(--font-size-lg);
+            }
+            
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            [dir="ltr"] .sidebar {
+                left: -100%;
+            }
+            
+            .hero {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* =============== HIGH CONTRAST MODE =============== */
+        @media (prefers-contrast: high) {
+            .btn {
+                border: 2px solid currentColor;
+            }
+            
+            .card {
+                border: 2px solid var(--border);
+            }
+        }
+        
+        /* =============== REDUCED MOTION =============== */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* =============== PRINT STYLES =============== */
+        @media print {
+            .header,
+            .sidebar,
+            .modal-overlay,
+            .btn,
+            .ad-banner {
+                display: none !important;
+            }
+            
+            .main {
+                margin-top: 0;
+            }
+            
+            body {
+                color: black;
+                background: white;
+            }
+        }
+        
+        /* =============== CUSTOM SCROLLBAR =============== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* =============== SELECTION STYLES =============== */
+        ::selection {
+            background: var(--primary);
+            color: white;
+        }
+        
+        ::-moz-selection {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* =============== FOCUS STYLES =============== */
+        .focus-visible:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        /* =============== TOOLTIP STYLES =============== */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: var(--z-tooltip);
+        }
+        
+        .tooltip:hover:before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header" id="header">
+<div class="container">
+<div class="header-content">
+<!-- Logo -->
+<a class="logo" href="#">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span class="logo-text">Pixomod</span>
+</a>
+<!-- Header Actions -->
+<div class="header-actions">
+<!-- Language Selector -->
+<div class="language-selector">
+<button class="language-btn" id="languageBtn">
+<i class="fas fa-globe"></i>
+<span id="currentLang">العربية</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="language-dropdown" id="languageDropdown">
+<div class="language-option" data-lang="ar">
+<i class="fas fa-flag"></i>
+<span>العربية</span>
+</div>
+<div class="language-option" data-lang="en">
+<i class="fas fa-flag"></i>
+<span>English</span>
+</div>
+<div class="language-option" data-lang="fr">
+<i class="fas fa-flag"></i>
+<span>Français</span>
+</div>
+</div>
+</div>
+<!-- Theme Toggle -->
+<div class="theme-toggle" data-tooltip="تبديل الوضع" id="themeToggle">
+<div class="theme-toggle-thumb">
+<i class="fas fa-sun"></i>
+</div>
+</div>
+<!-- Login Button -->
+<button class="btn btn-primary" id="loginBtn">
+<i class="fas fa-user"></i>
+<span>تسجيل الدخول</span>
+</button>
+<!-- Menu Toggle -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<!-- إضافة هذا الكود إلى القائمة الجانبية في HTML -->
+<!-- تعديل القائمة الجانبية لإضافة قسم الإدارة -->
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span>Pixomod</span>
+</div>
+<button class="sidebar-close" id="sidebarClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<!-- قسم معلومات المستخدم - يظهر عند تسجيل الدخول -->
+<div class="user-info" id="userInfo" style="display: none;">
+<div class="user-avatar">
+<i class="fas fa-user-circle"></i>
+</div>
+<div class="user-details">
+<h4 id="userName">اسم المستخدم</h4>
+<span class="user-role" id="userRole">مستخدم</span>
+</div>
+<button class="logout-btn" id="logoutBtn" title="تسجيل الخروج">
+<i class="fas fa-sign-out-alt"></i>
+</button>
+</div>
+<nav class="sidebar-nav">
+<!-- الروابط العامة -->
+<a class="sidebar-nav-item" href="#">
+<div class="sidebar-nav-icon">
+<i class="fas fa-home"></i>
+</div>
+<span>الصفحة الرئيسية</span>
+</a>
+<a class="sidebar-nav-item" href="#mobile-apps">
+<div class="sidebar-nav-icon">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<span>ألعاب وتطبيقات الهاتف</span>
+</a>
+<a class="sidebar-nav-item" href="#pc-software">
+<div class="sidebar-nav-icon">
+<i class="fas fa-desktop"></i>
+</div>
+<span>برامج الكمبيوتر</span>
+</a>
+<a class="sidebar-nav-item" href="#blog">
+<div class="sidebar-nav-icon">
+<i class="fas fa-blog"></i>
+</div>
+<span>المدونة والمقالات</span>
+</a>
+<a class="sidebar-nav-item" href="#contact">
+<div class="sidebar-nav-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<span>اتصل بنا</span>
+</a>
+<!-- زر تسجيل الدخول - يظهر فقط عند عدم تسجيل الدخول -->
+<div class="sidebar-login-section" id="sidebarLoginSection">
+<div class="sidebar-divider"></div>
+<button class="sidebar-nav-item sidebar-login-btn" id="sidebarLoginBtn">
+<div class="sidebar-nav-icon">
+<i class="fas fa-sign-in-alt"></i>
+</div>
+<span>تسجيل الدخول</span>
+</button>
+</div>
+<!-- قسم الإدارة - يظهر فقط للمشرفين والمدراء -->
+<div class="admin-section" id="adminSection" style="display: none;">
+<div class="sidebar-divider"></div>
+<div class="admin-header">
+<i class="fas fa-shield-alt"></i>
+<span>لوحة الإدارة</span>
+</div>
+<!-- صلاحيات المشرف -->
+<div class="moderator-links" id="moderatorLinks" style="display: none;">
+<a class="sidebar-nav-item admin-item" href="admin/manage-posts.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-edit"></i>
+</div>
+<span>إدارة المنشورات</span>
+</a>
+<a class="sidebar-nav-item admin-item" href="admin/manage-comments.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-comments"></i>
+</div>
+<span>إدارة التعليقات</span>
+</a>
+<a class="sidebar-nav-item admin-item" href="admin/content-review.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-eye"></i>
+</div>
+<span>مراجعة المحتوى</span>
+</a>
+</div>
+<!-- صلاحيات المدير الإضافية -->
+<div class="admin-links" id="adminLinks" style="display: none;">
+<a class="sidebar-nav-item admin-item" href="admin/manage-users.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-users"></i>
+</div>
+<span>إدارة المستخدمين</span>
+</a>
+<a class="sidebar-nav-item admin-item" href="admin/site-settings.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-cogs"></i>
+</div>
+<span>إعدادات الموقع</span>
+</a>
+<a class="sidebar-nav-item admin-item" href="admin/analytics.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-chart-bar"></i>
+</div>
+<span>التحليلات والإحصائيات</span>
+</a>
+<a class="sidebar-nav-item admin-item" href="admin/backup.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-database"></i>
+</div>
+<span>النسخ الاحتياطي</span>
+</a>
+<a class="sidebar-nav-item admin-item" href="admin/security.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-shield-alt"></i>
+</div>
+<span>الأمان والحماية</span>
+</a>
+</div>
+</div>
+</nav>
+</aside>
+<style>
+/* إضافة هذا CSS إلى ملف الأنماط الخاص بك */
+
+/* معلومات المستخدم */
+.user-info {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--surface);
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--font-size-xl);
+}
+
+.user-details {
+    flex: 1;
+}
+
+.user-details h4 {
+    margin: 0;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--text);
+}
+
+.user-role {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    padding: 2px 8px;
+    background: var(--primary);
+    color: white;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.user-role.admin {
+    background: #dc3545;
+}
+
+.user-role.moderator {
+    background: #ffc107;
+    color: #000;
+}
+
+.logout-btn {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.logout-btn:hover {
+    background: #dc3545;
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* قسم تسجيل الدخول */
+.sidebar-login-section {
+    margin-top: auto;
+}
+
+.sidebar-login-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    color: white !important;
+    margin: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar-login-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left var(--transition-slow);
+}
+
+.sidebar-login-btn:hover:before {
+    left: 100%;
+}
+
+.sidebar-login-btn:hover {
+    transform: translateX(0) !important;
+    background: linear-gradient(135deg, var(--secondary), var(--primary)) !important;
+}
+
+/* فاصل القسم */
+.sidebar-divider {
+    height: 1px;
+    background: var(--border);
+    margin: var(--spacing-lg) var(--spacing-md);
+}
+
+/* قسم الإدارة */
+.admin-section {
+    background: rgba(0, 123, 255, 0.05);
+    margin: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    border: 1px solid rgba(0, 123, 255, 0.1);
+}
+
+[data-theme="dark"] .admin-section {
+    background: rgba(0, 255, 127, 0.05);
+    border-color: rgba(0, 255, 127, 0.1);
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-weight: 600;
+    color: var(--primary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+    background: rgba(0, 123, 255, 0.1);
+    border-radius: var(--radius-md);
+}
+
+[data-theme="dark"] .admin-header {
+    color: var(--secondary);
+    background: rgba(0, 255, 127, 0.1);
+}
+
+.admin-item {
+    background: rgba(0, 123, 255, 0.02) !important;
+    border: 1px solid rgba(0, 123, 255, 0.1) !important;
+    margin-bottom: var(--spacing-xs) !important;
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+}
+
+[data-theme="dark"] .admin-item {
+    background: rgba(0, 255, 127, 0.02) !important;
+    border-color: rgba(0, 255, 127, 0.1) !important;
+}
+
+.admin-item:hover {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+    transform: translateX(5px) !important;
+}
+
+[dir="ltr"] .admin-item:hover {
+    transform: translateX(-5px) !important;
+}
+
+.admin-item .sidebar-nav-icon {
+    opacity: 0.8;
+}
+
+.admin-item:hover .sidebar-nav-icon {
+    opacity: 1;
+}
+
+/* تأثيرات الانتقال */
+.user-info,
+.admin-section,
+.sidebar-login-section {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.5s ease forwards;
+}
+
+.user-info {
+    animation-delay: 0.1s;
+}
+
+.admin-section {
+    animation-delay: 0.2s;
+}
+
+.sidebar-login-section {
+    animation-delay: 0.3s;
+}
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* تنسيق للشاشات الصغيرة */
+@media (max-width: 480px) {
+    .user-info {
+        padding: var(--spacing-md);
+    }
+    
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: var(--font-size-lg);
+    }
+    
+    .user-details h4 {
+        font-size: var(--font-size-sm);
+    }
+    
+    .admin-section {
+        margin: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+}
+
+/* تأثيرات لافتة الإشعار */
+.admin-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+    z-index: 10000;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    max-width: 300px;
+}
+
+.admin-notification.show {
+    transform: translateX(0);
+}
+
+.admin-notification .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+}
+</style>
+<script>
+// إضافة هذا الكود JavaScript إلى ملف الـ JS الخاص بك
+
+// =============== ADMIN SYSTEM VARIABLES ===============
+let currentUser = null;
+let isLoggedIn = false;
+
+// أنواع المستخدمين
+const USER_ROLES = {
+    USER: 'user',
+    MODERATOR: 'moderator', 
+    ADMIN: 'admin'
+};
+
+// =============== ADMIN SYSTEM INITIALIZATION ===============
+function initializeAdminSystem() {
+    // التحقق من حالة تسجيل الدخول المحفوظة
+    checkSavedLoginState();
+    
+    // إضافة مستمعي الأحداث للإدارة
+    setupAdminEventListeners();
+    
+    // تحديث واجهة المستخدم
+    updateSidebarUI();
+}
+
+// =============== LOGIN STATE MANAGEMENT ===============
+function checkSavedLoginState() {
+    // في التطبيق الحقيقي، يمكنك استخدام localStorage أو sessionStorage
+    // هنا سنحاكي البيانات المحفوظة
+    const savedUser = getCurrentUserFromStorage();
+    
+    if (savedUser) {
+        currentUser = savedUser;
+        isLoggedIn = true;
+        updateSidebarUI();
+        showAdminWelcomeNotification();
+    }
+}
+
+function getCurrentUserFromStorage() {
+    // محاكاة استرجاع بيانات المستخدم
+    // في التطبيق الحقيقي: return JSON.parse(localStorage.getItem('currentUser'));
+    
+    // للاختبار، يمكنك إلغاء التعليق عن إحدى هذه الخيارات:
+    
+    // return { id: 1, name: 'أحمد محمد', role: USER_ROLES.ADMIN, email: 'admin@pixomod.com' };
+    // return { id: 2, name: 'فاطمة علي', role: USER_ROLES.MODERATOR, email: 'moderator@pixomod.com' };
+    
+    return null; // لا يوجد مستخدم مسجل حالياً
+}
+
+function saveUserToStorage(user) {
+    // في التطبيق الحقيقي: localStorage.setItem('currentUser', JSON.stringify(user));
+    currentUser = user;
+    isLoggedIn = true;
+}
+
+function clearUserFromStorage() {
+    // في التطبيق الحقيقي: localStorage.removeItem('currentUser');
+    currentUser = null;
+    isLoggedIn = false;
+}
+
+// =============== EVENT LISTENERS SETUP ===============
+function setupAdminEventListeners() {
+    // زر تسجيل الدخول في القائمة الجانبية
+    const sidebarLoginBtn = document.getElementById('sidebarLoginBtn');
+    if (sidebarLoginBtn) {
+        sidebarLoginBtn.addEventListener('click', openLoginModal);
+    }
+    
+    // زر تسجيل الخروج
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+    
+    // تعديل form تسجيل الدخول الموجود
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.removeEventListener('submit', handleLoginSubmit); // إزالة المستمع القديم
+        loginForm.addEventListener('submit', handleAdminLoginSubmit);
+    }
+}
+
+// =============== LOGIN FORM HANDLING ===============
+function handleAdminLoginSubmit(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    if (!email || !password) {
+        showNotification('يرجى ملء جميع الحقول', 'error');
+        return;
+    }
+    
+    // محاكاة عملية تسجيل الدخول
+    showLoading(true);
+    
+    // محاكاة طلب HTTP للخادم
+    setTimeout(() => {
+        const user = authenticateUser(email, password);
+        
+        if (user) {
+            // تسجيل دخول ناجح
+            saveUserToStorage(user);
+            updateSidebarUI();
+            closeLoginModal();
+            showLoading(false);
+            showNotification(`مرحباً ${user.name}! تم تسجيل الدخول بنجاح`, 'success');
+            
+            // إظهار إشعار الصلاحيات للمدراء والمشرفين
+            if (user.role !== USER_ROLES.USER) {
+                setTimeout(() => {
+                    showAdminWelcomeNotification();
+                }, 1000);
+            }
+        } else {
+            // فشل في تسجيل الدخول
+            showLoading(false);
+            showNotification('بيانات تسجيل الدخول غير صحيحة', 'error');
+        }
+    }, 2000);
+}
+
+// =============== USER AUTHENTICATION ===============
+function authenticateUser(email, password) {
+    // محاكاة قاعدة بيانات المستخدمين
+    const users = [
+        {
+            id: 1,
+            name: 'أحمد محمد',
+            email: 'admin@pixomod.com',
+            password: 'admin123',
+            role: USER_ROLES.ADMIN
+        },
+        {
+            id: 2,
+            name: 'فاطمة علي',
+            email: 'moderator@pixomod.com',
+            password: 'mod123',
+            role: USER_ROLES.MODERATOR
+        },
+        {
+            id: 3,
+            name: 'محمد أحمد',
+            email: 'user@pixomod.com',
+            password: 'user123',
+            role: USER_ROLES.USER
+        }
+    ];
+    
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+        // إرجاع المستخدم بدون كلمة المرور
+        const { password, ...userWithoutPassword } = user;
+        return userWithoutPassword;
+    }
+    
+    return null;
+}
+
+// =============== UI UPDATE FUNCTIONS ===============
+function updateSidebarUI() {
+    const userInfo = document.getElementById('userInfo');
+    const sidebarLoginSection = document.getElementById('sidebarLoginSection');
+    const adminSection = document.getElementById('adminSection');
+    const moderatorLinks = document.getElementById('moderatorLinks');
+    const adminLinks = document.getElementById('adminLinks');
+    
+    if (isLoggedIn && currentUser) {
+        // إخفاء زر تسجيل الدخول وإظهار معلومات المستخدم
+        sidebarLoginSection.style.display = 'none';
+        userInfo.style.display = 'flex';
+        
+        // تحديث معلومات المستخدم
+        document.getElementById('userName').textContent = currentUser.name;
+        const userRoleElement = document.getElementById('userRole');
+        
+        // تحديث دور المستخدم
+        switch (currentUser.role) {
+            case USER_ROLES.ADMIN:
+                userRoleElement.textContent = 'مدير';
+                userRoleElement.className = 'user-role admin';
+                break;
+            case USER_ROLES.MODERATOR:
+                userRoleElement.textContent = 'مشرف';
+                userRoleElement.className = 'user-role moderator';
+                break;
+            default:
+                userRoleElement.textContent = 'مستخدم';
+                userRoleElement.className = 'user-role';
+        }
+        
+        // إظهار لوحة الإدارة للمشرفين والمدراء
+        if (currentUser.role === USER_ROLES.MODERATOR || currentUser.role === USER_ROLES.ADMIN) {
+            adminSection.style.display = 'block';
+            moderatorLinks.style.display = 'block';
+            
+            // إظهار صلاحيات المدير الإضافية
+            if (currentUser.role === USER_ROLES.ADMIN) {
+                adminLinks.style.display = 'block';
+            } else {
+                adminLinks.style.display = 'none';
+            }
+        } else {
+            adminSection.style.display = 'none';
+        }
+        
+    } else {
+        // إظهار زر تسجيل الدخول وإخفاء معلومات المستخدم
+        sidebarLoginSection.style.display = 'block';
+        userInfo.style.display = 'none';
+        adminSection.style.display = 'none';
+    }
+}
+
+// =============== LOGOUT HANDLING ===============
+function handleLogout() {
+    // إظهار تأكيد تسجيل الخروج
+    if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+        clearUserFromStorage();
+        updateSidebarUI();
+        closeSidebar();
+        showNotification('تم تسجيل الخروج بنجاح', 'success');
+        
+        // إعادة تحميل الصفحة لضمان إخفاء المحتوى المحمي
+        setTimeout(() => {
+            window.location.reload();
+        }, 1500);
+    }
+}
+
+// =============== ADMIN NOTIFICATIONS ===============
+function showAdminWelcomeNotification() {
+    if (!currentUser || currentUser.role === USER_ROLES.USER) return;
+    
+    const roleText = currentUser.role === USER_ROLES.ADMIN ? 'المدير' : 'المشرف';
+    const message = `مرحباً ${roleText} ${currentUser.name}! يمكنك الآن الوصول إلى لوحة الإدارة من القائمة الجانبية.`;
+    
+    const notification = document.createElement('div');
+    notification.className = 'admin-notification';
+    notification.innerHTML = `
+        <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <i class="fas fa-shield-alt" style="font-size: 20px;"></i>
+            <strong>لوحة الإدارة متاحة</strong>
+        </div>
+        <p style="margin: 0; font-size: 14px; opacity: 0.9;">${message}</p>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // إظهار الإشعار
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 500);
+    
+    // إخفاء الإشعار تلقائياً بعد 8 ثوان
+    setTimeout(() => {
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.parentNode.removeChild(notification);
+            }
+        }, 300);
+    }, 8000);
+}
+
+// =============== ADMIN LINK PROTECTION ===============
+function setupAdminLinkProtection() {
+    // حماية روابط الإدارة
+    document.querySelectorAll('.admin-item').forEach(link => {
+        link.addEventListener('click', function(e) {
+            if (!isLoggedIn || !currentUser) {
+                e.preventDefault();
+                showNotification('يجب تسجيل الدخول أولاً للوصول إلى هذه الصفحة', 'error');
+                openLoginModal();
+                return;
+            }
+            
+            if (currentUser.role === USER_ROLES.USER) {
+                e.preventDefault();
+                showNotification('ليس لديك صلاحية للوصول إلى هذه الصفحة', 'error');
+                return;
+            }
+            
+            // التحقق من صلاحيات محددة لروابط المدير فقط
+            const href = this.getAttribute('href');
+            const adminOnlyPages = ['manage-users.html', 'site-settings.html', 'analytics.html', 'backup.html', 'security.html'];
+            
+            if (adminOnlyPages.some(page => href.includes(page)) && currentUser.role !== USER_ROLES.ADMIN) {
+                e.preventDefault();
+                showNotification('هذه الصفحة متاحة للمدراء فقط', 'error');
+                return;
+            }
+        });
+    });
+}
+
+// =============== DEMO LOGIN HELPER ===============
+function quickLogin(role) {
+    let user;
+    switch (role) {
+        case 'admin':
+            user = { id: 1, name: 'أحمد محمد', role: USER_ROLES.ADMIN, email: 'admin@pixomod.com' };
+            break;
+        case 'moderator':
+            user = { id: 2, name: 'فاطمة علي', role: USER_ROLES.MODERATOR, email: 'moderator@pixomod.com' };
+            break;
+        default:
+            user = { id: 3, name: 'محمد أحمد', role: USER_ROLES.USER, email: 'user@pixomod.com' };
+    }
+    
+    saveUserToStorage(user);
+    updateSidebarUI();
+    showNotification(`تم تسجيل الدخول كـ ${user.name}`, 'success');
+}
+
+// =============== UTILITY FUNCTIONS ===============
+function getRoleDisplayName(role) {
+    switch (role) {
+        case USER_ROLES.ADMIN:
+            return 'مدير';
+        case USER_ROLES.MODERATOR:
+            return 'مشرف';
+        default:
+            return 'مستخدم';
+    }
+}
+
+function hasAdminAccess() {
+    return isLoggedIn && currentUser && 
+           (currentUser.role === USER_ROLES.ADMIN || currentUser.role === USER_ROLES.MODERATOR);
+}
+
+function hasFullAdminAccess() {
+    return isLoggedIn && currentUser && currentUser.role === USER_ROLES.ADMIN;
+}
+
+// =============== INITIALIZATION ===============
+document.addEventListener('DOMContentLoaded', function() {
+    initializeAdminSystem();
+    setupAdminLinkProtection();
+});
+
+// =============== TESTING FUNCTIONS (يمكن حذفها في الإنتاج) ===============
+// للاختبار، يمكنك استخدام هذه الوظائف في وحدة التحكم:
+window.adminTest = {
+    loginAsAdmin: () => quickLogin('admin'),
+    loginAsModerator: () => quickLogin('moderator'),
+    loginAsUser: () => quickLogin('user'),
+    logout: handleLogout,
+    getCurrentUser: () => currentUser,
+    checkAccess: () => ({ hasAdminAccess: hasAdminAccess(), hasFullAdminAccess: hasFullAdminAccess() })
+};
+
+// إضافة معلومات للاختبار في وحدة التحكم
+console.log(`
+🔧 نظام الإدارة جاهز للاختبار!
+
+للاختبار السريع، استخدم هذه الأوامر في وحدة التحكم:
+
+1. تسجيل دخول كمدير:
+   adminTest.loginAsAdmin()
+
+2. تسجيل دخول كمشرف:
+   adminTest.loginAsModerator()
+
+3. تسجيل دخول كمستخدم عادي:
+   adminTest.loginAsUser()
+
+4. تسجيل الخروج:
+   adminTest.logout()
+
+5. التحقق من المستخدم الحالي:
+   adminTest.getCurrentUser()
+
+6. التحقق من الصلاحيات:
+   adminTest.checkAccess()
+
+بيانات تسجيل الدخول للاختبار:
+📧 المدير: admin@pixomod.com / admin123
+📧 المشرف: moderator@pixomod.com / mod123  
+📧 المستخدم: user@pixomod.com / user123
+`);
+
+// تصدير الوظائف للاستخدام الخارجي
+window.PixomodAdmin = {
+    login: handleAdminLoginSubmit,
+    logout: handleLogout,
+    getCurrentUser: () => currentUser,
+    isLoggedIn: () => isLoggedIn,
+    hasAdminAccess,
+    hasFullAdminAccess,
+    updateUI: updateSidebarUI,
+    USER_ROLES
+};
+</script>
+<!-- إضافة هذا HTML بعد modal تسجيل الدخول الموجود -->
+<div class="demo-login-panel" id="demoLoginPanel" style="display: none;">
+<div class="demo-panel-content">
+<h3>🧪 لوحة الاختبار السريع</h3>
+<p>للتطوير والاختبار فقط - احذف هذا في الإنتاج</p>
+<div class="demo-buttons">
+<button class="btn btn-primary" onclick="adminTest.loginAsAdmin()">
+<i class="fas fa-user-shield"></i>
+                دخول كمدير
+            </button>
+<button class="btn btn-secondary" onclick="adminTest.loginAsModerator()">
+<i class="fas fa-user-edit"></i>
+                دخول كمشرف
+            </button>
+<button class="btn btn-ghost" onclick="adminTest.loginAsUser()">
+<i class="fas fa-user"></i>
+                دخول كمستخدم
+            </button>
+</div>
+<button class="demo-close" onclick="toggleDemoPanel()">×</button>
+</div>
+</div>
+<style>
+/* لوحة الاختبار السريع - احذف في الإنتاج */
+.demo-login-panel {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--surface);
+    border: 2px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: 0 10px 30px var(--shadow);
+    z-index: 10000;
+    max-width: 300px;
+}
+
+.demo-panel-content h3 {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--primary);
+    font-size: var(--font-size-lg);
+}
+
+.demo-panel-content p {
+    margin: 0 0 var(--spacing-md) 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.demo-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.demo-buttons .btn {
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    justify-content: flex-start;
+}
+
+.demo-close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+    color: var(--text-secondary);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+}
+
+.demo-close:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* زر لإظهار لوحة الاختبار */
+.demo-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    z-index: 9999;
+    transition: all var(--transition-fast);
+}
+
+.demo-toggle-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+/* تأثيرات إضافية للإدارة */
+.admin-badge {
+    position: relative;
+    overflow: hidden;
+}
+
+.admin-badge::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 20px 20px 0;
+    border-color: transparent #dc3545 transparent transparent;
+}
+
+.moderator-badge::after {
+    border-color: transparent #ffc107 transparent transparent;
+}
+
+/* تحسينات إضافية للوصولية */
+.sidebar-nav-item:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.admin-item:focus {
+    outline-color: var(--secondary);
+}
+
+/* تأثيرات التحميل للقائمة الجانبية */
+.sidebar-loading {
+    position: relative;
+}
+
+.sidebar-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surface);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 4px solid var(--border);
+    border-top: 4px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    z-index: 1001;
+}
+
+/* متجاوب للشاشات الصغيرة جداً */
+@media (max-width: 320px) {
+    .demo-login-panel {
+        left: 10px;
+        right: 10px;
+        max-width: none;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .admin-section {
+        margin: var(--spacing-xs);
+        padding: var(--spacing-xs);
+    }
+}
+</style>
+<script>
+// وظائف إضافية للاختبار والتطوير
+
+// تبديل لوحة الاختبار
+function toggleDemoPanel() {
+    const panel = document.getElementById('demoLoginPanel');
+    const toggleBtn = document.getElementById('demoToggleBtn');
+    
+    if (panel.style.display === 'none' || !panel.style.display) {
+        panel.style.display = 'block';
+        if (toggleBtn) toggleBtn.style.display = 'none';
+    } else {
+        panel.style.display = 'none';
+        if (toggleBtn) toggleBtn.style.display = 'block';
+    }
+}
+
+// إنشاء زر لإظهار لوحة الاختبار (فقط في بيئة التطوير)
+function createDemoToggleButton() {
+    // تحقق من أن الموقع في بيئة التطوير
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        const toggleBtn = document.createElement('button');
+        toggleBtn.id = 'demoToggleBtn';
+        toggleBtn.className = 'demo-toggle-btn';
+        toggleBtn.innerHTML = '<i class="fas fa-flask"></i>';
+        toggleBtn.title = 'لوحة الاختبار السريع';
+        toggleBtn.onclick = toggleDemoPanel;
+        
+        document.body.appendChild(toggleBtn);
+    }
+}
+
+// تحسين تجربة المستخدم مع التحميل
+function showSidebarLoading(show) {
+    const sidebar = document.getElementById('sidebar');
+    if (show) {
+        sidebar.classList.add('sidebar-loading');
+    } else {
+        sidebar.classList.remove('sidebar-loading');
+    }
+}
+
+// حفظ حالة القائمة الجانبية
+function saveSidebarState() {
+    const isOpen = document.getElementById('sidebar').classList.contains('active');
+    // في التطبيق الحقيقي: localStorage.setItem('sidebarOpen', isOpen);
+}
+
+// استرجاع حالة القائمة الجانبية
+function restoreSidebarState() {
+    // في التطبيق الحقيقي: const wasOpen = localStorage.getItem('sidebarOpen') === 'true';
+    // if (wasOpen) toggleSidebar();
+}
+
+// تتبع أنشطة المدير
+function logAdminActivity(action, details) {
+    if (!hasAdminAccess()) return;
+    
+    const activity = {
+        userId: currentUser.id,
+        userName: currentUser.name,
+        userRole: currentUser.role,
+        action: action,
+        details: details,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        url: window.location.href
+    };
+    
+    console.log('🔍 نشاط الإدارة:', activity);
+    
+    // في التطبيق الحقيقي، أرسل إلى الخادم:
+    // fetch('/api/admin/log-activity', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(activity)
+    // });
+}
+
+// تتبع الروابط المحمية
+function trackProtectedLinkAccess(linkHref) {
+    logAdminActivity('PROTECTED_LINK_ACCESS', { 
+        link: linkHref,
+        accessGranted: hasAdminAccess()
+    });
+}
+
+// تحديث إضافي لحماية الروابط
+function enhanceAdminLinkProtection() {
+    document.querySelectorAll('.admin-item').forEach(link => {
+        const originalClickHandler = link.onclick;
+        
+        link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            trackProtectedLinkAccess(href);
+            
+            // إضافة تأثير بصري للتحميل
+            if (hasAdminAccess()) {
+                this.style.opacity = '0.6';
+                this.style.pointerEvents = 'none';
+                
+                setTimeout(() => {
+                    this.style.opacity = '';
+                    this.style.pointerEvents = '';
+                }, 1000);
+            }
+        });
+    });
+}
+
+// تحسين التنقل بلوحة المفاتيح
+function enhanceKeyboardNavigation() {
+    document.addEventListener('keydown', function(e) {
+        // Alt + A لفتح لوحة الإدارة (للمدراء والمشرفين فقط)
+        if (e.altKey && e.key === 'a' && hasAdminAccess()) {
+            e.preventDefault();
+            const adminSection = document.getElementById('adminSection');
+            if (adminSection && adminSection.style.display !== 'none') {
+                const firstAdminLink = adminSection.querySelector('.admin-item');
+                if (firstAdminLink) {
+                    firstAdminLink.focus();
+                    showNotification('🎯 تم التركيز على لوحة الإدارة', 'info');
+                }
+            }
+        }
+        
+        // Alt + L لفتح نموذج تسجيل الدخول
+        if (e.altKey && e.key === 'l' && !isLoggedIn) {
+            e.preventDefault();
+            openLoginModal();
+        }
+        
+        // Alt + O لتسجيل الخروج
+        if (e.altKey && e.key === 'o' && isLoggedIn) {
+            e.preventDefault();
+            handleLogout();
+        }
+    });
+}
+
+// إضافة مؤشرات بصرية للصلاحيات
+function addRoleIndicators() {
+    if (!isLoggedIn || !currentUser) return;
+    
+    const userInfo = document.getElementById('userInfo');
+    if (userInfo && (currentUser.role === USER_ROLES.ADMIN || currentUser.role === USER_ROLES.MODERATOR)) {
+        userInfo.classList.add(currentUser.role === USER_ROLES.ADMIN ? 'admin-badge' : 'moderator-badge');
+    }
+}
+
+// تحديث الإحصائيات (للمدراء)
+function updateAdminStats() {
+    if (!hasFullAdminAccess()) return;
+    
+    // محاكاة جلب الإحصائيات
+    const stats = {
+        totalUsers: Math.floor(Math.random() * 10000) + 1000,
+        activeUsers: Math.floor(Math.random() * 1000) + 100,
+        totalDownloads: Math.floor(Math.random() * 100000) + 10000,
+        pendingReports: Math.floor(Math.random() * 50)
+    };
+    
+    // في التطبيق الحقيقي، يمكن إظهار هذه الإحصائيات في لوحة الإدارة
+    console.log('📊 إحصائيات الإدارة:', stats);
+}
+
+// التحقق من الجلسة دورياً
+function startSessionCheck() {
+    if (!isLoggedIn) return;
+    
+    setInterval(() => {
+        // في التطبيق الحقيقي، تحقق من صحة الجلسة مع الخادم
+        // إذا انتهت صلاحية الجلسة، قم بتسجيل الخروج التلقائي
+        
+        // محاكاة انتهاء الجلسة بعد 30 دقيقة (للاختبار: 5 دقائق)
+        const sessionDuration = 5 * 60 * 1000; // 5 دقائق بالميلي ثانية
+        const loginTime = Date.now(); // في التطبيق الحقيقي، احفظ وقت تسجيل الدخول
+        
+        // if (Date.now() - loginTime > sessionDuration) {
+        //     showNotification('انتهت صلاحية جلستك. سيتم تسجيل الخروج تلقائياً.', 'warning');
+        //     setTimeout(handleLogout, 3000);
+        // }
+    }, 60000); // تحقق كل دقيقة
+}
+
+// تحسين تحديث واجهة المستخدم مع التأثيرات البصرية
+function updateSidebarUIWithAnimation() {
+    showSidebarLoading(true);
+    
+    setTimeout(() => {
+        updateSidebarUI();
+        addRoleIndicators();
+        showSidebarLoading(false);
+        
+        // تأثير إضافي للتحديث
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.transform = 'scale(0.98)';
+        sidebar.style.transition = 'transform 0.2s ease';
+        
+        setTimeout(() => {
+            sidebar.style.transform = 'scale(1)';
+            setTimeout(() => {
+                sidebar.style.transition = '';
+            }, 200);
+        }, 100);
+    }, 500);
+}
+
+// إعداد إضافي عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    // إنشاء زر الاختبار (فقط في بيئة التطوير)
+    createDemoToggleButton();
+    
+    // تحسين الحماية والتنقل
+    enhanceAdminLinkProtection();
+    enhanceKeyboardNavigation();
+    
+    // بدء فحص الجلسة
+    startSessionCheck();
+    
+    // تحديث الإحصائيات للمدراء
+    if (hasFullAdminAccess()) {
+        updateAdminStats();
+    }
+    
+    // استرجاع حالة القائمة الجانبية
+    restoreSidebarState();
+    
+    console.log('✅ نظام الإدارة المتطور جاهز!');
+});
+
+// حفظ حالة القائمة عند الإغلاق
+window.addEventListener('beforeunload', function() {
+    saveSidebarState();
+    
+    // تسجيل نشاط إغلاق الصفحة
+    if (hasAdminAccess()) {
+        logAdminActivity('PAGE_UNLOAD', { 
+            sessionDuration: Date.now() - (window.sessionStartTime || Date.now())
+        });
+    }
+});
+
+// تتبع وقت بداية الجلسة
+window.sessionStartTime = Date.now();
+</script>
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+<div class="modal">
+<div class="modal-header">
+<h2 class="modal-title">تسجيل الدخول</h2>
+<button class="modal-close" id="loginModalClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<form id="loginForm">
+<div class="form-group">
+<label class="form-label" for="email">البريد الإلكتروني</label>
+<input class="form-input" id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="password">كلمة المرور</label>
+<input class="form-input" id="password" required="" type="password"/>
+</div>
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+<i class="fas fa-sign-in-alt"></i>
+                        تسجيل الدخول
+                    </button>
+</form>
+<div class="divider">
+<span>أو</span>
+</div>
+<div class="social-login">
+<a class="social-btn" href="#">
+<i class="fab fa-google" style="color: #DB4437;"></i>
+<span>تسجيل الدخول بـ Google</span>
+</a>
+<a class="social-btn" href="#">
+<i class="fab fa-facebook" style="color: #4267B2;"></i>
+<span>تسجيل الدخول بـ Facebook</span>
+</a>
+</div>
+<div style="text-align: center; margin-top: var(--spacing-lg);">
+<span>ليس لديك حساب؟ </span>
+<a href="#" style="color: var(--primary); text-decoration: none;">إنشاء حساب جديد</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="main">
+<!-- Hero Section -->
+<section class="hero">
+<div class="container">
+<div class="hero-content">
+<h1 class="hero-title">مرحباً بك في Pixomod</h1>
+<p class="hero-subtitle">وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة</p>
+<div class="hero-cta">
+<a class="btn btn-primary" href="#mobile-apps">
+<i class="fas fa-mobile-alt"></i>
+                            تصفح التطبيقات
+                        </a>
+<a class="btn btn-secondary" href="#pc-software">
+<i class="fas fa-desktop"></i>
+                            برامج الكمبيوتر
+                        </a>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="section">
+<div class="container">
+<div class="stats">
+<div class="stat-item scroll-reveal">
+<div class="stat-number">50K+</div>
+<div class="stat-label">تطبيق وبرنامج</div>
+</div>
+<div class="stat-item scroll-reveal">
+<div class="stat-number">1M+</div>
+<div class="stat-label">مستخدم نشط</div>
+</div>
+<div class="stat-item scroll-reveal">
+<div class="stat-number">500+</div>
+<div class="stat-label">مقالة تقنية</div>
+</div>
+<div class="stat-item scroll-reveal">
+<div class="stat-number">24/7</div>
+<div class="stat-label">دعم فني</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Ad Banner -->
+<section class="section">
+<div class="container">
+<div class="ad-banner animate-glow">
+<div class="ad-content">
+<h2 style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-md);">
+<i class="fas fa-star animate-bounce"></i>
+                            مساحة إعلانية مميزة
+                        </h2>
+<p style="font-size: var(--font-size-lg); opacity: 0.9;">
+                            هذا المكان مخصص لعرض الإعلانات المميزة والعروض الخاصة
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Mobile Apps Section -->
+<section class="section" id="mobile-apps">
+<div class="container">
+<div class="section-header scroll-reveal">
+<h2 class="section-title">ألعاب وتطبيقات الهاتف</h2>
+<p class="section-subtitle">اكتشف أحدث الألعاب والتطبيقات المعدلة والأصلية للهواتف الذكية</p>
+</div>
+<div class="card-grid">
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-gamepad"></i>
+</div>
+<h3 class="card-title">ألعاب الأكشن</h3>
+<p class="card-description">مجموعة ضخمة من ألعاب الأكشن المثيرة والمليئة بالمغامرات</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تصفح الألعاب
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-puzzle-piece"></i>
+</div>
+<h3 class="card-title">ألعاب الذكاء</h3>
+<p class="card-description">تحدى عقلك مع أفضل ألعاب الألغاز والذكاء المسلية</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تصفح الألعاب
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-camera"></i>
+</div>
+<h3 class="card-title">تطبيقات التصوير</h3>
+<p class="card-description">أدوات احترافية لتحرير الصور والفيديو بجودة عالية</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تحميل التطبيقات
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-music"></i>
+</div>
+<h3 class="card-title">تطبيقات الموسيقى</h3>
+<p class="card-description">استمتع بأفضل تطبيقات الموسيقى والبودكاست</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تحميل التطبيقات
+                        </a>
+</div>
+</div>
+</div>
+</section>
+<!-- PC Software Section -->
+<section class="section" id="pc-software">
+<div class="container">
+<div class="section-header scroll-reveal">
+<h2 class="section-title">برامج الكمبيوتر</h2>
+<p class="section-subtitle">مجموعة شاملة من برامج الكمبيوتر المفيدة والضرورية لجميع الاستخدامات</p>
+</div>
+<div class="card-grid">
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-shield-alt"></i>
+</div>
+<h3 class="card-title">برامج الحماية</h3>
+<p class="card-description">احم جهازك بأقوى برامج مكافحة الفيروسات والحماية</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تحميل البرامج
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-paint-brush"></i>
+</div>
+<h3 class="card-title">برامج التصميم</h3>
+<p class="card-description">أدوات احترافية للتصميم الجرافيكي وتحرير الصور</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تحميل البرامج
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-video"></i>
+</div>
+<h3 class="card-title">برامج المونتاج</h3>
+<p class="card-description">برامج احترافية لتحرير ومونتاج الفيديو بجودة عالية</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تحميل البرامج
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-cogs"></i>
+</div>
+<h3 class="card-title">أدوات النظام</h3>
+<p class="card-description">برامج مساعدة لتحسين أداء النظام وإدارة الملفات</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-download"></i>
+                            تحميل البرامج
+                        </a>
+</div>
+</div>
+</div>
+</section>
+<!-- Blog Section -->
+<section class="section" id="blog">
+<div class="container">
+<div class="section-header scroll-reveal">
+<h2 class="section-title">المدونة والمقالات</h2>
+<p class="section-subtitle">اقرأ أحدث المقالات التقنية والنصائح المفيدة في عالم التكنولوجيا</p>
+</div>
+<div class="card-grid">
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-lightbulb"></i>
+</div>
+<h3 class="card-title">نصائح تقنية</h3>
+<p class="card-description">نصائح وحيل مفيدة لتحسين تجربتك مع التكنولوجيا</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-read"></i>
+                            قراءة المقالات
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-newspaper"></i>
+</div>
+<h3 class="card-title">أخبار التقنية</h3>
+<p class="card-description">كن على اطلاع بآخر أخبار وتطورات عالم التكنولوجيا</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-read"></i>
+                            قراءة الأخبار
+                        </a>
+</div>
+<div class="card scroll-reveal">
+<div class="card-icon">
+<i class="fas fa-graduation-cap"></i>
+</div>
+<h3 class="card-title">دروس تعليمية</h3>
+<p class="card-description">تعلم مهارات جديدة من خلال دروسنا التفاعلية المفصلة</p>
+<a class="btn btn-primary" href="#">
+<i class="fas fa-read"></i>
+                            مشاهدة الدروس
+                        </a>
+</div>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="section" id="contact">
+<div class="container">
+<div class="section-header scroll-reveal">
+<h2 class="section-title">اتصل بنا</h2>
+<p class="section-subtitle">نحن هنا للمساعدة! تواصل معنا لأي استفسار أو اقتراح</p>
+</div>
+<div class="contact-form scroll-reveal">
+<form id="contactForm">
+<div class="form-row">
+<div class="form-group">
+<label class="form-label" for="name">الاسم الكامل</label>
+<input class="form-input" id="name" required="" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="contactEmail">البريد الإلكتروني</label>
+<input class="form-input" id="contactEmail" required="" type="email"/>
+</div>
+</div>
+<div class="form-group">
+<label class="form-label" for="subject">الموضوع</label>
+<input class="form-input" id="subject" required="" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label" for="message">الرسالة</label>
+<textarea class="form-input form-textarea" id="message" required=""></textarea>
+</div>
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+<i class="fas fa-paper-plane"></i>
+                            إرسال الرسالة
+                        </button>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h3>معلومات مهمة</h3>
+<ul class="footer-links">
+<li><a href="#">سياسة الخصوصية</a></li>
+<li><a href="#">شروط الاستخدام</a></li>
+<li><a href="#">الأسئلة الشائعة</a></li>
+<li><a href="#">الدعم الفني</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 Pixomod. جميع الحقوق محفوظة. صُنع بـ <i class="fas fa-heart" style="color: #e74c3c;"></i> في الجزائر</p>
+</div>
+</div>
+</footer>
+<script>
+        // =============== GLOBAL VARIABLES ===============
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                logoText: 'Pixomod',
+                login: 'تسجيل الدخول',
+                home: 'الصفحة الرئيسية',
+                mobileApps: 'ألعاب وتطبيقات الهاتف',
+                pcSoftware: 'برامج الكمبيوتر',
+                blog: 'المدونة والمقالات',
+                contact: 'اتصل بنا',
+                heroTitle: 'مرحباً بك في Pixomod',
+                heroSubtitle: 'وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة',
+                browseMobile: 'تصفح التطبيقات',
+                browsePc: 'برامج الكمبيوتر',
+                currentLang: 'العربية',
+                themeToggleTooltip: 'تبديل الوضع'
+            },
+            en: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Login',
+                home: 'Home',
+                mobileApps: 'Mobile Games & Apps',
+                pcSoftware: 'PC Software',
+                blog: 'Blog & Articles',
+                contact: 'Contact Us',
+                heroTitle: 'Welcome to Pixomod',
+                heroSubtitle: 'Your ultimate destination for the best games, apps, and software with helpful tech articles',
+                browseMobile: 'Browse Apps',
+                browsePc: 'PC Software',
+                currentLang: 'English',
+                themeToggleTooltip: 'Toggle Theme'
+            },
+            fr: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Connexion',
+                home: 'Accueil',
+                mobileApps: 'Jeux et Apps Mobile',
+                pcSoftware: 'Logiciels PC',
+                blog: 'Blog et Articles',
+                contact: 'Contactez-nous',
+                heroTitle: 'Bienvenue sur Pixomod',
+                heroSubtitle: 'Votre destination ultime pour les meilleurs jeux, applications et logiciels avec des articles techniques utiles',
+                browseMobile: 'Parcourir les Apps',
+                browsePc: 'Logiciels PC',
+                currentLang: 'Français',
+                themeToggleTooltip: 'Basculer le Thème'
+            }
+        };
+
+        let currentLanguage = 'ar';
+        let currentTheme = 'light';
+
+        // =============== DOM ELEMENTS ===============
+        const header = document.getElementById('header');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginModalClose = document.getElementById('loginModalClose');
+
+        // =============== INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeScrollAnimations();
+            initializeEventListeners();
+            initializeHeaderScroll();
+            initializeForms();
+            initializeTooltips();
+            showWelcomeAnimation();
+        });
+
+        // =============== THEME MANAGEMENT ===============
+        function initializeTheme() {
+            // Note: In a real implementation, you would use localStorage here
+            // For this demo, we'll use a variable to simulate persistence
+            const savedTheme = currentTheme; // Would be: localStorage.getItem('theme') || 'light'
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            const themeToggleThumb = themeToggle.querySelector('.theme-toggle-thumb');
+            const themeIcon = themeToggleThumb.querySelector('i');
+            
+            if (theme === 'dark') {
+                themeToggle.classList.add('active');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeToggle.classList.remove('active');
+                themeIcon.className = 'fas fa-sun';
+            }
+            
+            // In a real implementation: localStorage.setItem('theme', theme)
+        }
+
+        function toggleTheme() {
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            
+            // Add transition effect
+            document.body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        }
+
+        // =============== LANGUAGE MANAGEMENT ===============
+        function initializeLanguage() {
+            // Note: In a real implementation, you would use localStorage here
+            const savedLang = currentLanguage; // Would be: localStorage.getItem('language') || 'ar'
+            setLanguage(savedLang);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            const translation = translations[lang];
+            
+            // Update HTML attributes
+            document.documentElement.lang = lang;
+            document.documentElement.dir = translation.dir;
+            
+            // Update UI text
+            updateUIText(translation);
+            
+            // Update current language display
+            document.getElementById('currentLang').textContent = translation.currentLang;
+            
+            // Update tooltips
+            updateTooltips();
+            
+            // In a real implementation: localStorage.setItem('language', lang)
+        }
+
+        function updateUIText(translation) {
+            // Update logo
+            document.querySelector('.logo-text').textContent = translation.logoText;
+            
+            // Update login button
+            const loginBtnSpan = loginBtn.querySelector('span');
+            if (loginBtnSpan) loginBtnSpan.textContent = translation.login;
+            
+            // Update sidebar navigation
+            const sidebarNavItems = document.querySelectorAll('.sidebar-nav-item span');
+            const navTexts = [
+                translation.home,
+                translation.mobileApps,
+                translation.pcSoftware,
+                translation.blog,
+                translation.contact
+            ];
+            
+            sidebarNavItems.forEach((item, index) => {
+                if (navTexts[index]) item.textContent = navTexts[index];
+            });
+            
+            // Update hero section
+            document.querySelector('.hero-title').textContent = translation.heroTitle;
+            document.querySelector('.hero-subtitle').textContent = translation.heroSubtitle;
+            
+            // Update hero buttons
+            const heroButtons = document.querySelectorAll('.hero-cta .btn span');
+            if (heroButtons[0]) heroButtons[0].textContent = translation.browseMobile;
+            if (heroButtons[1]) heroButtons[1].textContent = translation.browsePc;
+        }
+
+        function updateTooltips() {
+            const translation = translations[currentLanguage];
+            themeToggle.setAttribute('data-tooltip', translation.themeToggleTooltip);
+        }
+
+        // =============== EVENT LISTENERS ===============
+        function initializeEventListeners() {
+            // Menu toggle
+            menuToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            // Language selector
+            languageBtn.addEventListener('click', toggleLanguageDropdown);
+            document.addEventListener('click', closeLanguageDropdown);
+            
+            // Language options
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    closeLanguageDropdown();
+                });
+            });
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            // Modal controls
+            loginBtn.addEventListener('click', openLoginModal);
+            loginModalClose.addEventListener('click', closeLoginModal);
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === this) closeLoginModal();
+            });
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeSidebar();
+                    }
+                });
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            
+            // Window resize
+            window.addEventListener('resize', handleResize);
+        }
+
+        // =============== SIDEBAR MANAGEMENT ===============
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== LANGUAGE DROPDOWN ===============
+        function toggleLanguageDropdown(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        }
+
+        function closeLanguageDropdown() {
+            languageDropdown.classList.remove('active');
+        }
+
+        // =============== MODAL MANAGEMENT ===============
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Focus on first input
+            setTimeout(() => {
+                const firstInput = loginModal.querySelector('input');
+                if (firstInput) firstInput.focus();
+            }, 300);
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== HEADER SCROLL EFFECT ===============
+        function initializeHeaderScroll() {
+            let lastScrollY = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                // Add scrolled class for styling
+                if (currentScrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                // Hide/show header on scroll (optional)
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
+
+        // =============== SCROLL ANIMATIONS ===============
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all scroll-reveal elements
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // =============== FORM HANDLING ===============
+        function initializeForms() {
+            // Login form
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLoginSubmit);
+            
+            // Contact form
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', handleContactSubmit);
+            
+            // Add floating label effect
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+                
+                // Check if input has value on load
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+            });
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                showNotification('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            // Simulate login process
+            showLoading(true);
+            
+            setTimeout(() => {
+                showLoading(false);
+                showNotification('تم تسجيل الدخول بنجاح!', 'success');
+                closeLoginModal();
+                
+                // In a real app, you would handle the login response here
+            }, 2000);
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('contactEmail').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Simple validation
+            if (!name || !email || !subject || !message) {
+                showNotification('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            // Simulate form submission
+            showLoading(true);
+            
+            setTimeout(() => {
+                showLoading(false);
+                showNotification('تم إرسال رسالتك بنجاح!', 'success');
+                e.target.reset();
+                
+                // In a real app, you would send the data to a server
+            }, 2000);
+        }
+
+        // =============== NOTIFICATION SYSTEM ===============
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${getNotificationIcon(type)}"></i>
+                    <span>${message}</span>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            // Add styles
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-lg);
+                box-shadow: 0 10px 25px var(--shadow);
+                z-index: 10000;
+                min-width: 300px;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            
+            if (type === 'success') {
+                notification.style.borderColor = '#28a745';
+                notification.style.color = '#28a745';
+            } else if (type === 'error') {
+                notification.style.borderColor = '#dc3545';
+                notification.style.color = '#dc3545';
+            }
+            
+            // Add to DOM
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            // Close functionality
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => removeNotification(notification));
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                removeNotification(notification);
+            }, 5000);
+        }
+
+        function removeNotification(notification) {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+
+        function getNotificationIcon(type) {
+            switch (type) {
+                case 'success': return 'fa-check-circle';
+                case 'error': return 'fa-exclamation-circle';
+                case 'warning': return 'fa-exclamation-triangle';
+                default: return 'fa-info-circle';
+            }
+        }
+
+        // =============== LOADING SYSTEM ===============
+        function showLoading(show) {
+            let loader = document.getElementById('globalLoader');
+            
+            if (show && !loader) {
+                loader = document.createElement('div');
+                loader.id = 'globalLoader';
+                loader.innerHTML = `
+                    <div class="loading-overlay">
+                        <div class="loading-spinner"></div>
+                        <p>جاري التحميل...</p>
+                    </div>
+                `;
+                
+                loader.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
+                
+                document.body.appendChild(loader);
+            } else if (!show && loader) {
+                loader.remove();
+            }
+        }
+
+        // =============== TOOLTIP SYSTEM ===============
+        function initializeTooltips() {
+            // This is handled by CSS :hover pseudo-class
+            // Additional JavaScript can be added for more complex tooltips
+        }
+
+        // =============== KEYBOARD NAVIGATION ===============
+        function handleKeyboardNavigation(e) {
+            // ESC key closes modals and dropdowns
+            if (e.key === 'Escape') {
+                closeLoginModal();
+                closeSidebar();
+                closeLanguageDropdown();
+            }
+            
+            // Enter key on buttons
+            if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+                e.target.click();
+            }
+        }
+
+        // =============== RESPONSIVE HANDLING ===============
+        function handleResize() {
+            // Close sidebar on larger screens
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+            
+            // Close language dropdown on resize
+            closeLanguageDropdown();
+        }
+
+        // =============== WELCOME ANIMATION ===============
+        function showWelcomeAnimation() {
+            // Add a welcome animation class to the body
+            document.body.classList.add('welcome-animation');
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                document.body.classList.remove('welcome-animation');
+            }, 1000);
+        }
+
+        // =============== PERFORMANCE OPTIMIZATIONS ===============
+        
+        // Debounce function for scroll events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Throttle function for resize events
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        // =============== ACCESSIBILITY ENHANCEMENTS ===============
+        
+        // Add focus-visible polyfill behavior
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('using-keyboard');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('using-keyboard');
+        });
+
+        // Screen reader announcements
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.style.cssText = `
+                position: absolute;
+                left: -10000px;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            `;
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        // =============== ADVANCED FEATURES ===============
+        
+        // Dynamic favicon based on theme
+        function updateFavicon() {
+            // This would require actual favicon files
+            // const favicon = document.querySelector('link[rel="icon"]');
+            // favicon.href = currentTheme === 'dark' ? '/favicon-dark.ico' : '/favicon-light.ico';
+        }
+
+        // Page visibility API for performance
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Pause animations when page is not visible
+                document.body.classList.add('page-hidden');
+            } else {
+                // Resume animations when page becomes visible
+                document.body.classList.remove('page-hidden');
+            }
+        });
+
+        // Service Worker registration (for PWA capabilities)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // navigator.serviceWorker.register('/sw.js')
+                //     .then(function(registration) {
+                //         console.log('SW registered: ', registration);
+                //     })
+                //     .catch(function(registrationError) {
+                //         console.log('SW registration failed: ', registrationError);
+                //     });
+            });
+        }
+
+        // =============== ANALYTICS AND TRACKING ===============
+        
+        function trackUserInteraction(action, element) {
+            // In a real implementation, you would send this data to your analytics service
+            console.log('User interaction:', action, element);
+        }
+
+        // Track button clicks
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.btn, .card, .social-link')) {
+                trackUserInteraction('click', e.target.className);
+            }
+        });
+
+        // Track form submissions
+        document.addEventListener('submit', function(e) {
+            trackUserInteraction('form_submit', e.target.id);
+        });
+
+        // =============== ERROR HANDLING ===============
+        
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+            // In a real implementation, you might want to send errors to a logging service
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+            // Handle unhandled promise rejections
+        });
+
+        // =============== ADDITIONAL UTILITIES ===============
+        
+        // Copy to clipboard functionality
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                return navigator.clipboard.writeText(text);
+            } else {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+        }
+
+        // Format numbers with locale
+        function formatNumber(number) {
+            return new Intl.NumberFormat(currentLanguage === 'ar' ? 'ar-EG' : currentLanguage).format(number);
+        }
+
+        // Generate unique IDs
+        function generateId() {
+            return 'id_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Validate email format
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // =============== FINAL INITIALIZATION ===============
+        
+        // Additional setup that runs after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add CSS custom properties for JavaScript values
+            document.documentElement.style.setProperty('--js-header-height', '70px');
+            
+            // Initialize any additional features
+            updateFavicon();
+            
+            // Add loaded class to body for CSS animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        });
+
+        // Export functions for potential external use
+        window.PixomodApp = {
+            setTheme,
+            setLanguage,
+            showNotification,
+            showLoading,
+            copyToClipboard,
+            formatNumber,
+            isValidEmail
+        };
+
+    </script>
+
+<!-- Sidebar Enhancements -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector(".sidebar ul");
+  const role = localStorage.getItem("userRole");
+
+  // زر تسجيل الدخول (في الجوال فقط)
+  if (window.innerWidth < 768 && !document.getElementById("loginBtnMobile")) {
+    const loginLi = document.createElement("li");
+    const loginBtn = document.createElement("a");
+    loginBtn.textContent = "تسجيل الدخول";
+    loginBtn.href = "#";
+    loginBtn.id = "loginBtnMobile";
+    loginBtn.onclick = () => {
+      document.querySelector(".login-popup")?.classList.add("show");
+    };
+    loginLi.appendChild(loginBtn);
+    sidebar.appendChild(loginLi);
+  }
+
+  // زر لوحة التحكم عند تسجيل الدخول
+  if (role && !document.getElementById("dashboardLink")) {
+    const dashboardLi = document.createElement("li");
+    const dashboardLink = document.createElement("a");
+    dashboardLink.id = "dashboardLink";
+    dashboardLink.textContent = "لوحة التحكم";
+    dashboardLink.href = role === "admin" ? "pixomod_admin_dashboard_final.html" : "pixomod_moderator_dashboard_final.html";
+    dashboardLi.appendChild(dashboardLink);
+    sidebar.appendChild(dashboardLi);
+  }
+});
+</script>
+</body>
+</html>
+<h3>Pixomod</h3>
+<p>وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.</p>
+<div class="social-links">
+<a class="social-link" data-tooltip="فيسبوك" href="#">
+<i class="fab fa-facebook"></i>
+</a>
+<a class="social-link" data-tooltip="تويتر" href="#">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="social-link" data-tooltip="إنستغرام" href="#">
+<i class="fab fa-instagram"></i>
+</a>
+<a class="social-link" data-tooltip="يوتيوب" href="#">
+<i class="fab fa-youtube"></i>
+</a>
+</div>
+
+<div class="footer-section">
+<h3>روابط سريعة</h3>
+<ul class="footer-links">
+<li><a href="#">الصفحة الرئيسية</a></li>
+<li><a href="#mobile-apps">تطبيقات الهاتف</a></li>
+<li><a href="#pc-software">برامج الكمبيوتر</a></li>
+<li><a href="#blog">المدونة</a></li>
+<li><a href="#contact">اتصل بنا</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3>الفئات</h3>
+<ul class="footer-links">
+<li><a href="#">ألعاب الأكشن</a></li>
+<li><a href="#">ألعاب الذكاء</a></li>
+<li><a href="#">برامج التصميم</a></li>
+<li><a href="#">برامج الحماية</a></li>
+</ul>
+</div>
+<div class="footer-section">
+</div>

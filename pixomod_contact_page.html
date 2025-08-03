@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pixomod - اتصل بنا</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&amp;family=Segoe+UI:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        /* =============== GLOBAL VARIABLES =============== */
+        :root {
+            /* Light Theme Colors */
+            --primary-light: #007BFF;
+            --secondary-light: #6610F2;
+            --background-light: #FFFFFF;
+            --surface-light: #F8F9FA;
+            --text-light: #212529;
+            --text-secondary-light: #6C757D;
+            --border-light: #DEE2E6;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark Theme Colors */
+            --primary-dark: #000000;
+            --secondary-dark: #00FF7F;
+            --background-dark: #121212;
+            --surface-dark: #1E1E1E;
+            --text-dark: #FFFFFF;
+            --text-secondary-dark: #B3B3B3;
+            --border-dark: #333333;
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            
+            /* Current Theme (defaults to light) */
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --background: var(--background-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            
+            /* Typography */
+            --font-primary: 'Cairo', 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Z-index layers */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal-backdrop: 1040;
+            --z-modal: 1050;
+            --z-popover: 1060;
+            --z-tooltip: 1070;
+        }
+        
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --surface: var(--surface-dark);
+            --text: var(--text-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+        
+        /* =============== RESET & BASE STYLES =============== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+            overflow-x: hidden;
+        }
+        
+        /* RTL/LTR Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="ltr"] {
+            text-align: left;
+        }
+        
+        /* =============== UTILITY CLASSES =============== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .visible {
+            display: block !important;
+        }
+        
+        .opacity-0 {
+            opacity: 0;
+        }
+        
+        .opacity-100 {
+            opacity: 1;
+        }
+        
+        .transition-all {
+            transition: all var(--transition-normal);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--surface);
+        }
+        
+        /* =============== HEADER STYLES =============== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: var(--z-fixed);
+            transition: all var(--transition-normal);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(18, 18, 18, 0.95);
+        }
+        
+        .header.scrolled {
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .header-content {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-normal);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .language-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 25px var(--shadow);
+            min-width: 150px;
+            z-index: var(--z-dropdown);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+        }
+        
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .language-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            width: 50px;
+            height: 25px;
+            background: var(--border);
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color var(--transition-normal);
+        }
+        
+        .theme-toggle.active {
+            background: var(--primary);
+        }
+        
+        .theme-toggle-thumb {
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+        }
+        
+        .theme-toggle.active .theme-toggle-thumb {
+            transform: translateX(25px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all var(--transition-fast);
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* =============== SIDEBAR STYLES =============== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: var(--z-modal);
+            transition: right var(--transition-normal);
+            overflow-y: auto;
+        }
+        
+        [dir="ltr"] .sidebar {
+            left: -350px;
+            right: auto;
+            border-left: none;
+            border-right: 1px solid var(--border);
+            transition: left var(--transition-normal);
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        [dir="ltr"] .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .sidebar-close:hover {
+            transform: rotate(90deg);
+            background: var(--secondary);
+        }
+        
+        .sidebar-nav {
+            padding: var(--spacing-lg);
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-nav-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.1;
+            transition: left var(--transition-slow);
+        }
+        
+        .sidebar-nav-item:hover:before {
+            left: 100%;
+        }
+        
+        .sidebar-nav-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        [dir="ltr"] .sidebar-nav-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        .sidebar-nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* =============== MAIN CONTENT STYLES =============== */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .page-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 900;
+            margin-bottom: var(--spacing-lg);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-xl);
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        /* =============== CONTACT FORM STYLES =============== */
+        .contact-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-2xl);
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .contact-form-wrapper {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: all var(--transition-normal);
+        }
+        
+        .contact-form-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+        
+        .contact-info {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: all var(--transition-normal);
+        }
+        
+        .contact-info:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+        
+        .form-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            background: var(--background);
+            color: var(--text);
+            transition: all var(--transition-fast);
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        /* =============== CONTACT INFO STYLES =============== */
+        .contact-info-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .contact-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        [dir="ltr"] .contact-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        .contact-item-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+        }
+        
+        .contact-item:hover .contact-item-icon {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .contact-item-content h4 {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .contact-item-content p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+        
+        .contact-item:hover .contact-item-content p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* =============== SOCIAL LINKS SECTION =============== */
+        .social-section {
+            margin-top: var(--spacing-2xl);
+            text-align: center;
+        }
+        
+        .social-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+        }
+        
+        .social-link {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: var(--font-size-xl);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .social-link:hover:before {
+            left: 100%;
+        }
+        
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,123,255,0.3);
+        }
+        
+        /* =============== ANIMATIONS =============== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                animation-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transform: translate3d(0, -30px, 0);
+            }
+            70% {
+                animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
+                transform: translate3d(0, -15px, 0);
+            }
+            90% {
+                transform: translate3d(0,-4px,0);
+            }
+        }
+        
+        /* =============== RESPONSIVE DESIGN =============== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .header-content {
+                height: 60px;
+            }
+            
+            .main {
+                margin-top: 60px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .header-actions > .btn {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .page-subtitle {
+                font-size: var(--font-size-lg);
+            }
+            
+            .contact-section {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+            }
+            
+            .contact-form-wrapper,
+            .contact-info {
+                padding: var(--spacing-lg);
+            }
+            
+            .social-links {
+                gap: var(--spacing-md);
+            }
+            
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: var(--font-size-lg);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            [dir="ltr"] .sidebar {
+                left: -100%;
+            }
+            
+            .page-header {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-sm);
+            }
+            
+            .contact-item:hover {
+                transform: translateY(-5px);
+            }
+        }
+        
+        /* =============== NOTIFICATION STYLES =============== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: 0 10px 25px var(--shadow);
+            z-index: 10000;
+            min-width: 300px;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-success {
+            border-color: #28a745;
+            color: #28a745;
+        }
+        
+        .notification-error {
+            border-color: #dc3545;
+            color: #dc3545;
+        }
+        
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .notification-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+        }
+        
+        /* =============== LOADING SPINNER =============== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* =============== TOOLTIP STYLES =============== */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: var(--z-tooltip);
+        }
+        
+        .tooltip:hover:before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header" id="header">
+<div class="container">
+<div class="header-content">
+<!-- Logo -->
+<a class="logo" href="index.html">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span class="logo-text" data-i18n="logoText">Pixomod</span>
+</a>
+<!-- Header Actions -->
+<div class="header-actions">
+<!-- Language Selector -->
+<div class="language-selector">
+<button class="language-btn" id="languageBtn">
+<i class="fas fa-globe"></i>
+<span data-i18n="currentLang" id="currentLang">العربية</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="language-dropdown" id="languageDropdown">
+<div class="language-option" data-lang="ar">
+<i class="fas fa-flag"></i>
+<span>العربية</span>
+</div>
+<div class="language-option" data-lang="en">
+<i class="fas fa-flag"></i>
+<span>English</span>
+</div>
+<div class="language-option" data-lang="fr">
+<i class="fas fa-flag"></i>
+<span>Français</span>
+</div>
+</div>
+</div>
+<!-- Theme Toggle -->
+<div class="theme-toggle tooltip" data-i18n-tooltip="themeToggleTooltip" data-tooltip="تبديل الوضع" id="themeToggle">
+<div class="theme-toggle-thumb">
+<i class="fas fa-sun"></i>
+</div>
+</div>
+<!-- Back to Home Button -->
+<a class="btn btn-primary" href="index.html">
+<i class="fas fa-home"></i>
+<span data-i18n="backToHome">العودة للرئيسية</span>
+</a>
+<!-- Menu Toggle -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span data-i18n="logoText">Pixomod</span>
+</div>
+<button class="sidebar-close" id="sidebarClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<nav class="sidebar-nav">
+<a class="sidebar-nav-item" href="index.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-home"></i>
+</div>
+<span data-i18n="home">الصفحة الرئيسية</span>
+</a>
+<a class="sidebar-nav-item" href="#mobile-apps">
+<div class="sidebar-nav-icon">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<span data-i18n="mobileApps">ألعاب وتطبيقات الهاتف</span>
+</a>
+<a class="sidebar-nav-item" href="#pc-software">
+<div class="sidebar-nav-icon">
+<i class="fas fa-desktop"></i>
+</div>
+<span data-i18n="pcSoftware">برامج الكمبيوتر</span>
+</a>
+<a class="sidebar-nav-item" href="#blog">
+<div class="sidebar-nav-icon">
+<i class="fas fa-blog"></i>
+</div>
+<span data-i18n="blog">المدونة والمقالات</span>
+</a>
+<a class="sidebar-nav-item" href="contact.html">
+<div class="sidebar-nav-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<span data-i18n="contact">اتصل بنا</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="main">
+<!-- Page Header -->
+<section class="page-header">
+<div class="container">
+<div class="page-header-content">
+<h1 class="page-title" data-i18n="contactPageTitle">اتصل بنا</h1>
+<p class="page-subtitle" data-i18n="contactPageSubtitle">نحن هنا للمساعدة! تواصل معنا لأي استفسار أو اقتراح</p>
+</div>
+</div>
+</section>
+<!-- Contact Section -->
+<section class="section">
+<div class="container">
+<div class="contact-section">
+<!-- Contact Form -->
+<div class="contact-form-wrapper scroll-reveal">
+<h2 class="form-title">
+<i class="fas fa-paper-plane"></i>
+<span data-i18n="sendMessageTitle">إرسال رسالة</span>
+</h2>
+<form id="contactForm">
+<div class="form-group">
+<label class="form-label" data-i18n="fullNameLabel" for="fullName">الاسم الكامل *</label>
+<input class="form-input" data-i18n-placeholder="fullNamePlaceholder" id="fullName" placeholder="أدخل اسمك الكامل" required="" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="emailLabel" for="email">البريد الإلكتروني *</label>
+<input class="form-input" data-i18n-placeholder="emailPlaceholder" id="email" placeholder="أدخل بريدك الإلكتروني" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="messageLabel" for="message">الرسالة *</label>
+<textarea class="form-textarea" data-i18n-placeholder="messagePlaceholder" id="message" placeholder="اكتب رسالتك هنا..." required=""></textarea>
+</div>
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+<i class="fas fa-paper-plane"></i>
+<span data-i18n="sendButton">إرسال الرسالة</span>
+</button>
+</form>
+</div>
+<!-- Contact Info -->
+<div class="contact-info scroll-reveal">
+<h2 class="contact-info-title">
+<i class="fas fa-info-circle"></i>
+<span data-i18n="contactInfoTitle">معلومات التواصل</span>
+</h2>
+<div class="contact-item">
+<div class="contact-item-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<div class="contact-item-content">
+<h4 data-i18n="emailContactTitle">البريد الإلكتروني</h4>
+<p>contact@pixomod.com</p>
+</div>
+</div>
+<div class="contact-item">
+<div class="contact-item-icon">
+<i class="fas fa-phone"></i>
+</div>
+<div class="contact-item-content">
+<h4 data-i18n="phoneContactTitle">الهاتف</h4>
+<p dir="ltr">+213 555 123 456</p>
+</div>
+</div>
+<div class="contact-item">
+<div class="contact-item-icon">
+<i class="fas fa-map-marker-alt"></i>
+</div>
+<div class="contact-item-content">
+<h4 data-i18n="locationContactTitle">الموقع</h4>
+<p data-i18n="locationContactText">ورقلة، الجزائر</p>
+</div>
+</div>
+<div class="contact-item">
+<div class="contact-item-icon">
+<i class="fas fa-clock"></i>
+</div>
+<div class="contact-item-content">
+<h4 data-i18n="workingHoursTitle">ساعات العمل</h4>
+<p data-i18n="workingHoursText">24/7 - خدمة مستمرة</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Social Media Section -->
+<div class="social-section scroll-reveal">
+<h3 class="social-title" data-i18n="followUsTitle">تابعنا على مواقع التواصل الاجتماعي</h3>
+<div class="social-links">
+<a class="social-link tooltip" data-i18n-tooltip="facebookTooltip" data-tooltip="فيسبوك" href="#">
+<i class="fab fa-facebook-f"></i>
+</a>
+<a class="social-link tooltip" data-i18n-tooltip="twitterTooltip" data-tooltip="تويتر" href="#">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="social-link tooltip" data-i18n-tooltip="instagramTooltip" data-tooltip="إنستغرام" href="#">
+<i class="fab fa-instagram"></i>
+</a>
+<a class="social-link tooltip" data-i18n-tooltip="youtubeTooltip" data-tooltip="يوتيوب" href="#">
+<i class="fab fa-youtube"></i>
+</a>
+<a class="social-link tooltip" data-i18n-tooltip="telegramTooltip" data-tooltip="تليجرام" href="#">
+<i class="fab fa-telegram-plane"></i>
+</a>
+<a class="social-link tooltip" data-i18n-tooltip="whatsappTooltip" data-tooltip="واتساب" href="#">
+<i class="fab fa-whatsapp"></i>
+</a>
+</div>
+</div>
+</div>
+</section>
+</main>
+<script>
+        // =============== GLOBAL VARIABLES ===============
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                logoText: 'Pixomod',
+                currentLang: 'العربية',
+                themeToggleTooltip: 'تبديل الوضع',
+                backToHome: 'العودة للرئيسية',
+                home: 'الصفحة الرئيسية',
+                mobileApps: 'ألعاب وتطبيقات الهاتف',
+                pcSoftware: 'برامج الكمبيوتر',
+                blog: 'المدونة والمقالات',
+                contact: 'اتصل بنا',
+                contactPageTitle: 'اتصل بنا',
+                contactPageSubtitle: 'نحن هنا للمساعدة! تواصل معنا لأي استفسار أو اقتراح',
+                sendMessageTitle: 'إرسال رسالة',
+                fullNameLabel: 'الاسم الكامل *',
+                fullNamePlaceholder: 'أدخل اسمك الكامل',
+                emailLabel: 'البريد الإلكتروني *',
+                emailPlaceholder: 'أدخل بريدك الإلكتروني',
+                messageLabel: 'الرسالة *',
+                messagePlaceholder: 'اكتب رسالتك هنا...',
+                sendButton: 'إرسال الرسالة',
+                contactInfoTitle: 'معلومات التواصل',
+                emailContactTitle: 'البريد الإلكتروني',
+                phoneContactTitle: 'الهاتف',
+                locationContactTitle: 'الموقع',
+                locationContactText: 'ورقلة، الجزائر',
+                workingHoursTitle: 'ساعات العمل',
+                workingHoursText: '24/7 - خدمة مستمرة',
+                followUsTitle: 'تابعنا على مواقع التواصل الاجتماعي',
+                facebookTooltip: 'فيسبوك',
+                twitterTooltip: 'تويتر',
+                instagramTooltip: 'إنستغرام',
+                youtubeTooltip: 'يوتيوب',
+                telegramTooltip: 'تليجرام',
+                whatsappTooltip: 'واتساب',
+                // Notifications
+                fillAllFields: 'يرجى ملء جميع الحقول المطلوبة',
+                messageSent: 'تم إرسال رسالتك بنجاح! سنرد عليك قريباً',
+                messageFailed: 'فشل في إرسال الرسالة. يرجى المحاولة لاحقاً',
+                loading: 'جاري الإرسال...'
+            },
+            en: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                currentLang: 'English',
+                themeToggleTooltip: 'Toggle Theme',
+                backToHome: 'Back to Home',
+                home: 'Home',
+                mobileApps: 'Mobile Games & Apps',
+                pcSoftware: 'PC Software',
+                blog: 'Blog & Articles',
+                contact: 'Contact Us',
+                contactPageTitle: 'Contact Us',
+                contactPageSubtitle: 'We are here to help! Contact us for any inquiry or suggestion',
+                sendMessageTitle: 'Send Message',
+                fullNameLabel: 'Full Name *',
+                fullNamePlaceholder: 'Enter your full name',
+                emailLabel: 'Email Address *',
+                emailPlaceholder: 'Enter your email address',
+                messageLabel: 'Message *',
+                messagePlaceholder: 'Write your message here...',
+                sendButton: 'Send Message',
+                contactInfoTitle: 'Contact Information',
+                emailContactTitle: 'Email Address',
+                phoneContactTitle: 'Phone',
+                locationContactTitle: 'Location',
+                locationContactText: 'Ouargla, Algeria',
+                workingHoursTitle: 'Working Hours',
+                workingHoursText: '24/7 - Continuous Service',
+                followUsTitle: 'Follow Us on Social Media',
+                facebookTooltip: 'Facebook',
+                twitterTooltip: 'Twitter',
+                instagramTooltip: 'Instagram',
+                youtubeTooltip: 'YouTube',
+                telegramTooltip: 'Telegram',
+                whatsappTooltip: 'WhatsApp',
+                // Notifications
+                fillAllFields: 'Please fill in all required fields',
+                messageSent: 'Your message has been sent successfully! We will reply soon',
+                messageFailed: 'Failed to send message. Please try again later',
+                loading: 'Sending...'
+            },
+            fr: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                currentLang: 'Français',
+                themeToggleTooltip: 'Basculer le Thème',
+                backToHome: 'Retour à l\'Accueil',
+                home: 'Accueil',
+                mobileApps: 'Jeux et Apps Mobile',
+                pcSoftware: 'Logiciels PC',
+                blog: 'Blog et Articles',
+                contact: 'Contactez-nous',
+                contactPageTitle: 'Contactez-nous',
+                contactPageSubtitle: 'Nous sommes là pour vous aider! Contactez-nous pour toute question ou suggestion',
+                sendMessageTitle: 'Envoyer un Message',
+                fullNameLabel: 'Nom Complet *',
+                fullNamePlaceholder: 'Entrez votre nom complet',
+                emailLabel: 'Adresse Email *',
+                emailPlaceholder: 'Entrez votre adresse email',
+                messageLabel: 'Message *',
+                messagePlaceholder: 'Écrivez votre message ici...',
+                sendButton: 'Envoyer le Message',
+                contactInfoTitle: 'Informations de Contact',
+                emailContactTitle: 'Adresse Email',
+                phoneContactTitle: 'Téléphone',
+                locationContactTitle: 'Emplacement',
+                locationContactText: 'Ouargla, Algérie',
+                workingHoursTitle: 'Heures de Travail',
+                workingHoursText: '24/7 - Service Continu',
+                followUsTitle: 'Suivez-nous sur les Réseaux Sociaux',
+                facebookTooltip: 'Facebook',
+                twitterTooltip: 'Twitter',
+                instagramTooltip: 'Instagram',
+                youtubeTooltip: 'YouTube',
+                telegramTooltip: 'Telegram',
+                whatsappTooltip: 'WhatsApp',
+                // Notifications
+                fillAllFields: 'Veuillez remplir tous les champs requis',
+                messageSent: 'Votre message a été envoyé avec succès! Nous répondrons bientôt',
+                messageFailed: 'Échec de l\'envoi du message. Veuillez réessayer plus tard',
+                loading: 'Envoi en cours...'
+            }
+        };
+
+        let currentLanguage = 'ar';
+        let currentTheme = 'light';
+
+        // =============== DOM ELEMENTS ===============
+        const header = document.getElementById('header');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const contactForm = document.getElementById('contactForm');
+
+        // =============== INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeScrollAnimations();
+            initializeEventListeners();
+            initializeHeaderScroll();
+            initializeContactForm();
+            showWelcomeAnimation();
+        });
+
+        // =============== THEME MANAGEMENT ===============
+        function initializeTheme() {
+            const savedTheme = currentTheme;
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            const themeToggleThumb = themeToggle.querySelector('.theme-toggle-thumb');
+            const themeIcon = themeToggleThumb.querySelector('i');
+            
+            if (theme === 'dark') {
+                themeToggle.classList.add('active');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeToggle.classList.remove('active');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            
+            document.body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        }
+
+        // =============== LANGUAGE MANAGEMENT ===============
+        function initializeLanguage() {
+            const savedLang = currentLanguage;
+            setLanguage(savedLang);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            const translation = translations[lang];
+            
+            document.documentElement.lang = lang;
+            document.documentElement.dir = translation.dir;
+            
+            updateUIText(translation);
+            updateTooltips();
+        }
+
+        function updateUIText(translation) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translation[key]) {
+                    element.textContent = translation[key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translation[key]) {
+                    element.placeholder = translation[key];
+                }
+            });
+
+            document.querySelectorAll('[data-i18n-tooltip]').forEach(element => {
+                const key = element.getAttribute('data-i18n-tooltip');
+                if (translation[key]) {
+                    element.setAttribute('data-tooltip', translation[key]);
+                }
+            });
+        }
+
+        function updateTooltips() {
+            const translation = translations[currentLanguage];
+            themeToggle.setAttribute('data-tooltip', translation.themeToggleTooltip);
+        }
+
+        // =============== EVENT LISTENERS ===============
+        function initializeEventListeners() {
+            menuToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            languageBtn.addEventListener('click', toggleLanguageDropdown);
+            document.addEventListener('click', closeLanguageDropdown);
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    closeLanguageDropdown();
+                });
+            });
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeSidebar();
+                    }
+                });
+            });
+            
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            window.addEventListener('resize', handleResize);
+        }
+
+        // =============== SIDEBAR MANAGEMENT ===============
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== LANGUAGE DROPDOWN ===============
+        function toggleLanguageDropdown(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        }
+
+        function closeLanguageDropdown() {
+            languageDropdown.classList.remove('active');
+        }
+
+        // =============== HEADER SCROLL EFFECT ===============
+        function initializeHeaderScroll() {
+            let lastScrollY = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
+
+        // =============== SCROLL ANIMATIONS ===============
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // =============== CONTACT FORM HANDLING ===============
+        function initializeContactForm() {
+            contactForm.addEventListener('submit', handleContactSubmit);
+            
+            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+                
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+            });
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!fullName || !email || !message) {
+                showNotification(translations[currentLanguage].fillAllFields, 'error');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showNotification('البريد الإلكتروني غير صحيح', 'error');
+                return;
+            }
+            
+            showLoading(true, translations[currentLanguage].loading);
+            
+            setTimeout(() => {
+                showLoading(false);
+                showNotification(translations[currentLanguage].messageSent, 'success');
+                contactForm.reset();
+                document.querySelectorAll('.form-group').forEach(group => {
+                    group.classList.remove('focused');
+                });
+            }, 2000);
+        }
+
+        // =============== NOTIFICATION SYSTEM ===============
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${getNotificationIcon(type)}"></i>
+                    <span>${message}</span>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => removeNotification(notification));
+            
+            setTimeout(() => {
+                removeNotification(notification);
+            }, 5000);
+        }
+
+        function removeNotification(notification) {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+
+        function getNotificationIcon(type) {
+            switch (type) {
+                case 'success': return 'fa-check-circle';
+                case 'error': return 'fa-exclamation-circle';
+                case 'warning': return 'fa-exclamation-triangle';
+                default: return 'fa-info-circle';
+            }
+        }
+
+        // =============== LOADING SYSTEM ===============
+        function showLoading(show, message = 'جاري التحميل...') {
+            let loader = document.getElementById('globalLoader');
+            
+            if (show && !loader) {
+                loader = document.createElement('div');
+                loader.id = 'globalLoader';
+                loader.innerHTML = `
+                    <div class="loading-overlay">
+                        <div class="loading-spinner"></div>
+                        <p>${message}</p>
+                    </div>
+                `;
+                
+                loader.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: white;
+                    text-align: center;
+                `;
+                
+                document.body.appendChild(loader);
+            } else if (!show && loader) {
+                loader.remove();
+            }
+        }
+
+        // =============== KEYBOARD NAVIGATION ===============
+        function handleKeyboardNavigation(e) {
+            if (e.key === 'Escape') {
+                closeSidebar();
+                closeLanguageDropdown();
+            }
+            
+            if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+                e.target.click();
+            }
+        }
+
+        // =============== RESPONSIVE HANDLING ===============
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+            closeLanguageDropdown();
+        }
+
+        // =============== WELCOME ANIMATION ===============
+        function showWelcomeAnimation() {
+            document.body.classList.add('welcome-animation');
+            
+            setTimeout(() => {
+                document.body.classList.remove('welcome-animation');
+            }, 1000);
+        }
+
+        // =============== UTILITY FUNCTIONS ===============
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        // =============== ACCESSIBILITY ENHANCEMENTS ===============
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('using-keyboard');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('using-keyboard');
+        });
+
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.style.cssText = `
+                position: absolute;
+                left: -10000px;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            `;
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        // =============== FORM ENHANCEMENTS ===============
+        function addFormValidation() {
+            const inputs = document.querySelectorAll('.form-input, .form-textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    validateField(this);
+                });
+                
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+            });
+        }
+
+        function validateField(field) {
+            const value = field.value.trim();
+            const fieldType = field.type;
+            let isValid = true;
+            let errorMessage = '';
+            
+            // Remove existing error styling
+            field.classList.remove('error');
+            const existingError = field.parentNode.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            // Validate based on field type
+            if (field.hasAttribute('required') && !value) {
+                isValid = false;
+                errorMessage = translations[currentLanguage].fillAllFields;
+            } else if (fieldType === 'email' && value && !isValidEmail(value)) {
+                isValid = false;
+                errorMessage = 'البريد الإلكتروني غير صحيح';
+            }
+            
+            // Show error if invalid
+            if (!isValid) {
+                field.classList.add('error');
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.textContent = errorMessage;
+                errorDiv.style.cssText = `
+                    color: #dc3545;
+                    font-size: var(--font-size-sm);
+                    margin-top: var(--spacing-xs);
+                `;
+                field.parentNode.appendChild(errorDiv);
+            }
+            
+            return isValid;
+        }
+
+        // =============== ANALYTICS AND TRACKING ===============
+        function trackUserInteraction(action, element) {
+            console.log('User interaction:', action, element);
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.btn, .social-link, .contact-item')) {
+                trackUserInteraction('click', e.target.className);
+            }
+        });
+
+        document.addEventListener('submit', function(e) {
+            trackUserInteraction('form_submit', e.target.id);
+        });
+
+        // =============== ERROR HANDLING ===============
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+
+        // =============== PAGE VISIBILITY API ===============
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.body.classList.add('page-hidden');
+            } else {
+                document.body.classList.remove('page-hidden');
+            }
+        });
+
+        // =============== CONTACT FORM ENHANCEMENTS ===============
+        function enhanceContactForm() {
+            // Add character count for message field
+            const messageField = document.getElementById('message');
+            const charCountDiv = document.createElement('div');
+            charCountDiv.className = 'char-count';
+            charCountDiv.style.cssText = `
+                text-align: left;
+                font-size: var(--font-size-sm);
+                color: var(--text-secondary);
+                margin-top: var(--spacing-xs);
+            `;
+            messageField.parentNode.appendChild(charCountDiv);
+            
+            messageField.addEventListener('input', function() {
+                const count = this.value.length;
+                const maxLength = 1000;
+                charCountDiv.textContent = `${count}/${maxLength}`;
+                
+                if (count > maxLength * 0.9) {
+                    charCountDiv.style.color = '#dc3545';
+                } else {
+                    charCountDiv.style.color = 'var(--text-secondary)';
+                }
+            });
+            
+            // Trigger initial count
+            messageField.dispatchEvent(new Event('input'));
+            
+            // Add form auto-save (simulate)
+            const formFields = document.querySelectorAll('#contactForm input, #contactForm textarea');
+            formFields.forEach(field => {
+                field.addEventListener('input', debounce(function() {
+                    // In a real application, you would save to localStorage here
+                    console.log('Auto-saving form data...');
+                }, 1000));
+            });
+        }
+
+        // =============== SOCIAL MEDIA INTERACTIONS ===============
+        function initializeSocialLinks() {
+            document.querySelectorAll('.social-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Add click animation
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    // In a real application, you would open the actual social media links
+                    const platform = this.querySelector('i').className;
+                    console.log('Social media click:', platform);
+                    
+                    // Show notification
+                    showNotification(`تم النقر على رابط التواصل الاجتماعي`, 'info');
+                });
+            });
+        }
+
+        // =============== ADDITIONAL INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            addFormValidation();
+            enhanceContactForm();
+            initializeSocialLinks();
+            
+            // Add loaded class for CSS animations
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+            
+            // Initialize contact items hover effects
+            document.querySelectorAll('.contact-item').forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = currentLanguage === 'ar' ? 'translateX(10px)' : 'translateX(-10px)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        });
+
+        // =============== EXPORT FOR EXTERNAL USE ===============
+        window.PixomodContact = {
+            setTheme,
+            setLanguage,
+            showNotification,
+            showLoading,
+            isValidEmail,
+            getCurrentLanguage: () => currentLanguage,
+            getCurrentTheme: () => currentTheme
+        };
+
+        // =============== ADDITIONAL CSS FOR ENHANCED FEATURES ===============
+        const additionalStyles = `
+            <style>
+                .form-input.error,
+                .form-textarea.error {
+                    border-color: #dc3545;
+                    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+                }
+                
+                .char-count {
+                    direction: ltr;
+                    text-align: left;
+                }
+                
+                [dir="rtl"] .char-count {
+                    text-align: right;
+                }
+                
+                .welcome-animation {
+                    animation: welcomeFade 1s ease-in-out;
+                }
+                
+                @keyframes welcomeFade {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                
+                .page-hidden * {
+                    animation-play-state: paused !important;
+                }
+                
+                .using-keyboard .btn:focus,
+                .using-keyboard .form-input:focus,
+                .using-keyboard .form-textarea:focus {
+                    outline: 2px solid var(--primary);
+                    outline-offset: 2px;
+                }
+                
+                .contact-item {
+                    cursor: pointer;
+                }
+                
+                .loaded .scroll-reveal {
+                    transition-delay: 0.1s;
+                }
+                
+                .loaded .scroll-reveal:nth-child(2) {
+                    transition-delay: 0.2s;
+                }
+                
+                .loaded .scroll-reveal:nth-child(3) {
+                    transition-delay: 0.3s;
+                }
+                
+                @media (prefers-reduced-motion: reduce) {
+                    * {
+                        animation-duration: 0.01ms !important;
+                        animation-iteration-count: 1 !important;
+                        transition-duration: 0.01ms !important;
+                    }
+                }
+                
+                @media print {
+                    .header,
+                    .sidebar,
+                    .social-section {
+                        display: none !important;
+                    }
+                    
+                    .main {
+                        margin-top: 0;
+                    }
+                    
+                    body {
+                        color: black;
+                        background: white;
+                    }
+                }
+            </style>
+        `;
+        
+        document.head.insertAdjacentHTML('beforeend', additionalStyles);
+
+    </script>
+
+<!-- Sidebar Enhancements -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector(".sidebar ul");
+  const role = localStorage.getItem("userRole");
+
+  // زر تسجيل الدخول (في الجوال فقط)
+  if (window.innerWidth < 768 && !document.getElementById("loginBtnMobile")) {
+    const loginLi = document.createElement("li");
+    const loginBtn = document.createElement("a");
+    loginBtn.textContent = "تسجيل الدخول";
+    loginBtn.href = "#";
+    loginBtn.id = "loginBtnMobile";
+    loginBtn.onclick = () => {
+      document.querySelector(".login-popup")?.classList.add("show");
+    };
+    loginLi.appendChild(loginBtn);
+    sidebar.appendChild(loginLi);
+  }
+
+  // زر لوحة التحكم عند تسجيل الدخول
+  if (role && !document.getElementById("dashboardLink")) {
+    const dashboardLi = document.createElement("li");
+    const dashboardLink = document.createElement("a");
+    dashboardLink.id = "dashboardLink";
+    dashboardLink.textContent = "لوحة التحكم";
+    dashboardLink.href = role === "admin" ? "pixomod_admin_dashboard_final.html" : "pixomod_moderator_dashboard_final.html";
+    dashboardLi.appendChild(dashboardLink);
+    sidebar.appendChild(dashboardLi);
+  }
+});
+</script>
+
+<footer class="contact-info">
+<p>📧 البريد الإلكتروني: pisomode2025@gmail.com</p>
+<p>🌍 الموقع: Algérie, Algérie</p>
+<p>📞 الهاتف: 0792262278</p>
+</footer>
+</body>
+</html>

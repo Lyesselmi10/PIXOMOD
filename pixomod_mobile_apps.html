@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pixomod - تطبيقات الهاتف والألعاب</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&amp;family=Segoe+UI:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Font Awesome Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        /* =============== GLOBAL VARIABLES =============== */
+        :root {
+            /* Light Theme Colors */
+            --primary-light: #007BFF;
+            --secondary-light: #6610F2;
+            --background-light: #FFFFFF;
+            --surface-light: #F8F9FA;
+            --text-light: #212529;
+            --text-secondary-light: #6C757D;
+            --border-light: #DEE2E6;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            
+            /* Dark Theme Colors */
+            --primary-dark: #000000;
+            --secondary-dark: #00FF7F;
+            --background-dark: #121212;
+            --surface-dark: #1E1E1E;
+            --text-dark: #FFFFFF;
+            --text-secondary-dark: #B3B3B3;
+            --border-dark: #333333;
+            --shadow-dark: rgba(0, 0, 0, 0.3);
+            
+            /* Current Theme (defaults to light) */
+            --primary: var(--primary-light);
+            --secondary: var(--secondary-light);
+            --background: var(--background-light);
+            --surface: var(--surface-light);
+            --text: var(--text-light);
+            --text-secondary: var(--text-secondary-light);
+            --border: var(--border-light);
+            --shadow: var(--shadow-light);
+            
+            /* Typography */
+            --font-primary: 'Cairo', 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Border Radius */
+            --radius-sm: 0.25rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            
+            /* Transitions */
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Z-index layers */
+            --z-dropdown: 1000;
+            --z-sticky: 1020;
+            --z-fixed: 1030;
+            --z-modal-backdrop: 1040;
+            --z-modal: 1050;
+            --z-popover: 1060;
+            --z-tooltip: 1070;
+        }
+        
+        /* Dark theme variables */
+        [data-theme="dark"] {
+            --primary: var(--primary-dark);
+            --secondary: var(--secondary-dark);
+            --background: var(--background-dark);
+            --surface: var(--surface-dark);
+            --text: var(--text-dark);
+            --text-secondary: var(--text-secondary-dark);
+            --border: var(--border-dark);
+            --shadow: var(--shadow-dark);
+        }
+        
+        /* =============== RESET & BASE STYLES =============== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color var(--transition-normal), color var(--transition-normal);
+            overflow-x: hidden;
+        }
+        
+        /* RTL/LTR Support */
+        [dir="rtl"] {
+            text-align: right;
+        }
+        
+        [dir="ltr"] {
+            text-align: left;
+        }
+        
+        /* =============== UTILITY CLASSES =============== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        .flex {
+            display: flex;
+        }
+        
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .flex-between {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid {
+            display: grid;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .visible {
+            display: block !important;
+        }
+        
+        .opacity-0 {
+            opacity: 0;
+        }
+        
+        .opacity-100 {
+            opacity: 1;
+        }
+        
+        .transition-all {
+            transition: all var(--transition-normal);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+            gap: var(--spacing-sm);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,123,255,0.3);
+        }
+        
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--surface);
+        }
+        
+        /* =============== HEADER STYLES =============== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: var(--z-fixed);
+            transition: all var(--transition-normal);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(18, 18, 18, 0.95);
+        }
+        
+        .header.scrolled {
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .header-content {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-normal);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-lg);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .language-selector {
+            position: relative;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .language-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            box-shadow: 0 8px 25px var(--shadow);
+            min-width: 150px;
+            z-index: var(--z-dropdown);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all var(--transition-fast);
+        }
+        
+        .language-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .language-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .theme-toggle {
+            width: 50px;
+            height: 25px;
+            background: var(--border);
+            border-radius: 25px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color var(--transition-normal);
+        }
+        
+        .theme-toggle.active {
+            background: var(--primary);
+        }
+        
+        .theme-toggle-thumb {
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+        }
+        
+        .theme-toggle.active .theme-toggle-thumb {
+            transform: translateX(25px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: var(--spacing-sm);
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all var(--transition-fast);
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* =============== SIDEBAR STYLES =============== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -350px;
+            width: 350px;
+            height: 100vh;
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            z-index: var(--z-modal);
+            transition: right var(--transition-normal);
+            overflow-y: auto;
+        }
+        
+        [dir="ltr"] .sidebar {
+            left: -350px;
+            right: auto;
+            border-left: none;
+            border-right: 1px solid var(--border);
+            transition: left var(--transition-normal);
+        }
+        
+        .sidebar.active {
+            right: 0;
+        }
+        
+        [dir="ltr"] .sidebar.active {
+            left: 0;
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .sidebar-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+        }
+        
+        .sidebar-close:hover {
+            transform: rotate(90deg);
+            background: var(--secondary);
+        }
+        
+        .sidebar-nav {
+            padding: var(--spacing-lg);
+        }
+        
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            color: var(--text);
+            transition: all var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar-nav-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0.1;
+            transition: left var(--transition-slow);
+        }
+        
+        .sidebar-nav-item:hover:before {
+            left: 100%;
+        }
+        
+        .sidebar-nav-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        [dir="ltr"] .sidebar-nav-item:hover {
+            transform: translateX(-10px);
+        }
+        
+        .sidebar-nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dashboard-item {
+            border-top: 1px solid var(--border);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+        }
+        
+        /* =============== MODAL STYLES =============== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: var(--z-modal-backdrop);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px var(--shadow);
+            max-width: 450px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9) translateY(20px);
+            transition: all var(--transition-normal);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .modal-close {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background: var(--primary);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-xl);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--spacing-sm);
+            font-weight: 500;
+            color: var(--text);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            background: var(--background);
+            color: var(--text);
+            transition: all var(--transition-fast);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--background);
+            color: var(--text);
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: var(--spacing-xl) 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .divider:before,
+        .divider:after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .divider span {
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* =============== MAIN CONTENT STYLES =============== */
+        .main {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-header:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,800 1000,1000"/></svg>');
+            background-size: cover;
+        }
+        
+        .page-header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 900;
+            margin-bottom: var(--spacing-md);
+            animation: fadeInUp 1s ease;
+        }
+        
+        .page-subtitle {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+        
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .breadcrumb a:hover {
+            color: white;
+        }
+        
+        .breadcrumb-separator {
+            opacity: 0.6;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        /* =============== FILTERS SECTION =============== */
+        .filters-section {
+            background: var(--surface);
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 70px;
+            z-index: var(--z-sticky);
+        }
+        
+        .filters-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: var(--spacing-lg);
+        }
+        
+        .filters-group {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: var(--background);
+            color: var(--text);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            font-weight: 500;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .search-box {
+            position: relative;
+            min-width: 300px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 50px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            background: var(--background);
+            color: var(--text);
+            transition: all var(--transition-fast);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: var(--font-size-lg);
+        }
+        
+        .view-toggle {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xs);
+        }
+        
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* =============== APPS GRID =============== */
+        .apps-container {
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        .apps-stats {
+            text-align: center;
+            margin-bottom: var(--spacing-2xl);
+            color: var(--text-secondary);
+        }
+        
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .apps-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        
+        .app-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .app-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,123,255,0.05), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .app-card:hover:before {
+            left: 100%;
+        }
+        
+        .app-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .app-card.list-view {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-lg);
+        }
+        
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--radius-lg);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--spacing-lg);
+            flex-shrink: 0;
+        }
+        
+        .app-card.list-view .app-icon {
+            margin-bottom: 0;
+            width: 60px;
+            height: 60px;
+        }
+        
+        .app-content {
+            flex: 1;
+        }
+        
+        .app-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .app-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text);
+        }
+        
+        .app-platform {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: var(--primary);
+            color: white;
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+        
+        .app-platform.ios {
+            background: #007AFF;
+        }
+        
+        .app-platform.android {
+            background: #34C759;
+        }
+        
+        .app-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--spacing-lg);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .app-card.list-view .app-description {
+            -webkit-line-clamp: 2;
+        }
+        
+        .app-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .app-rating {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .star {
+            color: #FFD700;
+            font-size: var(--font-size-sm);
+        }
+        
+        .star.empty {
+            color: var(--text-secondary);
+            opacity: 0.3;
+        }
+        
+        .rating-text {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        .app-size {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        .app-actions {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .app-card.list-view .app-actions {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+        
+        /* =============== PAGINATION =============== */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .pagination-btn {
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--background);
+            color: var(--text);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+        
+        .pagination-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        
+        .pagination-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination-btn:disabled:hover {
+            border-color: var(--border);
+            background: var(--background);
+            color: var(--text);
+        }
+        
+        /* =============== LOADING STATES =============== */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: var(--spacing-2xl) auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .skeleton-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            animation: pulse 1.5s ease-in-out infinite alternate;
+        }
+        
+        .skeleton-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .skeleton-text {
+            height: 20px;
+            background: var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .skeleton-text.short {
+            width: 60%;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        /* =============== EMPTY STATE =============== */
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-2xl);
+            color: var(--text-secondary);
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.5;
+        }
+        
+        .empty-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-md);
+            color: var(--text);
+        }
+        
+        .empty-description {
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        /* =============== FOOTER STYLES =============== */
+        .footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: var(--spacing-2xl) 0;
+            margin-top: var(--spacing-2xl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-2xl);
+        }
+        
+        .footer-section h3 {
+            margin-bottom: var(--spacing-lg);
+            color: var(--text);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .social-link:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0,123,255,0.3);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            margin-top: var(--spacing-2xl);
+            padding-top: var(--spacing-xl);
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        
+        /* =============== RESPONSIVE DESIGN =============== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .header-content {
+                height: 60px;
+            }
+            
+            .main {
+                margin-top: 60px;
+            }
+            
+            .menu-toggle {
+                display: flex;
+            }
+            
+            .header-actions > .btn {
+                display: none;
+            }
+            
+            .page-title {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .filters-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .search-box {
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .app-card.list-view {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .app-card.list-view .app-actions {
+                margin-left: 0;
+                justify-content: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            [dir="ltr"] .sidebar {
+                left: -100%;
+            }
+            
+            .page-header {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .section {
+                padding: var(--spacing-xl) 0;
+            }
+            
+            .filters-group {
+                justify-content: center;
+            }
+        }
+        
+        /* =============== ACCESSIBILITY =============== */
+        .focus-visible:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        /* =============== TOOLTIP STYLES =============== */
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip:before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-fast);
+            z-index: var(--z-tooltip);
+        }
+        
+        .tooltip:hover:before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<header class="header" id="header">
+<div class="container">
+<div class="header-content">
+<!-- Logo -->
+<a class="logo" href="/">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span class="logo-text" data-i18n="logoText">Pixomod</span>
+</a>
+<!-- Header Actions -->
+<div class="header-actions">
+<!-- Language Selector -->
+<div class="language-selector">
+<button class="language-btn" id="languageBtn">
+<i class="fas fa-globe"></i>
+<span data-i18n="currentLang" id="currentLang">العربية</span>
+<i class="fas fa-chevron-down"></i>
+</button>
+<div class="language-dropdown" id="languageDropdown">
+<div class="language-option" data-lang="ar">
+<i class="fas fa-flag"></i>
+<span>العربية</span>
+</div>
+<div class="language-option" data-lang="en">
+<i class="fas fa-flag"></i>
+<span>English</span>
+</div>
+<div class="language-option" data-lang="fr">
+<i class="fas fa-flag"></i>
+<span>Français</span>
+</div>
+</div>
+</div>
+<!-- Theme Toggle -->
+<div class="theme-toggle" data-tooltip="تبديل الوضع" id="themeToggle">
+<div class="theme-toggle-thumb">
+<i class="fas fa-sun"></i>
+</div>
+</div>
+<!-- Login Button -->
+<button class="btn btn-primary" id="loginBtn">
+<i class="fas fa-user"></i>
+<span data-i18n="login">تسجيل الدخول</span>
+</button>
+<!-- Menu Toggle -->
+<div class="menu-toggle" id="menuToggle">
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Sidebar -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-header">
+<div class="logo">
+<div class="logo-icon">
+<i class="fas fa-cube"></i>
+</div>
+<span data-i18n="logoText">Pixomod</span>
+</div>
+<button class="sidebar-close" id="sidebarClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<nav class="sidebar-nav">
+<a class="sidebar-nav-item" href="/">
+<div class="sidebar-nav-icon">
+<i class="fas fa-home"></i>
+</div>
+<span data-i18n="home">الصفحة الرئيسية</span>
+</a>
+<a class="sidebar-nav-item" href="/mobile-apps">
+<div class="sidebar-nav-icon">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<span data-i18n="mobileApps">ألعاب وتطبيقات الهاتف</span>
+</a>
+<a class="sidebar-nav-item" href="/pc-software">
+<div class="sidebar-nav-icon">
+<i class="fas fa-desktop"></i>
+</div>
+<span data-i18n="pcSoftware">برامج الكمبيوتر</span>
+</a>
+<a class="sidebar-nav-item" href="/blog">
+<div class="sidebar-nav-icon">
+<i class="fas fa-blog"></i>
+</div>
+<span data-i18n="blog">المدونة والمقالات</span>
+</a>
+<a class="sidebar-nav-item" href="/contact">
+<div class="sidebar-nav-icon">
+<i class="fas fa-envelope"></i>
+</div>
+<span data-i18n="contact">اتصل بنا</span>
+</a>
+<!-- Dashboard Link (shown after login) -->
+<a class="sidebar-nav-item dashboard-item hidden" href="/dashboard" id="dashboardLink">
+<div class="sidebar-nav-icon">
+<i class="fas fa-tachometer-alt"></i>
+</div>
+<span data-i18n="dashboard">لوحة التحكم</span>
+</a>
+</nav>
+</aside>
+<!-- Login Modal -->
+<div class="modal-overlay" id="loginModal">
+<div class="modal">
+<div class="modal-header">
+<h2 class="modal-title" data-i18n="loginTitle">تسجيل الدخول</h2>
+<button class="modal-close" id="loginModalClose">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<form id="loginForm">
+<div class="form-group">
+<label class="form-label" data-i18n="emailLabel" for="email">البريد الإلكتروني</label>
+<input class="form-input" id="email" required="" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label" data-i18n="passwordLabel" for="password">كلمة المرور</label>
+<input class="form-input" id="password" required="" type="password"/>
+</div>
+<button class="btn btn-primary" style="width: 100%;" type="submit">
+<i class="fas fa-sign-in-alt"></i>
+<span data-i18n="loginButton">تسجيل الدخول</span>
+</button>
+</form>
+<div class="divider">
+<span data-i18n="or">أو</span>
+</div>
+<div class="social-login">
+<a class="social-btn" href="#">
+<i class="fab fa-google" style="color: #DB4437;"></i>
+<span data-i18n="loginWithGoogle">تسجيل الدخول بـ Google</span>
+</a>
+<a class="social-btn" href="#">
+<i class="fab fa-facebook" style="color: #4267B2;"></i>
+<span data-i18n="loginWithFacebook">تسجيل الدخول بـ Facebook</span>
+</a>
+</div>
+<div style="text-align: center; margin-top: var(--spacing-lg);">
+<span data-i18n="noAccount">ليس لديك حساب؟ </span>
+<a data-i18n="createAccount" href="#" style="color: var(--primary); text-decoration: none;">إنشاء حساب جديد</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="main">
+<!-- Page Header -->
+<section class="page-header">
+<div class="container">
+<div class="page-header-content">
+<nav class="breadcrumb">
+<a data-i18n="home" href="/">الصفحة الرئيسية</a>
+<span class="breadcrumb-separator">/</span>
+<span data-i18n="mobileApps">ألعاب وتطبيقات الهاتف</span>
+</nav>
+<h1 class="page-title" data-i18n="mobileAppsTitle">ألعاب وتطبيقات الهاتف</h1>
+<p class="page-subtitle" data-i18n="mobileAppsSubtitle">اكتشف أحدث الألعاب والتطبيقات المعدلة والأصلية للهواتف الذكية</p>
+</div>
+</div>
+</section>
+<!-- Filters Section -->
+<section class="filters-section">
+<div class="container">
+<div class="filters-container">
+<div class="filters-group">
+<button class="filter-btn active" data-filter="all" data-i18n="allApps">جميع التطبيقات</button>
+<button class="filter-btn" data-filter="android" data-i18n="androidApps">Android</button>
+<button class="filter-btn" data-filter="ios" data-i18n="iosApps">iOS</button>
+<button class="filter-btn" data-filter="games" data-i18n="games">الألعاب</button>
+<button class="filter-btn" data-filter="apps" data-i18n="apps">التطبيقات</button>
+</div>
+<div class="search-box">
+<i class="fas fa-search search-icon"></i>
+<input class="search-input" data-i18n-placeholder="searchPlaceholder" id="searchInput" placeholder="البحث عن التطبيقات والألعاب..." type="text"/>
+</div>
+<div class="view-toggle">
+<button class="view-btn active" data-tooltip="عرض الشبكة" data-view="grid">
+<i class="fas fa-th"></i>
+</button>
+<button class="view-btn" data-tooltip="عرض القائمة" data-view="list">
+<i class="fas fa-list"></i>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Apps Container -->
+<section class="apps-container">
+<div class="container">
+<div class="apps-stats" id="appsStats">
+<span data-i18n="showingResults">عرض 1-12 من أصل 156 تطبيق</span>
+</div>
+<div class="apps-grid" id="appsGrid">
+<!-- Apps will be loaded here dynamically -->
+</div>
+<!-- Pagination -->
+<div class="pagination" id="pagination">
+<button class="pagination-btn" disabled="" id="prevBtn">
+<i class="fas fa-chevron-right"></i>
+</button>
+<button class="pagination-btn active">1</button>
+<button class="pagination-btn">2</button>
+<button class="pagination-btn">3</button>
+<span>...</span>
+<button class="pagination-btn">13</button>
+<button class="pagination-btn" id="nextBtn">
+<i class="fas fa-chevron-left"></i>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h3>Pixomod</h3>
+<p data-i18n="footerDescription">وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.</p>
+<div class="social-links">
+<a class="social-link" data-tooltip="فيسبوك" href="#">
+<i class="fab fa-facebook"></i>
+</a>
+<a class="social-link" data-tooltip="تويتر" href="#">
+<i class="fab fa-twitter"></i>
+</a>
+<a class="social-link" data-tooltip="إنستغرام" href="#">
+<i class="fab fa-instagram"></i>
+</a>
+<a class="social-link" data-tooltip="يوتيوب" href="#">
+<i class="fab fa-youtube"></i>
+</a>
+</div>
+</div>
+<div class="footer-section">
+<h3 data-i18n="quickLinks">روابط سريعة</h3>
+<ul class="footer-links">
+<li><a data-i18n="home" href="/">الصفحة الرئيسية</a></li>
+<li><a data-i18n="mobileApps" href="/mobile-apps">تطبيقات الهاتف</a></li>
+<li><a data-i18n="pcSoftware" href="/pc-software">برامج الكمبيوتر</a></li>
+<li><a data-i18n="blog" href="/blog">المدونة</a></li>
+<li><a data-i18n="contact" href="/contact">اتصل بنا</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3 data-i18n="categories">الفئات</h3>
+<ul class="footer-links">
+<li><a data-i18n="actionGames" href="#">ألعاب الأكشن</a></li>
+<li><a data-i18n="puzzleGames" href="#">ألعاب الذكاء</a></li>
+<li><a data-i18n="designSoftware" href="#">برامج التصميم</a></li>
+<li><a data-i18n="securitySoftware" href="#">برامج الحماية</a></li>
+</ul>
+</div>
+<div class="footer-section">
+<h3 data-i18n="importantInfo">معلومات مهمة</h3>
+<ul class="footer-links">
+<li><a data-i18n="privacyPolicy" href="#">سياسة الخصوصية</a></li>
+<li><a data-i18n="termsOfUse" href="#">شروط الاستخدام</a></li>
+<li><a data-i18n="faq" href="#">الأسئلة الشائعة</a></li>
+<li><a data-i18n="support" href="#">الدعم الفني</a></li>
+</ul>
+</div>
+</div>
+<div class="footer-bottom">
+<p>© 2024 Pixomod. <span data-i18n="allRightsReserved">جميع الحقوق محفوظة. صُنع بـ</span> <i class="fas fa-heart" style="color: #e74c3c;"></i> <span data-i18n="madeInAlgeria">في الجزائر</span></p>
+</div>
+</div>
+</footer>
+<script>
+        // =============== GLOBAL VARIABLES ===============
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                logoText: 'Pixomod',
+                login: 'تسجيل الدخول',
+                home: 'الصفحة الرئيسية',
+                mobileApps: 'ألعاب وتطبيقات الهاتف',
+                pcSoftware: 'برامج الكمبيوتر',
+                blog: 'المدونة والMقالات',
+                contact: 'اتصل بنا',
+                dashboard: 'لوحة التحكم',
+                currentLang: 'العربية',
+                themeToggleTooltip: 'تبديل الوضع',
+                mobileAppsTitle: 'ألعاب وتطبيقات الهاتف',
+                mobileAppsSubtitle: 'اكتشف أحدث الألعاب والتطبيقات المعدلة والأصلية للهواتف الذكية',
+                allApps: 'جميع التطبيقات',
+                androidApps: 'Android',
+                iosApps: 'iOS',
+                games: 'الألعاب',
+                apps: 'التطبيقات',
+                searchPlaceholder: 'البحث عن التطبيقات والألعاب...',
+                showingResults: 'عرض {start}-{end} من أصل {total} تطبيق',
+                download: 'تحميل',
+                viewDetails: 'عرض التفاصيل',
+                loginTitle: 'تسجيل الدخول',
+                emailLabel: 'البريد الإلكتروني',
+                passwordLabel: 'كلمة المرور',
+                loginButton: 'تسجيل الدخول',
+                or: 'أو',
+                loginWithGoogle: 'تسجيل الدخول بـ Google',
+                loginWithFacebook: 'تسجيل الدخول بـ Facebook',
+                noAccount: 'ليس لديك حساب؟ ',
+                createAccount: 'إنشاء حساب جديد',
+                footerDescription: 'وجهتك الأولى للحصول على أفضل الألعاب والتطبيقات والبرامج مع المقالات التقنية المفيدة.',
+                quickLinks: 'روابط سريعة',
+                categories: 'الفئات',
+                actionGames: 'ألعاب الأكشن',
+                puzzleGames: 'ألعاب الذكاء',
+                designSoftware: 'برامج التصميم',
+                securitySoftware: 'برامج الحماية',
+                importantInfo: 'معلومات مهمة',
+                privacyPolicy: 'سياسة الخصوصية',
+                termsOfUse: 'شروط الاستخدام',
+                faq: 'الأسئلة الشائعة',
+                support: 'الدعم الفني',
+                allRightsReserved: 'جميع الحقوق محفوظة. صُنع بـ',
+                madeInAlgeria: 'في الجزائر'
+            },
+            en: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Login',
+                home: 'Home',
+                mobileApps: 'Mobile Games & Apps',
+                pcSoftware: 'PC Software',
+                blog: 'Blog & Articles',
+                contact: 'Contact Us',
+                dashboard: 'Dashboard',
+                currentLang: 'English',
+                themeToggleTooltip: 'Toggle Theme',
+                mobileAppsTitle: 'Mobile Games & Apps',
+                mobileAppsSubtitle: 'Discover the latest modified and original games and apps for smartphones',
+                allApps: 'All Apps',
+                androidApps: 'Android',
+                iosApps: 'iOS',
+                games: 'Games',
+                apps: 'Apps',
+                searchPlaceholder: 'Search for apps and games...',
+                showingResults: 'Showing {start}-{end} of {total} apps',
+                download: 'Download',
+                viewDetails: 'View Details',
+                loginTitle: 'Login',
+                emailLabel: 'Email',
+                passwordLabel: 'Password',
+                loginButton: 'Login',
+                or: 'Or',
+                loginWithGoogle: 'Login with Google',
+                loginWithFacebook: 'Login with Facebook',
+                noAccount: "Don't have an account? ",
+                createAccount: 'Create New Account',
+                footerDescription: 'Your ultimate destination for the best games, apps, and software with helpful tech articles.',
+                quickLinks: 'Quick Links',
+                categories: 'Categories',
+                actionGames: 'Action Games',
+                puzzleGames: 'Puzzle Games',
+                designSoftware: 'Design Software',
+                securitySoftware: 'Security Software',
+                importantInfo: 'Important Info',
+                privacyPolicy: 'Privacy Policy',
+                termsOfUse: 'Terms of Use',
+                faq: 'FAQ',
+                support: 'Support',
+                allRightsReserved: 'All rights reserved. Made with',
+                madeInAlgeria: 'in Algeria'
+            },
+            fr: {
+                dir: 'ltr',
+                logoText: 'Pixomod',
+                login: 'Connexion',
+                home: 'Accueil',
+                mobileApps: 'Jeux et Apps Mobile',
+                pcSoftware: 'Logiciels PC',
+                blog: 'Blog et Articles',
+                contact: 'Contactez-nous',
+                dashboard: 'Tableau de bord',
+                currentLang: 'Français',
+                themeToggleTooltip: 'Basculer le Thème',
+                mobileAppsTitle: 'Jeux et Applications Mobile',
+                mobileAppsSubtitle: 'Découvrez les derniers jeux et applications modifiés et originaux pour smartphones',
+                allApps: 'Toutes les Apps',
+                androidApps: 'Android',
+                iosApps: 'iOS',
+                games: 'Jeux',
+                apps: 'Applications',
+                searchPlaceholder: 'Rechercher des apps et jeux...',
+                showingResults: 'Affichage {start}-{end} sur {total} apps',
+                download: 'Télécharger',
+                viewDetails: 'Voir Détails',
+                loginTitle: 'Connexion',
+                emailLabel: 'Email',
+                passwordLabel: 'Mot de passe',  
+                loginButton: 'Se connecter',
+                or: 'Ou',
+                loginWithGoogle: 'Se connecter avec Google',
+                loginWithFacebook: 'Se connecter avec Facebook',
+                noAccount: "Vous n'avez pas de compte? ",
+                createAccount: 'Créer un nouveau compte',
+                footerDescription: 'Votre destination ultime pour les meilleurs jeux, applications et logiciels avec des articles techniques utiles.',
+                quickLinks: 'Liens Rapides',
+                categories: 'Catégories',
+                actionGames: 'Jeux d\'Action',
+                puzzleGames: 'Jeux de Réflexion',
+                designSoftware: 'Logiciels de Design',
+                securitySoftware: 'Logiciels de Sécurité',
+                importantInfo: 'Infos Importantes',
+                privacyPolicy: 'Politique de Confidentialité',
+                termsOfUse: 'Conditions d\'Utilisation',
+                faq: 'FAQ',
+                support: 'Support',
+                allRightsReserved: 'Tous droits réservés. Fait avec',
+                madeInAlgeria: 'en Algérie'
+            }
+        };
+
+        // Sample apps data
+        const appsData = [
+            {
+                id: 1,
+                name: 'PUBG Mobile',
+                description: 'لعبة باتل رويال مثيرة مع معارك 100 لاعب في خرائط واسعة ومتنوعة',
+                platform: 'android',
+                type: 'game',
+                rating: 4.5,
+                size: '2.1 GB',
+                icon: 'fas fa-gamepad',
+                featured: true
+            },
+            {
+                id: 2,
+                name: 'Instagram',
+                description: 'شارك الصور والفيديوهات مع أصدقائك وتابع اهتماماتك',
+                platform: 'both',
+                type: 'app',
+                rating: 4.2,
+                size: '45 MB',
+                icon: 'fab fa-instagram',
+                featured: false
+            },
+            {
+                id: 3,
+                name: 'Minecraft',
+                description: 'ابنِ واستكشف في عالم مفتوح مليء بالإبداع والمغامرات',
+                platform: 'both',
+                type: 'game',
+                rating: 4.8,
+                size: '150 MB',
+                icon: 'fas fa-cube',
+                featured: true
+            },
+            {
+                id: 4,
+                name: 'WhatsApp',
+                description: 'تطبيق المراسلة الأشهر عالمياً للتواصل مع الأصدقاء والعائلة',
+                platform: 'both',
+                type: 'app',
+                rating: 4.1,
+                size: '65 MB',
+                icon: 'fab fa-whatsapp',
+                featured: false
+            },
+            {
+                id: 5,
+                name: 'Clash Royale',
+                description: 'لعبة استراتيجية في الوقت الفعلي مع بطاقات قابلة للجمع',
+                platform: 'both',
+                type: 'game',
+                rating: 4.3,
+                size: '180 MB',
+                icon: 'fas fa-crown',
+                featured: false
+            },
+            {
+                id: 6,
+                name: 'TikTok',
+                description: 'اكتشف ومشارك مقاطع فيديو قصيرة ومسلية',
+                platform: 'both',
+                type: 'app',
+                rating: 4.0,
+                size: '120 MB',
+                icon: 'fab fa-tiktok',
+                featured: true
+            },
+            {
+                id: 7,
+                name: 'Call of Duty Mobile',
+                description: 'لعبة أكشن وإطلاق نار مع أوضاع متعددة اللاعبين',
+                platform: 'both',
+                type: 'game',
+                rating: 4.6,
+                size: '3.2 GB',
+                icon: 'fas fa-crosshairs',
+                featured: true
+            },
+            {
+                id: 8,
+                name: 'Spotify',
+                description: 'استمع إلى ملايين الأغاني والبودكاست مجاناً',
+                platform: 'both',
+                type: 'app',
+                rating: 4.4,
+                size: '85 MB',
+                icon: 'fab fa-spotify',
+                featured: false
+            },
+            {
+                id: 9,
+                name: 'Among Us',
+                description: 'لعبة جماعية مثيرة للعب مع الأصدقاء',
+                platform: 'both',
+                type: 'game',
+                rating: 4.1,
+                size: '250 MB',
+                icon: 'fas fa-user-astronaut',
+                featured: false
+            },
+            {
+                id: 10,
+                name: 'YouTube',
+                description: 'شاهد مقاطع الفيديو المفضلة لديك واشترك في القنوات',
+                platform: 'both',
+                type: 'app',
+                rating: 4.3,
+                size: '140 MB',
+                icon: 'fab fa-youtube',
+                featured: false
+            },
+            {
+                id: 11,
+                name: 'Genshin Impact',
+                description: 'لعبة آر بي جي مفتوحة العالم مع رسومات خلابة',
+                platform: 'both',
+                type: 'game',
+                rating: 4.7,
+                size: '4.5 GB',
+                icon: 'fas fa-magic',
+                featured: true
+            },
+            {
+                id: 12,
+                name: 'Telegram',
+                description: 'تطبيق مراسلة سريع وآمن مع ميزات متقدمة',
+                platform: 'both',
+                type: 'app',
+                rating: 4.5,
+                size: '55 MB',
+                icon: 'fab fa-telegram',
+                featured: false
+            }
+        ];
+
+        let currentLanguage = 'ar';
+        let currentTheme = 'light';
+        let currentFilter = 'all';
+        let currentView = 'grid';
+        let currentPage = 1;
+        let itemsPerPage = 12;
+        let filteredApps = [...appsData];
+        let isLoggedIn = false;
+        let userRole = null; // 'admin' or 'moderator' or null
+
+        // =============== DOM ELEMENTS ===============
+        const header = document.getElementById('header');
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const sidebarClose = document.getElementById('sidebarClose');
+        const languageBtn = document.getElementById('languageBtn');
+        const languageDropdown = document.getElementById('languageDropdown');
+        const themeToggle = document.getElementById('themeToggle');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginModal = document.getElementById('loginModal');
+        const loginModalClose = document.getElementById('loginModalClose');
+        const dashboardLink = document.getElementById('dashboardLink');
+        const appsGrid = document.getElementById('appsGrid');
+        const appsStats = document.getElementById('appsStats');
+        const searchInput = document.getElementById('searchInput');
+
+        // =============== INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            initializeLanguage();
+            initializeEventListeners();
+            initializeHeaderScroll();
+            initializeForms();
+            loadApps();
+            showWelcomeAnimation();
+        });
+
+        // =============== THEME MANAGEMENT ===============
+        function initializeTheme() {
+            const savedTheme = currentTheme;
+            setTheme(savedTheme);
+        }
+
+        function setTheme(theme) {
+            currentTheme = theme;
+            document.documentElement.setAttribute('data-theme', theme);
+            
+            const themeToggleThumb = themeToggle.querySelector('.theme-toggle-thumb');
+            const themeIcon = themeToggleThumb.querySelector('i');
+            
+            if (theme === 'dark') {
+                themeToggle.classList.add('active');
+                themeIcon.className = 'fas fa-moon';
+            } else {
+                themeToggle.classList.remove('active');
+                themeIcon.className = 'fas fa-sun';
+            }
+        }
+
+        function toggleTheme() {
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+            
+            document.body.style.transition = 'all 0.3s ease';
+            setTimeout(() => {
+                document.body.style.transition = '';
+            }, 300);
+        }
+
+        // =============== LANGUAGE MANAGEMENT ===============
+        function initializeLanguage() {
+            const savedLang = currentLanguage;
+            setLanguage(savedLang);
+        }
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            const translation = translations[lang];
+            
+            document.documentElement.lang = lang;
+            document.documentElement.dir = translation.dir;
+            
+            updateUIText(translation);
+            document.getElementById('currentLang').textContent = translation.currentLang;
+            updateTooltips();
+        }
+
+        function updateUIText(translation) {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translation[key]) {
+                    element.textContent = translation[key];
+                }
+            });
+            
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translation[key]) {
+                    element.placeholder = translation[key];
+                }
+            });
+            
+            updateAppsStats();
+        }
+
+        function updateTooltips() {
+            const translation = translations[currentLanguage];
+            themeToggle.setAttribute('data-tooltip', translation.themeToggleTooltip);
+        }
+
+        // =============== EVENT LISTENERS ===============
+        function initializeEventListeners() {
+            menuToggle.addEventListener('click', toggleSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            languageBtn.addEventListener('click', toggleLanguageDropdown);
+            document.addEventListener('click', closeLanguageDropdown);
+            
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    setLanguage(lang);
+                    closeLanguageDropdown();
+                });
+            });
+            
+            themeToggle.addEventListener('click', toggleTheme);
+            
+            loginBtn.addEventListener('click', openLoginModal);
+            loginModalClose.addEventListener('click', closeLoginModal);
+            loginModal.addEventListener('click', function(e) {
+                if (e.target === this) closeLoginModal();
+            });
+            
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.getAttribute('data-filter');
+                    filterApps();
+                });
+            });
+            
+            // View toggle
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentView = this.getAttribute('data-view');
+                    toggleView();
+                });
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', debounce(searchApps, 300));
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        closeSidebar();
+                    }
+                });
+            });
+            
+            document.addEventListener('keydown', handleKeyboardNavigation);
+            window.addEventListener('resize', handleResize);
+        }
+
+        // =============== SIDEBAR MANAGEMENT ===============
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            sidebarOverlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== LANGUAGE DROPDOWN ===============
+        function toggleLanguageDropdown(e) {
+            e.stopPropagation();
+            languageDropdown.classList.toggle('active');
+        }
+
+        function closeLanguageDropdown() {
+            languageDropdown.classList.remove('active');
+        }
+
+        // =============== MODAL MANAGEMENT ===============
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            setTimeout(() => {
+                const firstInput = loginModal.querySelector('input');
+                if (firstInput) firstInput.focus();
+            }, 300);
+        }
+
+        function closeLoginModal() {
+            loginModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // =============== HEADER SCROLL EFFECT ===============
+        function initializeHeaderScroll() {
+            let lastScrollY = 0;
+            
+            window.addEventListener('scroll', () => {
+                const currentScrollY = window.scrollY;
+                
+                if (currentScrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollY = currentScrollY;
+            });
+        }
+
+        // =============== FORM HANDLING ===============
+        function initializeForms() {
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', handleLoginSubmit);
+            
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+                
+                if (input.value) {
+                    input.parentElement.classList.add('focused');
+                }
+            });
+        }
+
+        function handleLoginSubmit(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showNotification('يرجى ملء جميع الحقول', 'error');
+                return;
+            }
+            
+            showLoading(true);
+            
+            setTimeout(() => {
+                showLoading(false);
+                
+                // Simulate login success
+                isLoggedIn = true;
+                userRole = email.includes('admin') ? 'admin' : 'moderator';
+                
+                showNotification('تม تسجيل الدخول بنجاح!', 'success');
+                closeLoginModal();
+                updateLoginState();
+            }, 2000);
+        }
+
+        function updateLoginState() {
+            if (isLoggedIn) {
+                loginBtn.innerHTML = '<i class="fas fa-user-check"></i><span>مرحباً</span>';
+                loginBtn.classList.add('logged-in');
+                
+                // Show dashboard link if user has permissions
+                if (userRole === 'admin' || userRole === 'moderator') {
+                    dashboardLink.classList.remove('hidden');
+                }
+            } else {
+                loginBtn.innerHTML = '<i class="fas fa-user"></i><span data-i18n="login">تسجيل الدخول</span>';
+                loginBtn.classList.remove('logged-in');
+                dashboardLink.classList.add('hidden');
+            }
+        }
+
+        // =============== APPS MANAGEMENT ===============
+        function loadApps() {
+            showLoadingState();
+            
+            setTimeout(() => {
+                renderApps();
+                updatePagination();
+            }, 1000);
+        }
+
+        function renderApps() {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const appsToShow = filteredApps.slice(startIndex, endIndex);
+            
+            appsGrid.innerHTML = '';
+            appsGrid.className = `apps-grid ${currentView === 'list' ? 'list-view' : ''}`;
+            
+            if (appsToShow.length === 0) {
+                showEmptyState();
+                return;
+            }
+            
+            appsToShow.forEach(app => {
+                const appCard = createAppCard(app);
+                appsGrid.appendChild(appCard);
+            });
+            
+            updateAppsStats();
+        }
+
+        function createAppCard(app) {
+            const card = document.createElement('div');
+            card.className = `app-card ${currentView === 'list' ? 'list-view' : ''}`;
+            card.setAttribute('data-app-id', app.id);
+            
+            const platformClass = app.platform === 'both' ? 'android' : app.platform;
+            const platformText = app.platform === 'both' ? 'Android/iOS' : 
+                               app.platform === 'android' ? 'Android' : 'iOS';
+            
+            card.innerHTML = `
+                <div class="app-icon">
+                    <i class="${app.icon}"></i>
+                </div>
+                <div class="app-content">
+                    <div class="app-header">
+                        <div>
+                            <h3 class="app-title">${app.name}</h3>
+                            <span class="app-platform ${platformClass}">
+                                <i class="fab fa-${app.platform === 'ios' ? 'apple' : 'android'}"></i>
+                                ${platformText}
+                            </span>
+                        </div>
+                    </div>
+                    <p class="app-description">${app.description}</p>
+                    <div class="app-meta">
+                        <div class="app-rating">
+                            <div class="stars">
+                                ${generateStars(app.rating)}
+                            </div>
+                            <span class="rating-text">${app.rating}/5</span>
+                        </div>
+                        <span class="app-size">${app.size}</span>
+                    </div>
+                    <div class="app-actions">
+                        <button class="btn btn-primary" onclick="downloadApp(${app.id})">
+                            <i class="fas fa-download"></i>
+                            <span data-i18n="download">تحميل</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="viewAppDetails(${app.id})">
+                            <i class="fas fa-eye"></i>
+                            <span data-i18n="viewDetails">عرض التفاصيل</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let starsHTML = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                starsHTML += '<i class="fas fa-star star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                starsHTML += '<i class="fas fa-star-half-alt star"></i>';
+            }
+            
+            const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+            for (let i = 0; i < emptyStars; i++) {
+                starsHTML += '<i class="far fa-star star empty"></i>';
+            }
+            
+            return starsHTML;
+        }
+
+        function filterApps() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            filteredApps = appsData.filter(app => {
+                const matchesFilter = currentFilter === 'all' || 
+                                    app.platform === currentFilter || 
+                                    (currentFilter === 'both' && app.platform === 'both') ||
+                                    app.type === currentFilter;
+                
+                const matchesSearch = app.name.toLowerCase().includes(searchTerm) ||
+                                    app.description.toLowerCase().includes(searchTerm);
+                
+                return matchesFilter && matchesSearch;
+            });
+            
+            currentPage = 1;
+            renderApps();
+            updatePagination();
+        }
+
+        function searchApps() {
+            filterApps();
+        }
+
+        function toggleView() {
+            renderApps();
+        }
+
+        function showLoadingState() {
+            appsGrid.innerHTML = '';
+            
+            for (let i = 0; i < 8; i++) {
+                const skeleton = document.createElement('div');
+                skeleton.className = 'skeleton-card';
+                skeleton.innerHTML = `
+                    <div class="skeleton-icon"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
+                    <div class="skeleton-text"></div>
+                `;
+                appsGrid.appendChild(skeleton);
+            }
+        }
+
+        function showEmptyState() {
+            appsGrid.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-search empty-icon"></i>
+                    <h3 class="empty-title">لا توجد تطبيقات</h3>
+                    <p class="empty-description">لم يتم العثور على تطبيقات تطابق معايير البحث المحددة</p>
+                    <button class="btn btn-primary" onclick="clearFilters()">
+                        <i class="fas fa-refresh"></i>
+                        إعادة تعيين البحث
+                    </button>
+                </div>
+            `;
+        }
+
+        function updateAppsStats() {
+            const translation = translations[currentLanguage];
+            const start = (currentPage - 1) * itemsPerPage + 1;
+            const end = Math.min(currentPage * itemsPerPage, filteredApps.length);
+            const total = filteredApps.length;
+            
+            const statsText = translation.showingResults
+                .replace('{start}', start)
+                .replace('{end}', end)
+                .replace('{total}', total);
+            
+            appsStats.textContent = statsText;
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredApps.length / itemsPerPage);
+            const pagination = document.getElementById('pagination');
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+            
+            pagination.style.display = 'flex';
+            // Update pagination buttons logic here
+        }
+
+        function clearFilters() {
+            currentFilter = 'all';
+            searchInput.value = '';
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-filter') === 'all') {
+                    btn.classList.add('active');
+                }
+            });
+            filterApps();
+        }
+
+        // =============== APP ACTIONS ===============
+        function downloadApp(appId) {
+            const app = appsData.find(a => a.id === appId);
+            if (app) {
+                showNotification(`جاري تحميل ${app.name}...`, 'success');
+                // Simulate download
+                setTimeout(() => {
+                    showNotification(`تم بدء تحميل ${app.name}`, 'info');
+                }, 1500);
+            }
+        }
+
+        function viewAppDetails(appId) {
+            const app = appsData.find(a => a.id === appId);
+            if (app) {
+                showNotification(`عرض تفاصيل ${app.name}`, 'info');
+                // In a real app, this would open a details modal or navigate to details page
+            }
+        }
+
+        // =============== NOTIFICATION SYSTEM ===============
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <div class="notification-content">
+                    <i class="fas ${getNotificationIcon(type)}"></i>
+                    <span>${message}</span>
+                </div>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius-lg);
+                padding: var(--spacing-lg);
+                box-shadow: 0 10px 25px var(--shadow);
+                z-index: 10000;
+                min-width: 300px;
+                transform: translateX(400px);
+                transition: transform 0.3s ease;
+            `;
+            
+            if (type === 'success') {
+                notification.style.borderColor = '#28a745';
+                notification.style.color = '#28a745';
+            } else if (type === 'error') {
+                notification.style.borderColor = '#dc3545';
+                notification.style.color = '#dc3545';
+            }
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            const closeBtn = notification.querySelector('.notification-close');
+            closeBtn.addEventListener('click', () => removeNotification(notification));
+            
+            setTimeout(() => {
+                removeNotification(notification);
+            }, 5000);
+        }
+
+        function removeNotification(notification) {
+            notification.style.transform = 'translateX(400px)';
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }
+
+        function getNotificationIcon(type) {
+            switch (type) {
+                case 'success': return 'fa-check-circle';
+                case 'error': return 'fa-exclamation-circle';
+                case 'warning': return 'fa-exclamation-triangle';
+                default: return 'fa-info-circle';
+            }
+        }
+
+        // =============== LOADING SYSTEM ===============
+        function showLoading(show) {
+            let loader = document.getElementById('globalLoader');
+            
+            if (show && !loader) {
+                loader = document.createElement('div');
+                loader.id = 'globalLoader';
+                loader.innerHTML = `
+                    <div class="loading-overlay">
+                        <div class="loading-spinner"></div>
+                        <p>جاري التحميل...</p>
+                    </div>
+                `;
+                
+                loader.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 10000;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
+                
+                document.body.appendChild(loader);
+            } else if (!show && loader) {
+                loader.remove();
+            }
+        }
+
+        // =============== KEYBOARD NAVIGATION ===============
+        function handleKeyboardNavigation(e) {
+            if (e.key === 'Escape') {
+                closeLoginModal();
+                closeSidebar();
+                closeLanguageDropdown();
+            }
+            
+            if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+                e.target.click();
+            }
+        }
+
+        // =============== RESPONSIVE HANDLING ===============
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                closeSidebar();
+            }
+            closeLanguageDropdown();
+        }
+
+        // =============== WELCOME ANIMATION ===============
+        function showWelcomeAnimation() {
+            document.body.classList.add('welcome-animation');
+            
+            setTimeout(() => {
+                document.body.classList.remove('welcome-animation');
+            }, 1000);
+        }
+
+        // =============== UTILITY FUNCTIONS ===============
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
+                }
+            };
+        }
+
+        // =============== ACCESSIBILITY ENHANCEMENTS ===============
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                document.body.classList.add('using-keyboard');
+            }
+        });
+
+        document.addEventListener('mousedown', function() {
+            document.body.classList.remove('using-keyboard');
+        });
+
+        function announceToScreenReader(message) {
+            const announcement = document.createElement('div');
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.setAttribute('aria-atomic', 'true');
+            announcement.style.cssText = `
+                position: absolute;
+                left: -10000px;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+            `;
+            announcement.textContent = message;
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
+        }
+
+        // =============== ERROR HANDLING ===============
+        window.addEventListener('error', function(e) {
+            console.error('JavaScript error:', e.error);
+        });
+
+        window.addEventListener('unhandledrejection', function(e) {
+            console.error('Unhandled promise rejection:', e.reason);
+        });
+
+        // =============== ANALYTICS TRACKING ===============
+        function trackUserInteraction(action, element) {
+            console.log('User interaction:', action, element);
+        }
+
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.btn, .app-card, .filter-btn')) {
+                trackUserInteraction('click', e.target.className);
+            }
+        });
+
+        document.addEventListener('submit', function(e) {
+            trackUserInteraction('form_submit', e.target.id);
+        });
+
+        // =============== ADDITIONAL UTILITIES ===============
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                return navigator.clipboard.writeText(text);
+            } else {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return Promise.resolve();
+            }
+        }
+
+        function formatNumber(number) {
+            return new Intl.NumberFormat(currentLanguage === 'ar' ? 'ar-EG' : currentLanguage).format(number);
+        }
+
+        function generateId() {
+            return 'id_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // =============== PAGE VISIBILITY HANDLING ===============
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                document.body.classList.add('page-hidden');
+            } else {
+                document.body.classList.remove('page-hidden');
+            }
+        });
+
+        // =============== FINAL INITIALIZATION ===============
+        document.addEventListener('DOMContentLoaded', function() {
+            document.documentElement.style.setProperty('--js-header-height', '70px');
+            
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 100);
+        });
+
+        // Export functions for potential external use
+        window.PixomodApp = {
+            setTheme,
+            setLanguage,
+            showNotification,
+            showLoading,
+            copyToClipboard,
+            formatNumber,
+            isValidEmail,
+            downloadApp,
+            viewAppDetails,
+            filterApps,
+            clearFilters
+        };
+
+        // =============== SERVICE WORKER REGISTRATION ===============
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // navigator.serviceWorker.register('/sw.js')
+                //     .then(function(registration) {
+                //         console.log('SW registered: ', registration);
+                //     })
+                //     .catch(function(registrationError) {
+                //         console.log('SW registration failed: ', registrationError);
+                //     });
+            });
+        }
+
+        // =============== SCROLL ANIMATIONS ===============
+        function initializeScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // =============== ADVANCED FILTERING ===============
+        function setupAdvancedFilters() {
+            // Add sorting functionality
+            const sortSelect = document.createElement('select');
+            sortSelect.className = 'form-input';
+            sortSelect.innerHTML = `
+                <option value="name">ترتيب حسب الاسم</option>
+                <option value="rating">ترتيب حسب التقييم</option>
+                <option value="size">ترتيب حسب الحجم</option>
+                <option value="featured">المميزة أولاً</option>
+            `;
+            
+            sortSelect.addEventListener('change', function() {
+                sortApps(this.value);
+            });
+        }
+
+        function sortApps(criteria) {
+            switch (criteria) {
+                case 'name':
+                    filteredApps.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'rating':
+                    filteredApps.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'size':
+                    filteredApps.sort((a, b) => {
+                        const aSize = parseFloat(a.size);
+                        const bSize = parseFloat(b.size);
+                        return aSize - bSize;
+                    });
+                    break;
+                case 'featured':
+                    filteredApps.sort((a, b) => b.featured - a.featured);
+                    break;
+            }
+            renderApps();
+        }
+
+        // =============== LAZY LOADING ===============
+        function setupLazyLoading() {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // =============== OFFLINE SUPPORT ===============
+        function setupOfflineSupport() {
+            window.addEventListener('online', function() {
+                showNotification('تم استعادة الاتصال بالإنترنت', 'success');
+            });
+
+            window.addEventListener('offline', function() {
+                showNotification('لا يوجد اتصال بالإنترنت', 'warning');
+            });
+        }
+
+        // Initialize additional features
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeScrollAnimations();
+            setupAdvancedFilters();
+            setupLazyLoading();
+            setupOfflineSupport();
+        });
+
+    </script>
+
+<!-- Sidebar Enhancements -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.querySelector(".sidebar ul");
+  const role = localStorage.getItem("userRole");
+
+  // زر تسجيل الدخول (في الجوال فقط)
+  if (window.innerWidth < 768 && !document.getElementById("loginBtnMobile")) {
+    const loginLi = document.createElement("li");
+    const loginBtn = document.createElement("a");
+    loginBtn.textContent = "تسجيل الدخول";
+    loginBtn.href = "#";
+    loginBtn.id = "loginBtnMobile";
+    loginBtn.onclick = () => {
+      document.querySelector(".login-popup")?.classList.add("show");
+    };
+    loginLi.appendChild(loginBtn);
+    sidebar.appendChild(loginLi);
+  }
+
+  // زر لوحة التحكم عند تسجيل الدخول
+  if (role && !document.getElementById("dashboardLink")) {
+    const dashboardLi = document.createElement("li");
+    const dashboardLink = document.createElement("a");
+    dashboardLink.id = "dashboardLink";
+    dashboardLink.textContent = "لوحة التحكم";
+    dashboardLink.href = role === "admin" ? "pixomod_admin_dashboard_final.html" : "pixomod_moderator_dashboard_final.html";
+    dashboardLi.appendChild(dashboardLink);
+    sidebar.appendChild(dashboardLi);
+  }
+});
+</script>
+</body>
+</html>
